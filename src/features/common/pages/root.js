@@ -1,10 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import Container from "@material-ui/core/Container"
+
 import { renderRoutes } from "react-router-config"
 
+import { Header } from "../components"
+
 export const Root = ({ route }) => {
-  return <main>{renderRoutes(route && route.routes)}</main>
+  return (
+    <>
+      <Header />
+      <Container fixed>{renderRoutes(route && route.routes)}</Container>
+    </>
+  )
 }
 
 Root.propTypes = {
