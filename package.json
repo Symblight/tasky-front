@@ -87,7 +87,6 @@
   "dependencies": {
     "@lingui/core": "^2.8.3",
     "@lingui/react": "^2.8.3",
-    "antd": "^3.19.8",
     "axios": "^0.19.0",
     "browser-cookies": "^1.2.0",
     "history": "^4.9.0",

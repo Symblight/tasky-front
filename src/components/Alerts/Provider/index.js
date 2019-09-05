@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 
 import uuid from "uuid"
 
-import { Alert } from "antd"
 import DefaultContext from "../Context"
 
 import { Wrapper } from "./styled"
@@ -65,13 +64,14 @@ const Provider = ({ children, timeout, context: Context }) => {
     <Context.Provider value={alertContext}>
       <Wrapper>
         {alerts.map((alert) => (
-          <Alert
-            key={alert.id}
-            message={alert.message}
-            type={alert.type}
-            closable
-            {...alert}
-          />
+          // <Alert
+          //   key={alert.id}
+          //   message={alert.message}
+          //   type={alert.type}
+          //   closable
+          //   {...alert}
+          // />
+          <div>alert</div>
         ))}
       </Wrapper>
       {children}
