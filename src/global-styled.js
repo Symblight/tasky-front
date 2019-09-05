@@ -4,8 +4,6 @@ export const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     height: 100%;
-    overflow-y: scroll;
-    -webkit-font-smoothing: antialiased;
   }
 
   #root {
