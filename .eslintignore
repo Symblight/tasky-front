@@ -1,0 +1,6 @@
+\build
+.git
+.vscode
+dist
+packages/**/node_modules
+src/lib/locale/
