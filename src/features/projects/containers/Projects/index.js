@@ -17,6 +17,18 @@ const DATA = [
     id: 2,
     title: "Third tile",
   },
+  {
+    id: 0,
+    title: "First tile",
+  },
+  {
+    id: 1,
+    title: "Second example tile",
+  },
+  {
+    id: 2,
+    title: "Third tile",
+  },
 ]
 
 export const Projects = () => {
