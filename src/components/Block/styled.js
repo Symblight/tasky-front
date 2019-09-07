@@ -1,9 +1,6 @@
 import styled, { css, keyframes } from "styled-components"
 
 const styles = css`
-  box-shadow: 0 1px 1px 1px rgba(10, 16, 34, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
   &:hover {
     box-shadow: 0 16px 32px 0 rgba(10, 16, 34, 0.2), 0 0 0 transparent;
     transform: translateY(-5px) translateZ(0);
@@ -40,4 +37,7 @@ export const Wrapper = styled.div`
   transform-origin: top;
   animation-name: ${showContent};
   animation-fill-mode: backwards;
+
+  box-shadow: 0 1px 1px 1px rgba(10, 16, 34, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 `

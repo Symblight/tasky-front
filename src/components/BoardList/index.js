@@ -4,15 +4,27 @@ import PropTypes from "prop-types"
 import _ from "lodash"
 import uuid from "uuid"
 
-import { Divider, Typography } from "antd"
+import { Icon, Divider, Typography } from "antd"
 
-import { StyledAddBoard, StyledBoard, Wrapper, Row, EmptyTile } from "./styled"
+import {
+  StyledAddBoard,
+  StyledBoard,
+  Wrapper,
+  Row,
+  EmptyTile,
+  WrapLabel,
+} from "./styled"
 
 const { Title } = Typography
 
 const SIZE_COLUMNS = 3
 
-export const BoardList = memo(({ data, label, addable, onToggle }) => {
+const ICONS = {
+  recently: <Icon type="coffee" />,
+  user: <Icon type="user" />,
+}
+
+export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
   const normalizeDate = addable ? [...data, { addable: true }] : data
   const fill = _.fill(new Array(SIZE_COLUMNS), {})
   const normalize = [...normalizeDate, ...fill]
@@ -30,7 +42,10 @@ export const BoardList = memo(({ data, label, addable, onToggle }) => {
   return (
     <>
       <Divider orientation="left">
-        <Title level={4}>{label}</Title>
+        <WrapLabel>
+          {ICONS[icon]}
+          <Title level={4}>{label}</Title>
+        </WrapLabel>
       </Divider>
       <Wrapper>
         {rows.map((row) => (
@@ -50,7 +65,11 @@ export const BoardList = memo(({ data, label, addable, onToggle }) => {
                 }
                 if (project.addable) {
                   return (
-                    <StyledAddBoard key={uuid(1)} onClick={handleOnToggle} />
+                    <StyledAddBoard
+                      key={uuid(1)}
+                      onClick={handleOnToggle}
+                      addable={addable}
+                    />
                   )
                 }
                 return <EmptyTile key={uuid(1)} />
@@ -67,4 +86,5 @@ BoardList.propTypes = {
   label: PropTypes.string,
   addable: PropTypes.bool,
   onToggle: PropTypes.func,
+  icon: PropTypes.node,
 }
