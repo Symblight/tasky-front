@@ -1,27 +1,22 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
+import { Menu } from "antd"
 
-import { Container } from "./styled"
+import { Logo } from "./styled"
 
 export const Header = () => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Container>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6">Main</Typography>
-        </Container>
-        <Button color="inherit">Login</Button>
-      </Toolbar>
-    </AppBar>
+    <>
+      <Logo />
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={["2"]}
+        style={{ lineHeight: "64px" }}
+      >
+        <Menu.Item key="1">nav 1</Menu.Item>
+      </Menu>
+    </>
   )
 }

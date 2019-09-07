@@ -1,17 +1,15 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { StyledCard, StyledLink } from "./styled"
+import { Link } from "react-router-dom"
+
+import { Wrapper } from "./styled"
 
 export const Tile = ({ data, isNew }) => {
-  if (isNew) {
-    return <StyledCard isnew="true">Создать новый проект</StyledCard>
-  }
-
   return (
-    <StyledLink to={`projects/${data.id}`}>
-      <StyledCard>{data.title}</StyledCard>
-    </StyledLink>
+    <Link to={`projects/${data.id}`}>
+      <Wrapper>{data.title}</Wrapper>
+    </Link>
   )
 }
 
