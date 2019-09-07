@@ -1,33 +1,40 @@
 export const DATA = [
   {
-    id: 0,
+    id: "TbRfir2B",
     title: "First tile",
+    color: "#ff4d4f",
   },
   {
-    id: 1,
+    id: "QcvECZ",
     title: "Second example tile",
+    color: "#ff7a45",
   },
   {
-    id: 2,
+    id: "WaCdYV",
     title: "Third tile",
+    color: "#ffa940",
   },
   {
-    id: 3,
+    id: "ZDFwMk",
     title: "First tile",
+    color: "#ffec3d",
   },
   {
-    id: 4,
+    id: "MkgNMP",
     title: "Second example tile",
+    color: "#40a9ff",
   },
   {
-    id: 5,
+    id: "WTwJLY",
     title: "Third tile",
+    color: "#73d13d",
   },
 ]
 
 export const DATA_RECENTLY = [
   {
-    id: 0,
+    id: "TbRfir2B",
     title: "First tile",
+    color: "#ff4d4f",
   },
 ]

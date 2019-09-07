@@ -1,3 +1,9 @@
 import styled from "styled-components"
 
-export const Wrapper = styled.div``
+import { Menu } from "antd"
+
+export const Wrapper = styled(Menu)`
+  ul {
+    background-color: transparent;
+  }
+`

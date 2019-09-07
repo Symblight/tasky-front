@@ -5,10 +5,10 @@ import { Link } from "react-router-dom"
 
 import { Wrapper, StyledBlock } from "./styled"
 
-export const Board = ({ data, className, ...props }) => {
+export const Board = ({ data, className, color, ...props }) => {
   return (
     <Link to={`/b/${data.id}`} className={className}>
-      <StyledBlock {...props}>
+      <StyledBlock color={color} {...props}>
         <Wrapper>{data.title}</Wrapper>
       </StyledBlock>
     </Link>
@@ -18,4 +18,5 @@ export const Board = ({ data, className, ...props }) => {
 Board.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
+  color: PropTypes.string,
 }

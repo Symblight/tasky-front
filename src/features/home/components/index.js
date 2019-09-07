@@ -1,0 +1,1 @@
+export { MainPost } from "./MainPost"
