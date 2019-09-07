@@ -12,6 +12,7 @@ export const Container = styled.div`
   align-items: center;
   height: 45px;
   font-weight: 700;
+  padding: 26px;
 `
 
 export const StyledBlock = styled(Block)`

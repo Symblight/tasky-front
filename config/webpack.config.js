@@ -66,18 +66,18 @@ const config = {
           loader: "babel-loader",
         },
       },
-      {
-        test: [/\.json$/i],
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              outputPath: "./static/data/",
-            },
-          },
-        ],
-      },
+      // {
+      //   test: /\.(jpg|png|svg)$/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     {
+      //       loader: "file-loader",
+      //       options: {
+      //         name: "[path][name]-[hash:8].[ext]",
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.html$/,
         use: [
@@ -102,13 +102,17 @@ const config = {
         ],
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        test: /\.(png|woff|woff2|eot|ttf|svg|jpg)$/,
         loader: "url-loader?limit=100000",
       },
       {
         test: /\.json$/,
         exclude: /node_modules/,
         loader: "json-loader",
+      },
+      {
+        test: /\.svg$/,
+        use: "react-svg-loader",
       },
     ],
   },
