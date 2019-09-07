@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 import { Menu } from "antd"
 
-const { Item } = Menu
+const { Item, SubMenu } = Menu
 
 export const Logo = styled.div`
   width: 120px;
@@ -12,18 +12,9 @@ export const Logo = styled.div`
   float: left;
 `
 
-export const StyledItem = styled(Item)`
+export const StyledItem = styled(SubMenu)`
   float: right;
   height: 64px;
   display: flex !important;
   align-items: center;
-`
-
-export const Avatar = styled.div`
-  width: 42px;
-  height: 42px;
-  border-radius: 4px;
-  background: #eee;
-  display: inline-block;
-  vertical-align: middle;
 `

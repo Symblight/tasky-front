@@ -36,3 +36,13 @@ export const Row = styled.div`
     margin-bottom: 14px;
   }
 `
+
+export const WrapLabel = styled.div`
+  display: flex;
+
+  i {
+    display: flex;
+    margin-top: 6px;
+    margin-right: 4px;
+  }
+`

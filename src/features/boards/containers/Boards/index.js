@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import PropTypes from "prop-types"
 
-import { Layout } from "antd"
+import { Icon, Layout } from "antd"
 import { BoardList, MenuNavigation, HomeContainer } from "@tasky/components"
 
 import { DATA, DATA_RECENTLY } from "@lib/mocks/boards"
@@ -35,6 +35,7 @@ export const Boards = ({ match }) => {
             data={DATA_RECENTLY}
             username={match.params.username}
             label="Недавно просмотренное"
+            icon="recently"
           />
           <BoardList
             data={DATA}
@@ -42,6 +43,7 @@ export const Boards = ({ match }) => {
             label="Персональные доски"
             addable
             onToggle={handleToggle}
+            icon="user"
           />
         </Content>
         <CreateBoardModal

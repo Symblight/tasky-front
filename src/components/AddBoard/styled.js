@@ -15,5 +15,9 @@ export const Container = styled.div`
 `
 
 export const StyledBlock = styled(Block)`
-  background-color: #f5f5f5;
+  background-color: #eaeaea;
+
+  &:hover {
+    background-color: #cecece;
+  }
 `
