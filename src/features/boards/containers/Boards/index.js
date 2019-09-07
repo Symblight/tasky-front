@@ -8,7 +8,7 @@ import { DATA, DATA_RECENTLY } from "@lib/mocks/boards"
 import { USER } from "@lib/mocks/user"
 
 import { CreateBoardModal } from "../../components"
-import { StyledAside, StyledLayout, StyledContent } from "./styled"
+import { StyledAside, StyledLayout } from "./styled"
 
 const { Content } = Layout
 
