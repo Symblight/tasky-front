@@ -2,14 +2,20 @@ import React from "react"
 import { renderRoutes } from "react-router-config"
 
 import { NotFound, Root } from "@features/common"
-import { projectsRoutes } from "@features/projects"
+import { boardsRoutes } from "@features/boards"
 import { joinRoutes } from "@features/join"
+import { homeRoutes } from "@features/home"
 
 const routes = [
   {
     path: "/",
     component: Root,
-    routes: [...projectsRoutes(), ...joinRoutes(), { component: NotFound }],
+    routes: [
+      ...homeRoutes(),
+      ...boardsRoutes(),
+      ...joinRoutes(),
+      { component: NotFound },
+    ],
   },
 ]
 

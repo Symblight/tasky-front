@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import styled from "styled-components"
 import { Layout } from "antd"
 
 import { renderRoutes } from "react-router-config"
@@ -15,7 +16,7 @@ export const Root = ({ route }) => {
       <HeaderLayout>
         <Header />
       </HeaderLayout>
-      <Content>{renderRoutes(route && route.routes)}</Content>
+      <StyledContent>{renderRoutes(route && route.routes)}</StyledContent>
     </Layout>
   )
 }
@@ -23,3 +24,7 @@ export const Root = ({ route }) => {
 Root.propTypes = {
   route: PropTypes.object,
 }
+
+const StyledContent = styled(Content)`
+  padding: 16px 50px;
+`

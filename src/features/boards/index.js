@@ -1,0 +1,1 @@
+export { boardsRoutes } from "./routes"
