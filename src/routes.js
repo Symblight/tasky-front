@@ -6,6 +6,7 @@ import { boardsRoutes } from "@features/boards"
 import { joinRoutes } from "@features/join"
 import { homeRoutes } from "@features/home"
 import { boardRoutes } from "@features/board"
+import { profileRoutes } from "@features/profile"
 
 const routes = [
   {
@@ -16,6 +17,7 @@ const routes = [
       ...boardsRoutes(),
       ...boardRoutes(),
       ...joinRoutes(),
+      ...profileRoutes(),
       { component: NotFound },
     ],
   },

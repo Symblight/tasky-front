@@ -4,7 +4,9 @@ import PropTypes from "prop-types"
 import { Menu, Badge } from "antd"
 import { Link } from "react-router-dom"
 
-import { Logo, StyledItem, Avatar } from "./styled"
+import { USER } from "@lib/mocks/user"
+
+import { StyledItem, Avatar } from "./styled"
 
 export const Header = () => {
   return (
@@ -19,9 +21,11 @@ export const Header = () => {
           <Link to="/">Главная</Link>
         </Menu.Item>
         <StyledItem key="user">
-          <Badge count={5}>
-            <Avatar />
-          </Badge>
+          <Link to={`/p/${USER.username}`}>
+            <Badge count={5}>
+              <Avatar />
+            </Badge>
+          </Link>
         </StyledItem>
       </Menu>
     </>
