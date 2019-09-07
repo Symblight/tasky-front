@@ -5,6 +5,7 @@ import { NotFound, Root } from "@features/common"
 import { boardsRoutes } from "@features/boards"
 import { joinRoutes } from "@features/join"
 import { homeRoutes } from "@features/home"
+import { boardRoutes } from "@features/board"
 
 const routes = [
   {
@@ -13,6 +14,7 @@ const routes = [
     routes: [
       ...homeRoutes(),
       ...boardsRoutes(),
+      ...boardRoutes(),
       ...joinRoutes(),
       { component: NotFound },
     ],

@@ -3,9 +3,9 @@ import PropTypes from "prop-types"
 
 import { Container, Wrapper, StyledBlock } from "./styled"
 
-export const AddBoard = ({ className }) => {
+export const AddBoard = ({ className, onClick }) => {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} onClick={onClick}>
       <StyledBlock>
         <Container>Создать доску</Container>
       </StyledBlock>
@@ -15,4 +15,5 @@ export const AddBoard = ({ className }) => {
 
 AddBoard.propTypes = {
   className: PropTypes.string,
+  onClick: PropTypes.func,
 }

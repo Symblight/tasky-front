@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import PropTypes from "prop-types"
 
 import _ from "lodash"
@@ -10,9 +10,9 @@ import { StyledAddBoard, StyledBoard, Wrapper, Row, EmptyTile } from "./styled"
 
 const { Title } = Typography
 
-const SIZE_COLUMNS = 4
+const SIZE_COLUMNS = 3
 
-export const BoardList = ({ data, label, addable }) => {
+export const BoardList = memo(({ data, label, addable, onToggle }) => {
   const normalizeDate = addable ? [...data, { addable: true }] : data
   const fill = _.fill(new Array(SIZE_COLUMNS), {})
   const normalize = [...normalizeDate, ...fill]
@@ -20,6 +20,12 @@ export const BoardList = ({ data, label, addable }) => {
   const rows = _.chunk(normalize, SIZE_COLUMNS).filter(
     (item) => Object.keys(item[0]).length,
   )
+
+  const handleOnToggle = () => {
+    if (onToggle) {
+      onToggle()
+    }
+  }
 
   return (
     <>
@@ -38,11 +44,14 @@ export const BoardList = ({ data, label, addable }) => {
                       key={project.id}
                       data={project}
                       index={index}
+                      {...project}
                     />
                   )
                 }
                 if (project.addable) {
-                  return <StyledAddBoard key={uuid(1)} />
+                  return (
+                    <StyledAddBoard key={uuid(1)} onClick={handleOnToggle} />
+                  )
                 }
                 return <EmptyTile key={uuid(1)} />
               })}
@@ -51,10 +60,11 @@ export const BoardList = ({ data, label, addable }) => {
       </Wrapper>
     </>
   )
-}
+})
 
 BoardList.propTypes = {
   data: PropTypes.array,
   label: PropTypes.string,
   addable: PropTypes.bool,
+  onToggle: PropTypes.func,
 }

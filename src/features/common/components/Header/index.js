@@ -1,21 +1,28 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Menu } from "antd"
+import { Menu, Badge } from "antd"
+import { Link } from "react-router-dom"
 
-import { Logo } from "./styled"
+import { Logo, StyledItem, Avatar } from "./styled"
 
 export const Header = () => {
   return (
     <>
-      <Logo />
       <Menu
         theme="dark"
         mode="horizontal"
         defaultSelectedKeys={["2"]}
         style={{ lineHeight: "64px" }}
       >
-        <Menu.Item key="1">nav 1</Menu.Item>
+        <Menu.Item key="home">
+          <Link to="/">Главная</Link>
+        </Menu.Item>
+        <StyledItem key="user">
+          <Badge count={5}>
+            <Avatar />
+          </Badge>
+        </StyledItem>
       </Menu>
     </>
   )

@@ -12,6 +12,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   #root {
+    display: flex;
     height: 100%;
     overflow: auto;
     z-index: 999;

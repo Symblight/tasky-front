@@ -11,6 +11,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 45px;
+  font-weight: 700;
 `
 
 export const StyledBlock = styled(Block)`
