@@ -1,15 +1,39 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import { Button, Form as FormAntd } from "antd"
+import { compose } from "recompose"
+
 import { Form } from "../../components"
 
-export const Join = () => {
+const enhance = compose(FormAntd.create({ name: "login" }))
+
+const View = ({ form }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    form.validateFields((err, values) => {
+      if (!err) {
+        console.log("Received values of form:", values)
+      }
+    })
+  }
   return (
     <div>
-      <h5>Авторизация</h5>
-      <Form />
+      <FormAntd onSubmit={handleSubmit}>
+        <h5>Авторизация</h5>
+        <Form form={form} />
+        <FormAntd.Item>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
+          </Button>
+        </FormAntd.Item>
+      </FormAntd>
     </div>
   )
 }
 
-Join.propTypes = {}
+View.propTypes = {
+  form: PropTypes.object,
+}
+
+export const Join = enhance(View)

@@ -1,30 +1,42 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Wrapper } from "./styled"
+import { Input, Icon, Form as FormAntd } from "antd"
 
-export const Form = () => {
+import {} from "./styled"
+
+const { Item } = FormAntd
+
+export const Form = ({ form }) => {
+  const { getFieldDecorator } = form
+
   return (
-    <Wrapper>
-      <input
-        id="outlined-email-input"
-        label="Email"
-        type="email"
-        name="email"
-        margin="normal"
-        variant="filled"
-      />
-      <input
-        id="outlined-password-input"
-        label="Password"
-        type="password"
-        name="password"
-        autoComplete="password"
-        margin="normal"
-        variant="filled"
-      />
-    </Wrapper>
+    <>
+      <Item>
+        {getFieldDecorator("username", {
+          rules: [{ required: true, message: "Please input your username!" }],
+        })(
+          <Input
+            prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+            placeholder="Username"
+          />,
+        )}
+      </Item>
+      <Item>
+        {getFieldDecorator("password", {
+          rules: [{ required: true, message: "Please input your Password!" }],
+        })(
+          <Input
+            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+            type="password"
+            placeholder="Password"
+          />,
+        )}
+      </Item>
+    </>
   )
 }
 
-Form.propTypes = {}
+Form.propTypes = {
+  form: PropTypes.object,
+}
