@@ -1,18 +1,22 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Container } from "@material-ui/core"
+import { Layout } from "antd"
 
 import { renderRoutes } from "react-router-config"
 
 import { Header } from "../components"
 
+const { Header: HeaderLayout, Content } = Layout
+
 export const Root = ({ route }) => {
   return (
-    <>
-      <Header />
-      <Container fixed>{renderRoutes(route && route.routes)}</Container>
-    </>
+    <Layout>
+      <HeaderLayout>
+        <Header />
+      </HeaderLayout>
+      <Content>{renderRoutes(route && route.routes)}</Content>
+    </Layout>
   )
 }
 

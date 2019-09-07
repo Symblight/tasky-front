@@ -1,14 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { TextField } from "@material-ui/core"
-
 import { Wrapper } from "./styled"
 
 export const Form = () => {
   return (
     <Wrapper>
-      <TextField
+      <input
         id="outlined-email-input"
         label="Email"
         type="email"
@@ -16,7 +14,7 @@ export const Form = () => {
         margin="normal"
         variant="filled"
       />
-      <TextField
+      <input
         id="outlined-password-input"
         label="Password"
         type="password"
