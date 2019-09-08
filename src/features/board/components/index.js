@@ -1,1 +1,5 @@
 export { Dashboard } from "./Dashboard"
+export { Tile } from "./Tile"
+export { Column } from "./Column"
+export { Board } from "./Board"
+export { ColumnContent } from "./ColumnContent"

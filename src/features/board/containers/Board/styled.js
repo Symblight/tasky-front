@@ -1,12 +1,14 @@
 import styled from "styled-components"
 import { Layout } from "antd"
 
-import { BoardWallpaper } from "@assets/images"
-
 const { Content } = Layout
 
-export const Wrapper = styled.div``
+export const Wrapper = styled.div`
+  height: 100%;
+  margin-right: 8px;
+  margin-left: 8px;
+`
 
 export const StyledContent = styled(Content)`
-  background-image: url(${BoardWallpaper});
+  background-color: #fff;
 `

@@ -1,24 +1,28 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 
 import { Layout } from "antd"
-import { HomeContainer } from "@tasky/components"
+import { GenericPage } from "@tasky/components"
 
-import { Dashboard } from "../../components"
+import { Dashboard, Board as BoardMain } from "../../components"
 
 import { Wrapper, StyledContent } from "./styled"
 
-export const Board = () => {
+export const Board = ({ match }) => {
   return (
     <Layout style={{ height: "100%" }}>
-      <StyledContent>
+      <StyledContent style={{ display: "flex", flexDirection: "column" }}>
         <Dashboard />
-        <HomeContainer>
-          <Wrapper>Board</Wrapper>
-        </HomeContainer>
+        <div style={{ flex: "1 auto", width: "100vw", paddingTop: "12px" }}>
+          <Wrapper>
+            <BoardMain idBoard={match.params.idBoard} />
+          </Wrapper>
+        </div>
       </StyledContent>
     </Layout>
   )
 }
 
-Board.propTypes = {}
+Board.propTypes = {
+  match: PropTypes.object,
+}

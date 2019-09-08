@@ -12,7 +12,7 @@ const { Header: HeaderLayout, Content } = Layout
 export const Root = ({ route }) => {
   return (
     <Layout>
-      <HeaderLayout>
+      <HeaderLayout style={{ height: "44px" }}>
         <Header />
       </HeaderLayout>
       <Content>{renderRoutes(route && route.routes)}</Content>

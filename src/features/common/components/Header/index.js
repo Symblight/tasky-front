@@ -1,31 +1,29 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Icon, Menu, Badge } from "antd"
+import { Icon, Menu } from "antd"
 import { Link } from "react-router-dom"
 
 import { USER } from "@lib/mocks/user"
 import { Avatar } from "@tasky/components"
 
-import { StyledItem } from "./styled"
+import { StyledItem, StyledMenu } from "./styled"
 
 const { SubMenu } = Menu
 
 export const Header = () => {
   const renderSubmenu = () => {
     return (
-      <Badge count={5}>
-        <Avatar data={{ firstname: USER.firstname, lastname: USER.lastname }} />
-      </Badge>
+      <Avatar data={{ firstname: USER.firstname, lastname: USER.lastname }} />
     )
   }
   return (
     <>
-      <Menu
+      <StyledMenu
         theme="dark"
         mode="horizontal"
         defaultSelectedKeys={["2"]}
-        style={{ lineHeight: "64px" }}
+        style={{ lineHeight: "44px" }}
       >
         <Menu.Item key="home">
           <Link to="/">
@@ -41,7 +39,7 @@ export const Header = () => {
             <Link to="/login">Выйти</Link>
           </Menu.Item>
         </StyledItem>
-      </Menu>
+      </StyledMenu>
     </>
   )
 }

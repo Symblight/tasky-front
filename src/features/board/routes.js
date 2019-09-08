@@ -10,6 +10,12 @@ const Board = lazy(() =>
   ),
 )
 
+const Card = lazy(() =>
+  import(/* webpackChunkName: "board-card" */ "./pages/card").then(
+    ({ CardPage }) => ({ default: CardPage }),
+  ),
+)
+
 export const boardRoutes = () => [
   {
     path: "/b/:idBoard",
@@ -17,8 +23,14 @@ export const boardRoutes = () => [
     routes: [
       {
         path: "/b/:idBoard",
-        exact: true,
         component: WaitingComponent(Board),
+        routes: [
+          {
+            path: "/b/:idBoard/:idCard",
+            component: WaitingComponent(Card),
+            exact: true,
+          },
+        ],
       },
     ],
   },

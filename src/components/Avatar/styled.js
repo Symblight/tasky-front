@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
-const getSize = ({ size }) => size * 21
-const getSizeFont = ({ size }) => size * 9
+const getSize = ({ size }) => size * 14.6
+const getSizeFont = ({ size }) => size * 8
 
 export const Wrapper = styled.div`
   width: ${getSize}px;

@@ -15,13 +15,11 @@ export const Avatar = ({ data, size }) => {
     return acronym.length > LENGTH ? acronym.slice(0, 1) : acronym
   }
 
-  if (!data) return null
-
-  const name = `${data.firstname} ${data.lastname}`
+  const name = data && `${data.firstname} ${data.lastname}`
 
   return (
     <Wrapper size={size}>
-      <WrapInitials size={size}>{getIniitals(name)}</WrapInitials>
+      <WrapInitials size={size}>{name && getIniitals(name)}</WrapInitials>
     </Wrapper>
   )
 }

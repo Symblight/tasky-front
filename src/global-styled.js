@@ -19,14 +19,29 @@ export const GlobalStyles = createGlobalStyle`
     position: relative;
     background-color: #f0f2f5;
   }
-  body .ant-pagination-disabled a,
-  body .ant-pagination-disabled:hover a,
-  body .ant-pagination-disabled:focus a,
-  body .ant-pagination-disabled .ant-pagination-item-link,
-  body .ant-pagination-disabled:hover .ant-pagination-item-link,
-  body .ant-pagination-disabled:focus .ant-pagination-item-link{
-    display: flex;
-    justify-content: center;
-    align-items: center
-}
+    body .ant-pagination-disabled a,
+    body .ant-pagination-disabled:hover a,
+    body .ant-pagination-disabled:focus a,
+    body .ant-pagination-disabled .ant-pagination-item-link,
+    body .ant-pagination-disabled:hover .ant-pagination-item-link,
+    body .ant-pagination-disabled:focus .ant-pagination-item-link {
+      display: flex;
+      justify-content: center;
+      align-items: center
+  }
+
+  ::-webkit-scrollbar {
+      width: 8px;
+      height: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #dedede;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #b9b9b9;
+    outline: 1px solid slategrey;
+    border-radius: 4px;
+  }
 `
