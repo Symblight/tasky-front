@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import _ from "lodash"
 import uuid from "uuid"
 
-import { Icon, Divider, Typography } from "antd"
+import { Divider, Typography } from "antd"
 
 import {
   StyledAddBoard,
@@ -18,11 +18,6 @@ import {
 const { Title } = Typography
 
 const SIZE_COLUMNS = 3
-
-const ICONS = {
-  recently: <Icon type="coffee" />,
-  user: <Icon type="user" />,
-}
 
 export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
   const normalizeDate = addable ? [...data, { addable: true }] : data
@@ -43,12 +38,12 @@ export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
     <>
       <Divider orientation="left">
         <WrapLabel>
-          {ICONS[icon]}
+          {icon}
           <Title level={4}>{label}</Title>
         </WrapLabel>
       </Divider>
       <Wrapper>
-        {rows.map((row) => (
+        {rows.map((row, indexRow) => (
           <Row key={uuid(1)}>
             {row &&
               row.map((project, index) => {
@@ -58,7 +53,7 @@ export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
                       id={project.id}
                       key={project.id}
                       data={project}
-                      index={index}
+                      index={indexRow + index}
                       {...project}
                     />
                   )
