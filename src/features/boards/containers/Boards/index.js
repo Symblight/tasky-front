@@ -35,7 +35,7 @@ export const Boards = ({ match }) => {
             data={DATA_RECENTLY}
             username={match.params.username}
             label="Недавно просмотренное"
-            icon="recently"
+            icon="⏱️"
           />
           <BoardList
             data={DATA}
@@ -43,7 +43,7 @@ export const Boards = ({ match }) => {
             label="Персональные доски"
             addable
             onToggle={handleToggle}
-            icon="user"
+            icon="📁"
           />
         </Content>
         <CreateBoardModal

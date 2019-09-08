@@ -23,8 +23,8 @@ const View = ({ form }) => {
         <h5>Авторизация</h5>
         <Form form={form} />
         <FormAntd.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
+          <Button type="primary" htmlType="submit">
+            Войти
           </Button>
         </FormAntd.Item>
       </FormAntd>

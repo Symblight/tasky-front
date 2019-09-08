@@ -5,7 +5,7 @@ import { Wrapper, WrapInitials } from "./styled"
 
 const LENGTH = 2
 
-export const Avatar = ({ data }) => {
+export const Avatar = ({ data, size }) => {
   const getIniitals = (value) => {
     const acronym = value.split(/\s/).reduce((response, word) => {
       let acr = response
@@ -20,12 +20,17 @@ export const Avatar = ({ data }) => {
   const name = `${data.firstname} ${data.lastname}`
 
   return (
-    <Wrapper>
-      <WrapInitials>{getIniitals(name)}</WrapInitials>
+    <Wrapper size={size}>
+      <WrapInitials size={size}>{getIniitals(name)}</WrapInitials>
     </Wrapper>
   )
 }
 
 Avatar.propTypes = {
   data: PropTypes.object,
+  size: PropTypes.number,
+}
+
+Avatar.defaultProps = {
+  size: 2,
 }
