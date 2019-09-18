@@ -14,7 +14,16 @@ export const Logo = styled.div`
 
 export const StyledItem = styled(SubMenu)`
   float: right;
-  height: 64px;
+  height: 44px;
   display: flex !important;
   align-items: center;
+`
+
+export const StyledMenu = styled(Menu)`
+  .ant-layout-header {
+    height: 44px;
+    padding: 0 50px;
+    line-height: 64px;
+    background: #001529;
+}
 `
