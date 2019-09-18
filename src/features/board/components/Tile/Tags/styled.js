@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 export const StyledTag = styled(Tag)`
   display: flex;
   align-items: center;
+  justify-content: center;
   color: #fff;
   &:not(:last-child) {
     margin-right: 4px;
