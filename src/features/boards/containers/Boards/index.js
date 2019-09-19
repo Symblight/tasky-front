@@ -8,12 +8,15 @@ import { DATA, DATA_RECENTLY } from "@lib/mocks/boards"
 import { USER } from "@lib/mocks/user"
 
 import { CreateBoardModal } from "../../components"
+import { useBoardsApi } from "../../hooks"
+
 import { StyledAside, StyledLayout } from "./styled"
 
 const { Content } = Layout
 
 export const Boards = ({ match }) => {
   const [createModal, setCreateModal] = useState(false)
+  const boardFetch = useBoardsApi()
 
   const handleToggle = useCallback(
     () => setCreateModal((prevState) => !prevState),

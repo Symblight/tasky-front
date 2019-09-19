@@ -2,6 +2,8 @@ import { createStore, compose, applyMiddleware } from "redux"
 import { routerMiddleware } from "connected-react-router"
 import { createLogger } from "redux-logger"
 
+import { apiMiddleware, apiError, asyncMiddleware } from "@lib/middleware"
+
 import { appReducer } from "./reducers"
 
 /**
@@ -20,7 +22,13 @@ const loggerMiddleware = createLogger({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // eslint-disable-line no-underscore-dangle, max-len
 
 export const configureStore = ({ history, initialState = {} } = {}) => {
-  const middlewares = [routerMiddleware(history), loggerMiddleware]
+  const middlewares = [
+    routerMiddleware(history),
+    asyncMiddleware(),
+    apiMiddleware,
+    apiError,
+    loggerMiddleware,
+  ]
 
   const store = createStore(
     appReducer(history),
