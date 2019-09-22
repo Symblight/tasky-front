@@ -48,9 +48,10 @@ export const apiMiddleware = (store) => (next) => (action) => {
       method: request.method,
       url: formattedUrl,
       crossDomain: true,
+      withCredentials: true,
       headers,
       data: {
-        ...request.body,
+        ...request.data,
       },
     })
       .then((data) => {
@@ -60,9 +61,14 @@ export const apiMiddleware = (store) => (next) => (action) => {
         })
       })
       .catch((error) => {
+        const errorResponse = error.response.data.error
         store.dispatch({
           type: ERROR,
-          payload: error,
+          payload: {
+            message: errorResponse.message,
+            status: errorResponse.status,
+            error: true,
+          },
         })
       })
   } else {

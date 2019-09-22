@@ -4,7 +4,7 @@ import { createLogger } from "redux-logger"
 
 import { apiMiddleware, apiError, asyncMiddleware } from "@lib/middleware"
 
-import { appReducer } from "./reducers"
+import { rootReducer } from "./reducers"
 
 /**
  * Configure the store for the DEV mode
@@ -31,7 +31,7 @@ export const configureStore = ({ history, initialState = {} } = {}) => {
   ]
 
   const store = createStore(
-    appReducer(history),
+    rootReducer(history),
     initialState,
     composeEnhancers(applyMiddleware(...middlewares)),
   )

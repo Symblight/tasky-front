@@ -13,7 +13,7 @@ export const useBoardsApi = () => {
         async: true,
         request: {
           method: "GET",
-          url: "/todos/1",
+          url: "/user/login",
         },
       },
     })

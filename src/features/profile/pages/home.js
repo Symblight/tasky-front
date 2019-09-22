@@ -1,9 +1,18 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 import { HomeContainer, TitlePage } from "@tasky/components"
+import { compose } from "recompose"
+import { withUser, withLayout } from "@features/common"
+
 import { Profile } from "../containers"
 
-export const HomePage = ({ ...props }) => {
+const enchance = compose(
+  withUser,
+  withLayout("default"),
+)
+
+const View = ({ ...props }) => {
   return (
     <HomeContainer>
       <TitlePage name="Профиль" />
@@ -11,3 +20,5 @@ export const HomePage = ({ ...props }) => {
     </HomeContainer>
   )
 }
+
+export const HomePage = enchance(View)
