@@ -1,10 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import { compose } from "recompose"
 import { LoginContainer, TitlePage } from "@tasky/components"
+import { withUser, withGuest, withLayout } from "@features/common"
+
 import { Join } from "../containers"
 
-export const JoinPage = ({ ...props }) => {
+const enchance = compose(
+  withUser,
+  withGuest,
+  withLayout("generic"),
+)
+
+const View = ({ ...props }) => {
   return (
     <LoginContainer>
       <TitlePage name="Авторизация" />
@@ -12,3 +21,5 @@ export const JoinPage = ({ ...props }) => {
     </LoginContainer>
   )
 }
+
+export const JoinPage = enchance(View)

@@ -36,7 +36,7 @@ export const Header = () => {
             <Link to={`/p/${USER.username}`}>Профиль</Link>
           </Menu.Item>
           <Menu.Item key="login">
-            <Link to="/login">Выйти</Link>
+            <Link to="/logout">Выйти</Link>
           </Menu.Item>
         </StyledItem>
       </StyledMenu>

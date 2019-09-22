@@ -5,19 +5,8 @@ import { Layout } from "antd"
 
 import { renderRoutes } from "react-router-config"
 
-import { Header } from "../components"
-
-const { Header: HeaderLayout, Content } = Layout
-
 export const Root = ({ route }) => {
-  return (
-    <Layout>
-      <HeaderLayout style={{ height: "44px" }}>
-        <Header />
-      </HeaderLayout>
-      <Content>{renderRoutes(route && route.routes)}</Content>
-    </Layout>
-  )
+  return <Layout>{renderRoutes(route && route.routes)}</Layout>
 }
 
 Root.propTypes = {

@@ -5,8 +5,8 @@ import { Provider } from "react-redux"
 import { ConnectedRouter } from "connected-react-router"
 import { createBrowserHistory } from "history"
 
-import { App } from "./app"
-import { configureStore } from "./store"
+import { App } from "./webroot/app"
+import { configureStore } from "./modules/store"
 
 const root = document.querySelector("#root")
 const history = createBrowserHistory()
@@ -24,7 +24,7 @@ const render = () => {
 }
 
 if (module.hot) {
-  module.hot.accept("./app", render)
+  module.hot.accept("./webroot/app", render)
 }
 
 render()

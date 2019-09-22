@@ -13,12 +13,12 @@ export const Form = ({ form }) => {
   return (
     <>
       <Item>
-        {getFieldDecorator("username", {
-          rules: [{ required: true, message: "Please input your username!" }],
+        {getFieldDecorator("email", {
+          rules: [{ required: true, message: "Please input your email!" }],
         })(
           <Input
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="Username"
+            placeholder="Email"
           />,
         )}
       </Item>
