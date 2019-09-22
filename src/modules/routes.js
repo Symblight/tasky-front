@@ -7,6 +7,7 @@ import { joinRoutes } from "@features/join"
 import { homeRoutes } from "@features/home"
 import { boardRoutes } from "@features/board"
 import { profileRoutes } from "@features/profile"
+import { signUpRoutes } from "@features/register"
 
 const routes = [
   ...homeRoutes(),
@@ -15,6 +16,7 @@ const routes = [
   ...profileRoutes(),
   ...joinRoutes(),
   ...rootRoutes(),
+  ...signUpRoutes(),
   { component: NotFound },
 ]
 

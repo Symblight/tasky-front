@@ -17,7 +17,9 @@ export const GlobalStyles = createGlobalStyle`
     overflow: auto;
     z-index: 999;
     position: relative;
-    background-color: #f0f2f5;
+    section {
+      background-color: #fff;
+    }
   }
     body .ant-pagination-disabled a,
     body .ant-pagination-disabled:hover a,

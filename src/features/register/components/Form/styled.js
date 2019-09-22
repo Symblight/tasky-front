@@ -1,8 +1,7 @@
 import styled from "styled-components"
 
-import { Form } from "antd"
-
-export const StyledForm = styled(Form)`
+export const Wrapper = styled.div`
   display: flex;
+
   flex-direction: column;
 `

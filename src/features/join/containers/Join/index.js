@@ -1,12 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Button, Form as FormAntd } from "antd"
+import { Button, Form as FormAntd, Typography } from "antd"
 import { compose } from "recompose"
 
 import { useSignIn } from "@features/common"
 
 import { Form } from "../../components"
+
+import { StyledForm } from "./styled"
+
+const { Title } = Typography
 
 const enhance = compose(FormAntd.create({ name: "login" }))
 
@@ -30,17 +34,13 @@ const View = ({ form }) => {
     })
   }
   return (
-    <div>
-      <FormAntd onSubmit={handleSubmit}>
-        <h5>Авторизация</h5>
-        <Form form={form} />
-        <FormAntd.Item>
-          <Button type="primary" htmlType="submit">
-            Войти
-          </Button>
-        </FormAntd.Item>
-      </FormAntd>
-    </div>
+    <StyledForm onSubmit={handleSubmit}>
+      <Title level={4}>Авторизация</Title>
+      <Form form={form} />
+      <Button type="primary" htmlType="submit">
+        Войти
+      </Button>
+    </StyledForm>
   )
 }
 

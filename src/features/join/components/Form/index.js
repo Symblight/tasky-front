@@ -14,7 +14,9 @@ export const Form = ({ form }) => {
     <>
       <Item>
         {getFieldDecorator("email", {
-          rules: [{ required: true, message: "Please input your email!" }],
+          rules: [
+            { required: true, message: "Пожалуйста, введите вашу почту!" },
+          ],
         })(
           <Input
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
@@ -24,12 +26,12 @@ export const Form = ({ form }) => {
       </Item>
       <Item>
         {getFieldDecorator("password", {
-          rules: [{ required: true, message: "Please input your Password!" }],
+          rules: [{ required: true, message: "Пожалуйста, введите пароль!" }],
         })(
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
             type="password"
-            placeholder="Password"
+            placeholder="Пароль"
           />,
         )}
       </Item>

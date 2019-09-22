@@ -61,11 +61,11 @@ export const apiMiddleware = (store) => (next) => (action) => {
         })
       })
       .catch((error) => {
-        const errorResponse = error.response.data.error
+        const errorResponse = error.response
         store.dispatch({
           type: ERROR,
           payload: {
-            message: errorResponse.message,
+            message: errorResponse.data,
             status: errorResponse.status,
             error: true,
           },
