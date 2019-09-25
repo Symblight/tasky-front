@@ -1,17 +1,9 @@
-import { lazy } from "react"
-
-import { WaitingComponent } from "@lib/waiting"
-
-const Boards = lazy(() =>
-  import(/* webpackChunkName: "boards-all" */ "./pages/boards").then(
-    ({ BoardsPage }) => ({ default: BoardsPage }),
-  ),
-)
+import { BoardsPage } from "./pages/boards"
 
 export const boardsRoutes = () => [
   {
     path: "/:username/boards",
     exact: true,
-    component: WaitingComponent(Boards),
+    component: BoardsPage,
   },
 ]

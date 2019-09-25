@@ -1,14 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import styled from "styled-components"
 import { Layout } from "antd"
 
 import { renderRoutes } from "react-router-config"
 
 export const Root = ({ route }) => {
-  return <Layout>{renderRoutes(route && route.routes)}</Layout>
+  return <StyledLayout>11{renderRoutes(route && route.routes)}</StyledLayout>
 }
 
 Root.propTypes = {
   route: PropTypes.object,
 }
+
+const StyledLayout = styled(Layout)`
+  background-color: #fff;
+`

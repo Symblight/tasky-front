@@ -1,17 +1,9 @@
-import { lazy } from "react"
-
-import { WaitingComponent } from "@lib/waiting"
-
-const Home = lazy(() =>
-  import(/* webpackChunkName: "home" */ "./pages/home").then(
-    ({ HomePage }) => ({ default: HomePage }),
-  ),
-)
+import { HomePage } from "./pages/home"
 
 export const homeRoutes = () => [
   {
     path: "/",
-    component: WaitingComponent(Home),
+    component: HomePage,
     exact: true,
   },
 ]
