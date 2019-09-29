@@ -7,15 +7,13 @@ import { auth } from "../../api"
 export const useUser = () => {
   const dispatch = useDispatch()
   const selectors = useSelector((state) => {
-    const {
-      user: { auth: authState },
-    } = state
+    const { user } = state
 
     return {
-      loading: authState.get("loading"),
-      authenticated: authState.get("authenticated"),
-      user: authState.get("user"),
-      attempt: authState.get("authAttempt"),
+      loading: user.getIn(["auth", "loading"]),
+      authenticated: user.getIn(["auth", "authenticated"]),
+      user: user.getIn(["auth", "user"]),
+      attempt: user.getIn(["auth", "authAttempt"]),
     }
   })
 

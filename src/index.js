@@ -9,8 +9,12 @@ import { App } from "./webroot/app"
 import { configureStore } from "./modules/store"
 
 const root = document.querySelector("#root")
+const loader = document.querySelector("#loader")
+
 const history = createBrowserHistory()
 const store = configureStore({ history })
+
+const removeLoader = () => loader && loader.remove()
 
 const render = () => {
   ReactDOM.render(
@@ -28,3 +32,4 @@ if (module.hot) {
 }
 
 render()
+removeLoader()

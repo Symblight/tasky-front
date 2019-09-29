@@ -1,12 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Modal, Input, Typography } from "antd"
+import { CreateBoard } from "@tasky/components"
 
 export const CreateBoardModal = ({ visible, onCreate, onCancel }) => {
-  const handleOnCreate = () => {
+  const handleOnCreate = (data) => {
     if (onCreate) {
-      onCreate()
+      onCreate(data)
     }
   }
   const handleOnCancel = () => {
@@ -15,10 +15,11 @@ export const CreateBoardModal = ({ visible, onCreate, onCancel }) => {
     }
   }
   return (
-    <Modal visible={visible} onOk={handleOnCreate} onCancel={handleOnCancel}>
-      <Typography>Создать доску</Typography>
-      <Input />
-    </Modal>
+    <CreateBoard
+      visible={visible}
+      onClose={handleOnCancel}
+      onCreate={handleOnCreate}
+    />
   )
 }
 

@@ -8,7 +8,7 @@ import { DATA, DATA_RECENTLY } from "@lib/mocks/boards"
 import { USER } from "@lib/mocks/user"
 
 import { CreateBoardModal } from "../../components"
-import { useBoardsApi } from "../../hooks"
+import { useBoards } from "../../hooks"
 
 import { StyledAside, StyledLayout } from "./styled"
 
@@ -16,15 +16,20 @@ const { Content } = Layout
 
 export const Boards = ({ match }) => {
   const [createModal, setCreateModal] = useState(false)
-  const boardFetch = useBoardsApi()
+  const { onCreate, boards, loading } = useBoards()
 
   const handleToggle = useCallback(
     () => setCreateModal((prevState) => !prevState),
     [],
   )
 
-  const handleCreateBoard = () => {
-    handleToggle()
+  const handleCreateBoard = async (data) => {
+    try {
+      await onCreate(data)
+      handleToggle()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -40,14 +45,18 @@ export const Boards = ({ match }) => {
             label="Недавно просмотренное"
             icon="⏱️"
           />
-          <BoardList
-            data={DATA}
-            username={match.params.username}
-            label="Персональные доски"
-            addable
-            onToggle={handleToggle}
-            icon="📁"
-          />
+          {!loading ? (
+            <BoardList
+              data={boards}
+              username={match.params.username}
+              label="Персональные доски"
+              addable
+              onToggle={handleToggle}
+              icon="📁"
+            />
+          ) : (
+            <span>Загрузка</span>
+          )}
         </Content>
         <CreateBoardModal
           visible={createModal}

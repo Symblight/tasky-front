@@ -6,10 +6,15 @@ import { Link } from "react-router-dom"
 import { Animate } from "../Animate"
 import { Wrapper, StyledBlock } from "./styled"
 
-export const Board = ({ data, className, color, index, ...props }) => {
+export const Board = ({ data, className, background, index, ...props }) => {
   return (
     <Link to={`/b/${data.id}`} className={className}>
-      <StyledBlock animate={Animate} color={color} index={index} {...props}>
+      <StyledBlock
+        animate={Animate}
+        color={background}
+        index={index}
+        {...props}
+      >
         <Wrapper>{data.title}</Wrapper>
       </StyledBlock>
     </Link>
@@ -19,6 +24,6 @@ export const Board = ({ data, className, color, index, ...props }) => {
 Board.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
-  color: PropTypes.string,
+  background: PropTypes.string,
   index: PropTypes.number,
 }
