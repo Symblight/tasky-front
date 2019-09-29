@@ -15,7 +15,6 @@ export const GlobalStyles = createGlobalStyle`
     display: flex;
     height: 100%;
     overflow: auto;
-    z-index: 999;
     position: relative;
     section {
       background-color: #fff;
@@ -45,5 +44,11 @@ export const GlobalStyles = createGlobalStyle`
     background-color: #b9b9b9;
     outline: 1px solid slategrey;
     border-radius: 4px;
+  }
+
+  ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 `

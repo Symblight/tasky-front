@@ -1,1 +1,1 @@
-export { useBoardsApi } from "./useBoardsApi"
+export { useBoards } from "./useBoards"

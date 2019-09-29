@@ -8,17 +8,13 @@ import { useSelector } from "react-redux"
 import _ from "lodash"
 
 export const withGuest = (Component) => ({ ...props }) => {
-  const selectors = useSelector((state) => {
-    const {
-      user: { auth: authState },
-    } = state
+  const auth = useSelector((state) => {
+    const { user } = state
 
-    return {
-      user: authState.get("user"),
-    }
+    return user.getIn(["auth", "user"])
   })
 
-  if (_.isEmpty(selectors.user.toJS())) {
+  if (_.isEmpty(auth.toJS())) {
     return <Component {...props} />
   }
   return <Redirect to="/" />
