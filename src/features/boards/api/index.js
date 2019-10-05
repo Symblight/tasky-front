@@ -15,7 +15,7 @@ export const allBoardsByUser = () => ({
     async: true,
     request: {
       method: "GET",
-      url: "/board/all",
+      url: "/boards",
     },
   },
 })

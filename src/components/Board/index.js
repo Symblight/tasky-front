@@ -8,7 +8,7 @@ import { Wrapper, StyledBlock } from "./styled"
 
 export const Board = ({ data, className, background, index, ...props }) => {
   return (
-    <Link to={`/b/${data.id}`} className={className}>
+    <Link to={`/b/${data.uuid}`} className={className}>
       <StyledBlock
         animate={Animate}
         color={background}

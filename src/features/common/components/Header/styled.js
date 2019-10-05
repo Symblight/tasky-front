@@ -25,5 +25,5 @@ export const StyledMenu = styled(Menu)`
     padding: 0 50px;
     line-height: 64px;
     background: #001529;
-}
+  }
 `

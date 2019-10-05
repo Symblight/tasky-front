@@ -19,6 +19,7 @@ const View = ({
   index,
   items,
   onAdd,
+  id,
   newCardVisible,
   onNewCardToggle,
   editTitleVisible,
@@ -31,16 +32,17 @@ const View = ({
   onDeleteColumn,
   onDeleteCard,
 }) => {
-  const [valueHeader, setValueHeader] = useState(title)
+  const [valueHeader, setValueHeader] = useState({ title, id })
 
   const handleChange = useCallback(
-    (event) => setValueHeader(event.target.value),
+    (event) =>
+      setValueHeader({ title: event.target.value, id: valueHeader.id }),
     [],
   )
 
   const handleAddButtonToggle = () => {
     if (onNewCardToggle) {
-      onNewCardToggle(title)
+      onNewCardToggle(id)
     }
   }
 
@@ -52,13 +54,13 @@ const View = ({
 
   const handleOnAdd = (value) => {
     if (onAdd) {
-      onAdd(title, value)
+      onAdd(id, value)
       onNewCardToggle()
     }
   }
 
   const handleOnEditHeader = () => {
-    title !== valueHeader && onEditTitle(title, valueHeader)
+    id !== valueHeader.title && onEditTitle(id, valueHeader.title)
 
     if (onTitleColumnToggle) {
       onTitleColumnToggle()
@@ -67,32 +69,32 @@ const View = ({
 
   const handleClickToggleHeader = () => {
     if (onTitleColumnToggle) {
-      onTitleColumnToggle(title)
+      onTitleColumnToggle(id)
     }
   }
 
   const handleOnDeleteColumn = () => {
     if (onDeleteColumn) {
-      onDeleteColumn(title)
+      onDeleteColumn(id)
     }
   }
 
   return (
-    <Draggable draggableId={title} index={index}>
+    <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div ref={provided.innerRef} {...provided.draggableProps}>
           <Wrapper>
             <Header {...provided.dragHandleProps}>
-              {editTitleVisible === title ? (
+              {editTitleVisible === id ? (
                 <Input
-                  value={valueHeader}
+                  value={valueHeader.title}
                   onChange={handleChange}
                   onBlur={handleOnEditHeader}
                 />
               ) : (
                 <WrapHeader>
                   <HeaderTitle onClick={handleClickToggleHeader}>
-                    {valueHeader}
+                    {valueHeader.title}
                   </HeaderTitle>
                   <Popover
                     placement="rightTop"
@@ -109,11 +111,11 @@ const View = ({
             </Header>
             <List
               items={items}
-              listId={title}
+              listId={id}
               internalScroll
               dropProvider={provided}
               idBoard={idBoard}
-              addable={newCardVisible === title}
+              addable={newCardVisible === id}
               onAdd={handleOnAdd}
               onCancel={handleAddButtonToggleCancel}
               editCardVisible={editCardVisible}
@@ -121,7 +123,7 @@ const View = ({
               onChangeCard={onChangeCard}
               onDeleteCard={onDeleteCard}
             />
-            {newCardVisible !== title && (
+            {newCardVisible !== id && (
               <Action onClick={handleAddButtonToggle}>
                 <Icon type="plus" />
                 Создать карточку
@@ -144,12 +146,13 @@ View.propTypes = {
   onNewCardToggle: PropTypes.func,
   editTitleVisible: PropTypes.string,
   onTitleColumnToggle: PropTypes.func,
-  idBoard: PropTypes.string,
+  idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   editCardVisible: PropTypes.string,
   onEditCardToggle: PropTypes.func,
   onChangeCard: PropTypes.func,
   onDeleteColumn: PropTypes.func,
   onDeleteCard: PropTypes.func,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export const Column = enhance(View)

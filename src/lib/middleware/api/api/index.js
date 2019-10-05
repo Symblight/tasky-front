@@ -29,6 +29,7 @@ export const apiMiddleware = (store) => (next) => (action) => {
         types: [SUCCESS, ERROR],
         request,
       },
+      ...rest
     } = action.action
 
     const formattedUrl = getApiUrl(request.url)
@@ -57,7 +58,7 @@ export const apiMiddleware = (store) => (next) => (action) => {
       .then((data) => {
         store.dispatch({
           type: SUCCESS,
-          payload: data,
+          payload: { ...data, ...rest },
         })
       })
       .catch((error) => {

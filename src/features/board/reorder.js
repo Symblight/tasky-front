@@ -1,3 +1,5 @@
+import Immitable from "immutable"
+
 const reorder = (list, startIndex, endIndex) => {
   const result = [...list]
   const [removed] = result.splice(startIndex, 1)

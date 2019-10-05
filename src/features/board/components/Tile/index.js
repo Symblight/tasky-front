@@ -44,7 +44,7 @@ export const Tile = enhance(
   ) => {
     const [visible, setVisible] = useState(false)
     const [editable, setEditable] = useState({})
-    const [value, setValue] = useState(data.content)
+    const [value, setValue] = useState(data.data)
     const refEdit = useRef(null)
 
     const handleVisible = () => setVisible(true)
@@ -104,7 +104,7 @@ export const Tile = enhance(
         <Container ref={refEdit}>
           <Row>
             <Content>
-              <Content>{data.content}</Content>
+              <Content>{data.data}</Content>
             </Content>
             {visible && (
               <Action onClick={handleEdit}>
@@ -117,7 +117,7 @@ export const Tile = enhance(
           <Footer>
             <Tags />
             <InfoWrap>
-              <NameCard>TASK-{data.id}</NameCard>
+              <NameCard>{data.title}</NameCard>
               <Author />
             </InfoWrap>
           </Footer>
@@ -138,7 +138,7 @@ export const Tile = enhance(
 
 Tile.propTypes = {
   data: PropTypes.object,
-  idBoard: PropTypes.string,
+  idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   provided: PropTypes.object,
   style: PropTypes.object,
   editCardVisible: PropTypes.string,

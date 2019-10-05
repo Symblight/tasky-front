@@ -86,8 +86,8 @@ export const List = ({
 
 List.propTypes = {
   items: PropTypes.array,
-  listId: PropTypes.string,
-  idBoard: PropTypes.string,
+  listId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   addable: PropTypes.bool,
   onAdd: PropTypes.func,
   onCancel: PropTypes.func,

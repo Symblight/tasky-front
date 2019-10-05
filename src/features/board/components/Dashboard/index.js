@@ -1,15 +1,16 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 import { Button } from "antd"
 
 import { Title, Item, Wrapper, MainItems } from "./styled"
 
-export const Dashboard = () => {
+export const Dashboard = ({ title }) => {
   return (
     <Wrapper>
       <MainItems>
         <Item>
-          <Title>Название доски</Title>
+          <Title>{title}</Title>
         </Item>
         <Item>
           <Button>Команда</Button>
@@ -21,4 +22,8 @@ export const Dashboard = () => {
       <Button>Меню</Button>
     </Wrapper>
   )
+}
+
+Dashboard.propTypes = {
+  title: PropTypes.string,
 }

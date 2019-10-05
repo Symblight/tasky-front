@@ -109,6 +109,7 @@
     "redux-immutable": "^4.0.0",
     "redux-logger": "^3.0.6",
     "selectors": "0.0.1",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^4.3.1",
     "uuid": "^3.3.2"
   }

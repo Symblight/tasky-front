@@ -1,16 +1,16 @@
 import { combineReducers } from "redux"
 import { connectRouter } from "connected-react-router"
 
-import Immutable from "immutable"
-
 import { LOGOUT_SUCCESS, userReducers as user } from "@features/common"
 import { boardsReducers as boardsByUser } from "@features/boards"
+import { boardReducers as board } from "@features/board"
 
 const appReducer = (history) =>
   combineReducers({
     router: connectRouter(history),
     user,
     boardsByUser,
+    board,
   })
 
 export const rootReducer = (history) => (state, action) => {
