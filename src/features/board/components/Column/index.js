@@ -144,7 +144,7 @@ View.propTypes = {
   onEditTitle: PropTypes.func,
   newCardVisible: PropTypes.string,
   onNewCardToggle: PropTypes.func,
-  editTitleVisible: PropTypes.string,
+  editTitleVisible: PropTypes.number,
   onTitleColumnToggle: PropTypes.func,
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   editCardVisible: PropTypes.string,

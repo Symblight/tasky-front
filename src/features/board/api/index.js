@@ -45,8 +45,7 @@ export const boardById = (id) => ({
   },
 })
 
-export const addList = (map, data) => ({
-  map,
+export const addList = (data) => ({
   meta: {
     types: [CREATE_LIST_SUCCESS, CREATE_LIST_FAIL],
     async: true,
@@ -58,21 +57,23 @@ export const addList = (map, data) => ({
   },
 })
 
-export const editList = (map, data) => ({
-  map,
+export const editList = (id, title) => ({
+  id,
   meta: {
     types: [EDIT_LIST_SUCCESS, EDIT_LIST_FAIL],
     async: true,
     request: {
       method: "PUT",
-      url: `/lists/${data.id}`,
-      data,
+      url: `/lists/${id}`,
+      data: {
+        title,
+      },
     },
   },
 })
 
-export const removeList = (map, id) => ({
-  map,
+export const removeList = (id) => ({
+  id,
   meta: {
     types: [REMOVE_LIST_SUCCESS, REMOVE_LIST_FAIL],
     async: true,
@@ -121,8 +122,8 @@ export const removeCard = (map, id) => ({
   },
 })
 
-export const changeList = (map, data) => ({
-  map,
+export const changeList = (data) => ({
+  id: data.id,
   meta: {
     types: [CHANGE_POS_LIST_SUCCESS, CHANGE_POS_LIST_FAIL],
     async: true,

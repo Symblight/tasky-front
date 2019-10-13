@@ -23,8 +23,8 @@ export const Board = ({ match }) => {
     loading,
   } = useApiBoard(match.params.idBoard)
 
-  const handleChangeColumn = (map, item) => {
-    onChangeList(map, item)
+  const handleChangeColumn = (item) => {
+    onChangeList(item)
   }
 
   const handleChangeCard = (map, item) => {
@@ -35,20 +35,20 @@ export const Board = ({ match }) => {
     onAddCard(map, item)
   }
 
-  const handleCreateColumm = (map, item) => {
-    onAddList(map, item)
+  const handleCreateColumm = (item) => {
+    onAddList(item)
   }
 
-  const handleDeleteColumm = (map, id) => {
-    onRemoveList(map, id)
+  const handleDeleteColumm = (id) => {
+    onRemoveList(id)
   }
 
-  const handleDeleteCard = (map, id) => {
-    onRemoveCard(map, id)
+  const handleDeleteCard = (id, idList) => {
+    onRemoveCard(id, idList)
   }
 
-  const handleEditColumm = (map, item) => {
-    onEditList(map, item)
+  const handleEditColumm = (id, title) => {
+    onEditList(id, title)
   }
 
   const handleEditCard = (map, item) => {

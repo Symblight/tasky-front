@@ -13,22 +13,33 @@ const getCount = (value) =>
         .pop().length
     : 0
 
-const getNewPosition = (values, index) => {
+export const getNewPosition = (values, starIndex, endIndex) => {
   const map = values.toJS()
-  const posStart = map[index - 1] ? Number(values.getIn([index - 1, "pos"])) : 0
-  const posIndexEnd = Number(values.getIn([index, "pos"]))
-  const posEnd = !_.isNaN(posIndexEnd) ? posIndexEnd : 0
+  let newPos = 0
+  let update = false
 
-  const isInitial = posStart === 0 && posEnd === 0
+  const startItem = map[endIndex - 1] ? Number(map[endIndex - 1].pos) : null
+  const endItem = map[endIndex + 1] ? Number(map[endIndex + 1].pos) : null
 
-  const newPos = !isInitial
-    ? Number((posEnd - posStart) / NUMBER_DIVIDER + posStart)
-    : INITIAL_POSITION
-
-  const update = _.isEqual(
-    Math.floor(posEnd.toFixed(COUNT_AFTER_DOT)),
-    Math.floor(posStart.toFixed(COUNT_AFTER_DOT)),
-  )
+  if (endItem && startItem) {
+    if (starIndex > endIndex) {
+      newPos = Number(
+        (map[endIndex].pos - startItem) / NUMBER_DIVIDER + startItem,
+      )
+    } else {
+      newPos = Number(
+        (map[endIndex].pos - startItem) / NUMBER_DIVIDER + map[endIndex].pos,
+      )
+    }
+    update = _.isEqual(
+      Math.floor(startItem.toFixed(COUNT_AFTER_DOT)),
+      Math.floor(endItem.toFixed(COUNT_AFTER_DOT)),
+    )
+  } else if (!endItem && startItem) {
+    newPos = map[map.length - 1].pos + INITIAL_POSITION
+  } else {
+    newPos = map[0].pos / NUMBER_DIVIDER
+  }
 
   return { pos: Number(newPos).toFixed(COUNT_AFTER_DOT), update }
 }
@@ -58,19 +69,19 @@ export const updateOrder = (values) => {
 }
 
 export const reorder = (list, startIndex, endIndex) => {
-  const newPos = getNewPosition(list, endIndex)
+  const { pos, update } = getNewPosition(list, startIndex, endIndex)
 
   const updateMap = list.update((items) => {
     const values = [...items.toJS()]
     const [removed] = values.splice(startIndex, 1)
-    values.splice(endIndex, 0, { ...removed, pos: Number(newPos.pos) })
+    values.splice(endIndex, 0, { ...removed, pos: Number(pos) })
     return Immutable.fromJS(values)
   })
 
-  const pos = updateMap.getIn([endIndex, "pos"])
-  const result = newPos.update ? updateOrder(updateMap) : updateMap
+  const posItem = updateMap.getIn([endIndex, "pos"])
+  const result = update ? updateOrder(updateMap) : updateMap
 
-  return { map: result, pos, item: result.get(endIndex) }
+  return { map: result, pos: posItem, item: result.get(endIndex) }
 }
 
 export const reorderCards = ({ map, source, destination }) => {
@@ -103,7 +114,7 @@ export const reorderCards = ({ map, source, destination }) => {
     const tar = target.toJS()
     const cards = [...items.toJS()]
 
-    const newPos = getNewPosition(items, destination.index)
+    const newPos = getNewPosition(items, 0, destination.index)
 
     cards.splice(destination.index, 0, { ...tar, pos: newPos.pos })
     const result = Immutable.fromJS(cards)

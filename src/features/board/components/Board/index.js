@@ -1,17 +1,16 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 import { Droppable, DragDropContext } from "react-beautiful-dnd"
-import uuid from "uuid"
 import Immutable from "immutable"
 import _ from "lodash"
 
-// import { lists } from "@lib/mocks/items-board"
 import {
   reorder,
   getOrdered,
   reorderCards,
   INITIAL_POSITION,
+  getNewPosition,
 } from "@lib/utils/dnd-order"
 
 import { Column } from "../Column"
@@ -24,7 +23,7 @@ import { QuickCardEditor, Wrapper } from "./styled"
 
 export const Board = ({
   idBoard,
-  columns,
+  columns: data,
   author,
   onChangeCard,
   onChangeColumn,
@@ -35,11 +34,12 @@ export const Board = ({
   onDeleteColumn,
   onDeleteCard,
 }) => {
-  // const [columns, setColumns] = useState(Immutable.fromJS(getOrdered(lists)))
-
-  // console.log(columns.toJS(), getOrdered(columns), 111)
-
   const stateToggleBoard = useBoard()
+  const [columns, setColumns] = useState(Immutable.fromJS(getOrdered(data)))
+
+  useEffect(() => {
+    setColumns(Immutable.fromJS(getOrdered(data)))
+  }, [data])
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -57,15 +57,17 @@ export const Board = ({
     }
 
     if (result.type === "COLUMN") {
-      const ordered = reorder(columns, source.index, destination.index)
-      const oldPos = ordered.pos
+      const { map, item, pos } = reorder(
+        columns,
+        source.index,
+        destination.index,
+      )
 
-      // setColumns(ordered.map)
-
+      setColumns(map)
       if (onChangeColumn) {
-        onChangeColumn(ordered.map, {
-          id: ordered.item.toJS().id,
-          pos: Number(oldPos),
+        onChangeColumn({
+          id: item.get("id"),
+          pos: Number(pos),
         })
       }
 
@@ -82,7 +84,7 @@ export const Board = ({
       })
     }
 
-    // setColumns(ordered.map)
+    setColumns(ordered.map)
   }
 
   const handleAddTile = (idList, value) => {
@@ -121,35 +123,22 @@ export const Board = ({
 
   const handleAddColumn = (value) => {
     const newPosition = columns.getIn([-1, "pos"])
-      ? columns.getIn([-1, "pos"]) + INITIAL_POSITION
+      ? Number(columns.getIn([-1, "pos"])) + INITIAL_POSITION
       : INITIAL_POSITION
 
-    const newColumn = {
-      id: _.uniqueId("column-"),
-      title: value,
-      idBoard,
-      pos: newPosition,
-      cards: [],
-      data: "",
-    }
-
-    const updated = columns.set(columns.size, Immutable.fromJS(newColumn))
-
-    // setColumns(updated)
-
+    setColumns(
+      columns.update((lists) =>
+        lists.push({ id: _.uniqueId("card-"), title: value, cards: [] }),
+      ),
+    )
     if (onCreateColumn) {
-      onCreateColumn(updated, { title: value, pos: newPosition, idBoard })
+      onCreateColumn({ title: value, pos: Number(newPosition), idBoard })
     }
   }
 
   const handleEditTitle = (id, value) => {
-    const indexList = columns.findIndex((item) => item.get("id") === id)
-    const updated = columns.setIn([indexList, "title"], value)
-
-    // setColumns(updated)
-
     if (onEditColumn) {
-      onEditColumn(updated, { id, title: value })
+      onEditColumn(id, value)
     }
   }
 
@@ -178,15 +167,8 @@ export const Board = ({
   }
 
   const handleDeleteColumn = (id) => {
-    const updated = columns.update((items) => {
-      const values = [...items.toJS()]
-      return Immutable.fromJS(values.filter((value) => value.id !== id))
-    })
-
-    // setColumns(updated)
-
     if (onDeleteColumn) {
-      onDeleteColumn(updated, id)
+      onDeleteColumn(id)
     }
   }
 
@@ -216,7 +198,7 @@ export const Board = ({
           {(provided) => (
             <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
               <DragScroll>
-                {getOrdered(columns).map((column, index) => (
+                {columns.toJS().map((column, index) => (
                   <Column
                     key={column.id}
                     id={column.id}

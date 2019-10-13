@@ -54,33 +54,33 @@ export const useApiBoard = (id) => {
     }
   }
 
-  const handleAddList = async (map, data) => {
+  const handleAddList = async (data) => {
     try {
-      await dispatch(addList(map, data))
+      await dispatch(addList(data))
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleEditList = async (map, data) => {
+  const handleEditList = async (idList, title) => {
     try {
-      await dispatch(editList(map, data))
+      await dispatch(editList(idList, title))
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleRemoveList = async (map, idList) => {
+  const handleRemoveList = async (idList) => {
     try {
-      await dispatch(removeList(map, idList))
+      await dispatch(removeList(idList))
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleChangeList = async (map, data) => {
+  const handleChangeList = async (data) => {
     try {
-      await dispatch(changeList(map, data))
+      await dispatch(changeList(data))
     } catch (error) {
       console.error(error)
     }
