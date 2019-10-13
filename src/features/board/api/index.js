@@ -84,8 +84,8 @@ export const removeList = (id) => ({
   },
 })
 
-export const addCard = (map, data) => ({
-  map,
+export const addCard = (data) => ({
+  idList: data.idList,
   meta: {
     types: [CREATE_CARD_SUCCESS, CREATE_CARD_FAIL],
     async: true,

@@ -24,6 +24,7 @@ import { QuickCardEditor, Wrapper } from "./styled"
 export const Board = ({
   idBoard,
   columns: data,
+  cards: cardsAll,
   author,
   onChangeCard,
   onChangeColumn,
@@ -36,10 +37,15 @@ export const Board = ({
 }) => {
   const stateToggleBoard = useBoard()
   const [columns, setColumns] = useState(Immutable.fromJS(getOrdered(data)))
+  const [cards, setCards] = useState(cardsAll)
 
   useEffect(() => {
     setColumns(Immutable.fromJS(getOrdered(data)))
   }, [data])
+
+  useEffect(() => {
+    setCards(cardsAll)
+  }, [cardsAll])
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -74,22 +80,23 @@ export const Board = ({
       return
     }
 
-    const ordered = reorderCards({ map: columns, source, destination })
-    const oldPos = ordered.pos
+    const { map, pos, item } = reorderCards({
+      map: columns,
+      source,
+      destination,
+    })
+
+    setCards(map)
 
     if (onChangeCard) {
-      onChangeCard(ordered.map, {
-        id: ordered.item.toJS().id,
-        pos: Number(oldPos),
+      onChangeCard({
+        id: item.toJS().id,
+        pos: Number(pos),
       })
     }
-
-    setColumns(ordered.map)
   }
 
-  const handleAddTile = (idList, value) => {
-    const index = columns.findIndex((column) => column.get("id") === idList)
-    const cards = columns.getIn([index, "cards"])
+  const handleAddCard = (idList, value) => {
     const newPosition = cards.getIn([-1, "pos"])
       ? cards.getIn([-1, "pos"]) + INITIAL_POSITION
       : INITIAL_POSITION
@@ -98,20 +105,16 @@ export const Board = ({
       id: _.uniqueId("card-"),
       title: author,
       idBoard,
-      idList,
+      id_list: idList,
       data: value,
       labels: [],
       pos: Number(newPosition),
     })
-    const updated = columns.updateIn([index, "cards"], (items) => {
-      const newItems = [...items.toJS()]
-      newItems.push(newCard)
-      return Immutable.fromJS(newItems)
-    })
-    // setColumns(updated)
+    const updated = cards.update((items) => items.push(newCard))
+    setCards(updated)
     if (onCreateCard) {
-      onCreateCard(updated, {
-        author,
+      onCreateCard({
+        id_author: author,
         data: value,
         pos: Number(newPosition),
         labels: [],
@@ -153,16 +156,16 @@ export const Board = ({
   const handleEditCard = (idCard, idList, value) => {
     const indexList = columns.findIndex((item) => item.get("id") === idList)
 
-    const updatedCards = columns.updateIn([indexList, "cards"], (cards) => {
-      const index = cards.findIndex((item) => item.get("id") === idCard)
-      const updated = cards.setIn([index, "data"], value.content)
-      return updated
-    })
+    // const updatedCards = columns.updateIn([indexList, "cards"], (cards) => {
+    //   const index = cards.findIndex((item) => item.get("id") === idCard)
+    //   const updated = cards.setIn([index, "data"], value.content)
+    //   return updated
+    // })
 
     // setColumns(updatedCards)
 
     if (onEditCard) {
-      onEditCard(updatedCards, { id: idCard, data: value, labels: [] })
+      onEditCard({ id: idCard, data: value, labels: [] })
     }
   }
 
@@ -175,18 +178,23 @@ export const Board = ({
   const handleDeleteCard = (idCard, idColumn) => {
     const indexList = columns.findIndex((item) => item.get("id") === idColumn)
 
-    const updatedCards = columns.updateIn([indexList, "cards"], (cards) => {
-      const updated = _.filter(cards.toJS(), (item) => item.id !== idCard)
-      return Immutable.fromJS(updated)
-    })
+    // const updatedCards = columns.updateIn([indexList, "cards"], (cards) => {
+    //   const updated = _.filter(cards.toJS(), (item) => item.id !== idCard)
+    //   return Immutable.fromJS(updated)
+    // })
 
     // setColumns(updatedCards)
     handleHideCardEditor()
 
     if (onDeleteCard) {
-      onDeleteCard(updatedCards, idCard)
+      onDeleteCard(idCard)
     }
   }
+
+  const getCardsByListId = (idList) =>
+    Immutable.fromJS(
+      getOrdered(cards.filter((card) => card.get("id_list") === idList)),
+    )
 
   return (
     <>
@@ -204,8 +212,8 @@ export const Board = ({
                     id={column.id}
                     index={index}
                     title={column.title}
-                    items={column.cards}
-                    onAdd={handleAddTile}
+                    items={getCardsByListId(column.id).toJS()}
+                    onAdd={handleAddCard}
                     onEditTitle={handleEditTitle}
                     idBoard={idBoard}
                     onChangeCard={handleEditCard}
@@ -229,6 +237,7 @@ Board.propTypes = {
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   author: PropTypes.string,
   columns: PropTypes.object,
+  cards: PropTypes.object,
   onChangeCard: PropTypes.func,
   onChangeColumn: PropTypes.func,
   onEditColumn: PropTypes.func,

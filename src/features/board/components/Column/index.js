@@ -142,7 +142,7 @@ View.propTypes = {
   index: PropTypes.number,
   onAdd: PropTypes.func,
   onEditTitle: PropTypes.func,
-  newCardVisible: PropTypes.string,
+  newCardVisible: PropTypes.number,
   onNewCardToggle: PropTypes.func,
   editTitleVisible: PropTypes.number,
   onTitleColumnToggle: PropTypes.func,

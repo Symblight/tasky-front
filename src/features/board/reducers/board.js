@@ -22,6 +22,7 @@ import {
 const initialState = Immutable.fromJS({
   lists: [],
   labels: [],
+  cards: [],
   users: [],
   root: false,
   title: "",
@@ -67,7 +68,13 @@ export const reducer = (state = initialState, action) => {
       )
     }
     case CREATE_CARD_SUCCESS: {
-      return state
+      const { data, idList } = action.payload
+
+      const newCard = Immutable.fromJS(data)
+
+      return state.update("cards", (items) => {
+        return items.push(newCard)
+      })
     }
     case CHANGE_POS_LIST_SUCCESS: {
       const { data, id } = action.payload

@@ -31,8 +31,8 @@ export const Board = ({ match }) => {
     onChangeCard(map, item)
   }
 
-  const handleCreateCard = (map, item) => {
-    onAddCard(map, item)
+  const handleCreateCard = (item) => {
+    onAddCard(item)
   }
 
   const handleCreateColumm = (item) => {
@@ -68,6 +68,7 @@ export const Board = ({ match }) => {
               onAddList={onAddList}
               author="Alexey"
               columns={board.get("lists")}
+              cards={board.get("cards")}
               onChangeCard={handleChangeCard}
               onChangeColumn={handleChangeColumn}
               onEditColumn={handleEditColumm}

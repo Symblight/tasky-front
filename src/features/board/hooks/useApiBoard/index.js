@@ -86,9 +86,9 @@ export const useApiBoard = (id) => {
     }
   }
 
-  const handleAddCard = async (map, data) => {
+  const handleAddCard = async (data) => {
     try {
-      await dispatch(addCard(map, data))
+      await dispatch(addCard(data))
     } catch (error) {
       console.error(error)
     }
