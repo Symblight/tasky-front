@@ -27,8 +27,8 @@ export const Board = ({ match }) => {
     onChangeList(item)
   }
 
-  const handleChangeCard = (map, item) => {
-    onChangeCard(map, item)
+  const handleChangeCard = (item) => {
+    onChangeCard(item)
   }
 
   const handleCreateCard = (item) => {
@@ -43,16 +43,16 @@ export const Board = ({ match }) => {
     onRemoveList(id)
   }
 
-  const handleDeleteCard = (id, idList) => {
-    onRemoveCard(id, idList)
+  const handleDeleteCard = (idCard) => {
+    onRemoveCard(idCard)
   }
 
   const handleEditColumm = (id, title) => {
     onEditList(id, title)
   }
 
-  const handleEditCard = (map, item) => {
-    onEditCard(map, item)
+  const handleEditCard = (item) => {
+    onEditCard(item)
   }
 
   if (loading) return <div>Loading...</div>

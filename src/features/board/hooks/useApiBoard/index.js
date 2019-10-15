@@ -46,7 +46,6 @@ export const useApiBoard = (id) => {
   const handleLoadBoard = async () => {
     try {
       if (id) {
-        console.log(id, "id")
         await dispatch(boardById(id))
       }
     } catch (error) {
@@ -94,25 +93,25 @@ export const useApiBoard = (id) => {
     }
   }
 
-  const handleEditCard = async (map, data) => {
+  const handleEditCard = async (data) => {
     try {
-      await dispatch(editCard(map, data))
+      await dispatch(editCard(data))
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleRemoveCard = async (data, idCard) => {
+  const handleRemoveCard = async (idCard) => {
     try {
-      await dispatch(removeCard(data, idCard))
+      await dispatch(removeCard(idCard))
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleChangeCard = async (map, data) => {
+  const handleChangeCard = async (data) => {
     try {
-      await dispatch(changeCard(map, data))
+      await dispatch(changeCard(data))
     } catch (error) {
       console.error(error)
     }

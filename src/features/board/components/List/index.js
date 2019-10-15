@@ -49,7 +49,11 @@ export const List = ({
             <Container ref={scrollRef}>
               <DropZone ref={dropProvided.innerRef}>
                 {items.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                  <Draggable
+                    key={item.uuid}
+                    draggableId={item.uuid}
+                    index={index}
+                  >
                     {(dragProvided, dragSnapshot) => (
                       <NaturalDragAnimation
                         style={dragProvided.draggableProps.style}
@@ -57,7 +61,7 @@ export const List = ({
                       >
                         {(style) => (
                           <Tile
-                            key={item.id}
+                            key={item.uuid}
                             ref={dragProvided.innerRef}
                             data={item}
                             provided={dragProvided}
@@ -91,7 +95,7 @@ List.propTypes = {
   addable: PropTypes.bool,
   onAdd: PropTypes.func,
   onCancel: PropTypes.func,
-  editCardVisible: PropTypes.string,
+  editCardVisible: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onEditCardToggle: PropTypes.func,
   onChangeCard: PropTypes.func,
   onDeleteCard: PropTypes.func,

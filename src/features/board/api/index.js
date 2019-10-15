@@ -97,21 +97,21 @@ export const addCard = (data) => ({
   },
 })
 
-export const editCard = (map, data) => ({
-  map,
+export const editCard = (data) => ({
+  id: data.uuid,
   meta: {
     types: [EDIT_CARD_SUCCESS, EDIT_CARD_FAIL],
     async: true,
     request: {
       method: "PUT",
-      url: `/cards/${data.id}`,
+      url: `/cards/${data.uuid}`,
       data,
     },
   },
 })
 
-export const removeCard = (map, id) => ({
-  map,
+export const removeCard = (id) => ({
+  id,
   meta: {
     types: [REMOVE_CARD_SUCCESS, REMOVE_CARD_FAIL],
     async: true,
@@ -123,26 +123,26 @@ export const removeCard = (map, id) => ({
 })
 
 export const changeList = (data) => ({
-  id: data.id,
+  id: data.uuid,
   meta: {
     types: [CHANGE_POS_LIST_SUCCESS, CHANGE_POS_LIST_FAIL],
     async: true,
     request: {
       method: "PUT",
-      url: `/lists/${data.id}`,
+      url: `/lists/${data.uuid}`,
       data,
     },
   },
 })
 
-export const changeCard = (map, data) => ({
-  map,
+export const changeCard = (data) => ({
+  id: data.uuid,
   meta: {
     types: [CHANGE_POS_CARD_SUCCESS, CHANGE_POS_CARD_FAIL],
     async: true,
     request: {
       method: "PUT",
-      url: `/cards/${data.id}`,
+      url: `/cards/${data.uuid}`,
       data,
     },
   },

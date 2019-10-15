@@ -13,7 +13,7 @@ const getCount = (value) =>
         .pop().length
     : 0
 
-export const getNewPosition = (values, starIndex, endIndex) => {
+export const getNewPosition = (values, startIndex, endIndex) => {
   const map = values.toJS()
   let newPos = 0
   let update = false
@@ -22,13 +22,14 @@ export const getNewPosition = (values, starIndex, endIndex) => {
   const endItem = map[endIndex + 1] ? Number(map[endIndex + 1].pos) : null
 
   if (endItem && startItem) {
-    if (starIndex > endIndex) {
+    if (startIndex > endIndex) {
       newPos = Number(
-        (map[endIndex].pos - startItem) / NUMBER_DIVIDER + startItem,
+        (startItem - map[endIndex].pos) / NUMBER_DIVIDER + map[endIndex].pos,
       )
-    } else {
+    } else if (startIndex < endIndex) {
       newPos = Number(
-        (map[endIndex].pos - startItem) / NUMBER_DIVIDER + map[endIndex].pos,
+        (endItem - map[endIndex].pos) / NUMBER_DIVIDER +
+          Number(map[endIndex].pos),
       )
     }
     update = _.isEqual(
@@ -36,9 +37,49 @@ export const getNewPosition = (values, starIndex, endIndex) => {
       Math.floor(endItem.toFixed(COUNT_AFTER_DOT)),
     )
   } else if (!endItem && startItem) {
-    newPos = map[map.length - 1].pos + INITIAL_POSITION
+    newPos = Number(map[map.length - 1].pos) + INITIAL_POSITION
+  } else if (endItem && !startItem) {
+    newPos = Number(map[0].pos) / NUMBER_DIVIDER
   } else {
-    newPos = map[0].pos / NUMBER_DIVIDER
+    newPos = INITIAL_POSITION
+  }
+
+  return { pos: Number(newPos).toFixed(COUNT_AFTER_DOT), update }
+}
+
+export const getNewPositionAnotherCards = (values, startIndex, endIndex) => {
+  const map = values.toJS()
+  let newPos = 0
+  let update = false
+  let startItem = null
+  let endItem = null
+
+  if (startIndex > endIndex) {
+    startItem = map[endIndex] ? Number(map[endIndex].pos) : null
+    endItem = map[endIndex + 1] ? Number(map[endIndex + 1].pos) : null
+  } else if (startIndex < endIndex) {
+    startItem = map[endIndex - 1] ? Number(map[endIndex - 1].pos) : null
+    endItem = map[endIndex] ? Number(map[endIndex].pos) : null
+  }
+
+  if (endItem && startItem) {
+    if (startIndex > endIndex) {
+      newPos = Number((startItem - endItem) / NUMBER_DIVIDER + Number(endItem))
+    } else if (startIndex < endIndex) {
+      newPos = Number(
+        (endItem - startItem) / NUMBER_DIVIDER + Number(startItem),
+      )
+    }
+    update = _.isEqual(
+      Math.floor(startItem.toFixed(COUNT_AFTER_DOT)),
+      Math.floor(endItem.toFixed(COUNT_AFTER_DOT)),
+    )
+  } else if (!endItem && startItem) {
+    newPos = Number(map[map.length - 1].pos) + INITIAL_POSITION
+  } else if (endItem && !startItem) {
+    newPos = Number(map[0].pos) / NUMBER_DIVIDER
+  } else {
+    newPos = INITIAL_POSITION
   }
 
   return { pos: Number(newPos).toFixed(COUNT_AFTER_DOT), update }
@@ -53,6 +94,13 @@ export const getOrdered = (values) => {
     ...list,
     cards: _.sortBy(list.cards, (item) => item.pos),
   }))
+}
+
+const getCardsByListId = (cards, idList) => {
+  const orderedCards = getOrdered(
+    cards.filter((card) => card.get("id_list") === idList),
+  )
+  return Immutable.fromJS(orderedCards)
 }
 
 export const updateOrder = (values) => {
@@ -84,53 +132,72 @@ export const reorder = (list, startIndex, endIndex) => {
   return { map: result, pos: posItem, item: result.get(endIndex) }
 }
 
-export const reorderCards = ({ map, source, destination }) => {
-  const index = map.findIndex(
-    (column) => column.get("id") === source.droppableId,
+export const reorderCards = ({
+  lists,
+  cards,
+  source,
+  destination,
+  draggableId,
+}) => {
+  const index = lists.findIndex(
+    (list) => list.get("uuid") === source.droppableId,
   )
-  const indexNext = map.findIndex(
-    (column) => column.get("id") === destination.droppableId,
+  const indexNext = lists.findIndex(
+    (list) => list.get("uuid") === destination.droppableId,
   )
-
-  const current = map.getIn([index, "cards"])
-  const next = map.getIn([indexNext, "cards"])
-
-  const target = current.get(source.index)
 
   if (source.droppableId === destination.droppableId) {
-    const reordered = reorder(current, source.index, destination.index)
+    const listId = lists.getIn([index, "id"])
+    const cardsByList = getCardsByListId(cards, listId)
+    const { map, item, pos } = reorder(
+      cardsByList,
+      source.index,
+      destination.index,
+    )
 
-    const result = map.setIn([index, "cards"], reordered.map)
-    return { map: result, item: reordered.item, pos: reordered.pos }
+    const otherCards = cards.filter((list) => list.get("id_list") !== listId)
+    const updated = otherCards.merge(map)
+
+    return { map: updated, item, pos }
   }
 
-  const updateCurrent = current.update((items) => {
-    const cards = [...items.toJS()]
-    cards.splice(source.index, 1)
-    return Immutable.fromJS(cards)
-  })
+  const idList = lists.getIn([indexNext, "id"])
 
-  const updateNext = next.update((items) => {
-    const tar = target.toJS()
-    const cards = [...items.toJS()]
+  const cardIndexList = cards.findIndex(
+    (card) => card.get("uuid") === draggableId,
+  )
 
-    const newPos = getNewPosition(items, 0, destination.index)
+  const newCards = cards.setIn([cardIndexList, "id_list"], idList)
+  const cardsByList = getCardsByListId(newCards, idList)
 
-    cards.splice(destination.index, 0, { ...tar, pos: newPos.pos })
-    const result = Immutable.fromJS(cards)
-    return {
-      map: Immutable.fromJS(newPos.update ? updateOrder(result) : result),
-      pos: newPos.pos,
-    }
-  })
+  const flag = cardsByList.toJS().length / NUMBER_DIVIDER > destination.index
+  const start = !flag ? destination.index + 1 : -1
 
-  const result = map
-    .setIn([index, "cards"], updateCurrent)
-    .setIn([indexNext, "cards"], updateNext.map)
+  const { pos, update } = getNewPositionAnotherCards(
+    cardsByList,
+    start,
+    destination.index,
+  )
+
+  const cardsOrderedList = update ? updateOrder(cardsByList) : cardsByList
+  const cardIndex = cardsOrderedList.findIndex(
+    (card) => card.get("uuid") === draggableId,
+  )
+
+  const result = Immutable.fromJS(
+    getOrdered(cardsOrderedList.setIn([cardIndex, "pos"], Number(pos))),
+  )
+
+  const otherCards = newCards.filter((list) => list.get("id_list") !== idList)
+  const updated = otherCards.merge(result)
+
+  const cardIndexResult = updated.findIndex(
+    (card) => card.get("uuid") === draggableId,
+  )
 
   return {
-    map: result,
-    item: result.getIn([indexNext, "cards", destination.index]),
-    pos: updateNext.pos,
+    map: updated,
+    item: updated.getIn([cardIndexResult]),
+    pos: updated.getIn([cardIndexResult, "pos"]),
   }
 }

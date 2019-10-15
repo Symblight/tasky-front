@@ -54,7 +54,7 @@ export const Tile = enhance(
       e.preventDefault()
 
       if (onEditCardToggle) {
-        onEditCardToggle(data.id)
+        onEditCardToggle(data.uuid)
       }
     }
 
@@ -63,7 +63,7 @@ export const Tile = enhance(
 
       const newData = {
         ...data,
-        content: value,
+        data: value,
       }
 
       if (onEditCardToggle) {
@@ -71,7 +71,7 @@ export const Tile = enhance(
       }
 
       if (onChangeCard) {
-        onChangeCard(data.id, newData)
+        onChangeCard(data.uuid, newData)
       }
     }
 
@@ -81,12 +81,12 @@ export const Tile = enhance(
 
     const handleDelete = () => {
       if (onDelete) {
-        onDelete(data.id)
+        onDelete(data.uuid)
       }
     }
 
     useEffect(() => {
-      if (editCardVisible === data.id && refEdit.current) {
+      if (editCardVisible === data.uuid && refEdit.current) {
         setEditable(refEdit.current.getBoundingClientRect())
       }
     }, [editCardVisible])
@@ -99,7 +99,7 @@ export const Tile = enhance(
         onMouseLeave={handleHide}
         ref={ref}
         style={style}
-        to={`/b/${idBoard}/${data.id}`}
+        to={`/b/${idBoard}/${data.uuid}`}
       >
         <Container ref={refEdit}>
           <Row>
@@ -122,7 +122,7 @@ export const Tile = enhance(
             </InfoWrap>
           </Footer>
         </Container>
-        {editCardVisible === data.id && (
+        {editCardVisible === data.uuid && (
           <CardEdit
             editable={editable}
             onChange={handleChangeTextArea}
@@ -141,7 +141,7 @@ Tile.propTypes = {
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   provided: PropTypes.object,
   style: PropTypes.object,
-  editCardVisible: PropTypes.string,
+  editCardVisible: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onEditCardToggle: PropTypes.func,
   onChangeCard: PropTypes.func,
   onDelete: PropTypes.func,

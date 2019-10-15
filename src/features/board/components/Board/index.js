@@ -70,9 +70,11 @@ export const Board = ({
       )
 
       setColumns(map)
+
+      setColumns(map)
       if (onChangeColumn) {
         onChangeColumn({
-          id: item.get("id"),
+          uuid: map.getIn([destination.index, "uuid"]),
           pos: Number(pos),
         })
       }
@@ -81,31 +83,34 @@ export const Board = ({
     }
 
     const { map, pos, item } = reorderCards({
-      map: columns,
+      lists: columns,
+      cards,
       source,
       destination,
+      draggableId: result.draggableId,
     })
-
     setCards(map)
 
     if (onChangeCard) {
       onChangeCard({
-        id: item.toJS().id,
+        uuid: item.get("uuid"),
         pos: Number(pos),
+        id_list: item.get("id_list"),
       })
     }
   }
 
   const handleAddCard = (idList, value) => {
+    const indexList = columns.findIndex((item) => item.get("uuid") === idList)
     const newPosition = cards.getIn([-1, "pos"])
       ? cards.getIn([-1, "pos"]) + INITIAL_POSITION
       : INITIAL_POSITION
 
     const newCard = Immutable.fromJS({
-      id: _.uniqueId("card-"),
+      uuid: _.uniqueId("card-"),
       title: author,
       idBoard,
-      id_list: idList,
+      id_list: columns.getIn([indexList, "id"]),
       data: value,
       labels: [],
       pos: Number(newPosition),
@@ -118,7 +123,7 @@ export const Board = ({
         data: value,
         pos: Number(newPosition),
         labels: [],
-        idList,
+        idList: columns.getIn([indexList, "id"]),
         idBoard,
       })
     }
@@ -131,7 +136,7 @@ export const Board = ({
 
     setColumns(
       columns.update((lists) =>
-        lists.push({ id: _.uniqueId("card-"), title: value, cards: [] }),
+        lists.push({ uuid: _.uniqueId("new-list-"), title: value }),
       ),
     )
     if (onCreateColumn) {
@@ -154,18 +159,8 @@ export const Board = ({
   }
 
   const handleEditCard = (idCard, idList, value) => {
-    const indexList = columns.findIndex((item) => item.get("id") === idList)
-
-    // const updatedCards = columns.updateIn([indexList, "cards"], (cards) => {
-    //   const index = cards.findIndex((item) => item.get("id") === idCard)
-    //   const updated = cards.setIn([index, "data"], value.content)
-    //   return updated
-    // })
-
-    // setColumns(updatedCards)
-
     if (onEditCard) {
-      onEditCard({ id: idCard, data: value, labels: [] })
+      onEditCard({ uuid: idCard, data: value.data, labels: [] })
     }
   }
 
@@ -175,15 +170,7 @@ export const Board = ({
     }
   }
 
-  const handleDeleteCard = (idCard, idColumn) => {
-    const indexList = columns.findIndex((item) => item.get("id") === idColumn)
-
-    // const updatedCards = columns.updateIn([indexList, "cards"], (cards) => {
-    //   const updated = _.filter(cards.toJS(), (item) => item.id !== idCard)
-    //   return Immutable.fromJS(updated)
-    // })
-
-    // setColumns(updatedCards)
+  const handleDeleteCard = (idCard) => {
     handleHideCardEditor()
 
     if (onDeleteCard) {
@@ -191,10 +178,12 @@ export const Board = ({
     }
   }
 
-  const getCardsByListId = (idList) =>
-    Immutable.fromJS(
-      getOrdered(cards.filter((card) => card.get("id_list") === idList)),
+  const getCardsByListId = (idList) => {
+    const orderedCards = getOrdered(
+      cards.filter((card) => card.get("id_list") === idList),
     )
+    return Immutable.fromJS(orderedCards)
+  }
 
   return (
     <>
@@ -208,8 +197,8 @@ export const Board = ({
               <DragScroll>
                 {columns.toJS().map((column, index) => (
                   <Column
-                    key={column.id}
-                    id={column.id}
+                    key={column.uuid}
+                    id={column.uuid}
                     index={index}
                     title={column.title}
                     items={getCardsByListId(column.id).toJS()}

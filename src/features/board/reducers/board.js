@@ -53,18 +53,24 @@ export const reducer = (state = initialState, action) => {
       const { data, id } = action.payload
       const indexList = state
         .get("lists")
-        .findIndex((item) => item.get("id") === id)
+        .findIndex((item) => item.get("uuid") === id)
       return state.setIn(["lists", indexList, "title"], data.title)
     }
     case EDIT_CARD_SUCCESS: {
-      return state
+      const { data, id } = action.payload
+      const indexCard = state
+        .get("cards")
+        .findIndex((item) => item.get("uuid") === id)
+      return state.setIn(["cards", indexCard, "data"], data.data)
     }
     case REMOVE_CARD_SUCCESS: {
-      return state
+      return state.update("cards", (items) =>
+        items.filter((value) => value.get("uuid") !== action.payload.id),
+      )
     }
     case REMOVE_LIST_SUCCESS: {
       return state.update("lists", (items) =>
-        items.filter((value) => value.get("id") !== action.payload.id),
+        items.filter((value) => value.get("uuid") !== action.payload.id),
       )
     }
     case CREATE_CARD_SUCCESS: {
@@ -81,12 +87,18 @@ export const reducer = (state = initialState, action) => {
 
       const indexList = state
         .get("lists")
-        .findIndex((item) => item.get("id") === id)
+        .findIndex((item) => item.get("uuid") === id)
 
       return state.setIn(["lists", indexList], Immutable.fromJS(data))
     }
     case CHANGE_POS_CARD_SUCCESS: {
-      return state
+      const { data, id } = action.payload
+
+      const indexCard = state
+        .get("cards")
+        .findIndex((item) => item.get("uuid") === id)
+
+      return state.setIn(["cards", indexCard], Immutable.fromJS(data))
     }
     default: {
       return state
