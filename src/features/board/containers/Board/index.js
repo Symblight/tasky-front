@@ -65,6 +65,7 @@ export const Board = ({ match }) => {
           <Wrapper>
             <BoardMain
               idBoard={board.get("id")}
+              uuidBoard={match.params.idBoard}
               onAddList={onAddList}
               author="Alexey"
               columns={board.get("lists")}

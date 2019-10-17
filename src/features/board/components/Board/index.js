@@ -10,7 +10,6 @@ import {
   getOrdered,
   reorderCards,
   INITIAL_POSITION,
-  getNewPosition,
 } from "@lib/utils/dnd-order"
 
 import { Column } from "../Column"
@@ -23,6 +22,7 @@ import { QuickCardEditor, Wrapper } from "./styled"
 
 export const Board = ({
   idBoard,
+  uuidBoard,
   columns: data,
   cards: cardsAll,
   author,
@@ -82,7 +82,7 @@ export const Board = ({
       return
     }
 
-    const { map, pos, item } = reorderCards({
+    const { map, pos, item, update } = reorderCards({
       lists: columns,
       cards,
       source,
@@ -95,6 +95,7 @@ export const Board = ({
       onChangeCard({
         uuid: item.get("uuid"),
         pos: Number(pos),
+        update,
         id_list: item.get("id_list"),
       })
     }
@@ -102,14 +103,15 @@ export const Board = ({
 
   const handleAddCard = (idList, value) => {
     const indexList = columns.findIndex((item) => item.get("uuid") === idList)
-    const newPosition = cards.getIn([-1, "pos"])
-      ? cards.getIn([-1, "pos"]) + INITIAL_POSITION
+    const cardsByList = getCardsByListId(columns.getIn([indexList, "id"]))
+    const newPosition = cardsByList.getIn([-1, "pos"])
+      ? cardsByList.getIn([-1, "pos"]) + INITIAL_POSITION
       : INITIAL_POSITION
 
     const newCard = Immutable.fromJS({
       uuid: _.uniqueId("card-"),
       title: author,
-      idBoard,
+      idBoard: uuidBoard,
       id_list: columns.getIn([indexList, "id"]),
       data: value,
       labels: [],
@@ -124,7 +126,7 @@ export const Board = ({
         pos: Number(newPosition),
         labels: [],
         idList: columns.getIn([indexList, "id"]),
-        idBoard,
+        idBoard: uuidBoard,
       })
     }
   }
@@ -208,6 +210,7 @@ export const Board = ({
                     onChangeCard={handleEditCard}
                     onDeleteColumn={handleDeleteColumn}
                     onDeleteCard={handleDeleteCard}
+                    uuidBoard={uuidBoard}
                     {...stateToggleBoard}
                   />
                 ))}
@@ -235,4 +238,5 @@ Board.propTypes = {
   onCreateCard: PropTypes.func,
   onDeleteColumn: PropTypes.func,
   onDeleteCard: PropTypes.func,
+  uuidBoard: PropTypes.string,
 }

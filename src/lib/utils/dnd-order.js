@@ -129,7 +129,7 @@ export const reorder = (list, startIndex, endIndex) => {
   const posItem = updateMap.getIn([endIndex, "pos"])
   const result = update ? updateOrder(updateMap) : updateMap
 
-  return { map: result, pos: posItem, item: result.get(endIndex) }
+  return { map: result, pos: posItem, item: result.get(endIndex), update }
 }
 
 export const reorderCards = ({
@@ -149,7 +149,7 @@ export const reorderCards = ({
   if (source.droppableId === destination.droppableId) {
     const listId = lists.getIn([index, "id"])
     const cardsByList = getCardsByListId(cards, listId)
-    const { map, item, pos } = reorder(
+    const { map, item, pos, update } = reorder(
       cardsByList,
       source.index,
       destination.index,
@@ -158,7 +158,7 @@ export const reorderCards = ({
     const otherCards = cards.filter((list) => list.get("id_list") !== listId)
     const updated = otherCards.merge(map)
 
-    return { map: updated, item, pos }
+    return { map: updated, item, pos, update }
   }
 
   const idList = lists.getIn([indexNext, "id"])
@@ -199,5 +199,6 @@ export const reorderCards = ({
     map: updated,
     item: updated.getIn([cardIndexResult]),
     pos: updated.getIn([cardIndexResult, "pos"]),
+    update,
   }
 }

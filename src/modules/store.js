@@ -2,12 +2,7 @@ import { createStore, compose, applyMiddleware } from "redux"
 import { routerMiddleware } from "connected-react-router"
 import { createLogger } from "redux-logger"
 
-import {
-  apiMiddleware,
-  apiError,
-  asyncMiddleware,
-  socketMiddleware,
-} from "@lib/middleware"
+import { apiMiddleware, apiError, asyncMiddleware } from "@lib/middleware"
 
 import { rootReducer } from "./reducers"
 
@@ -30,7 +25,6 @@ export const configureStore = ({ history, initialState = {} } = {}) => {
   const middlewares = [
     routerMiddleware(history),
     asyncMiddleware(),
-    socketMiddleware(),
     apiMiddleware,
     apiError,
     loggerMiddleware,

@@ -35,7 +35,7 @@ const config = {
   devtool: isProduction ? false : "source-map",
   mode: process.env.NODE_ENV,
 
-  entry: INDEX,
+  entry: ["@babel/polyfill", INDEX],
 
   output: {
     filename: "[name].[hash].js",

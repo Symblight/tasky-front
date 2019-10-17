@@ -20,6 +20,7 @@ export const List = ({
   onEditCardToggle,
   onChangeCard,
   onDeleteCard,
+  uuidBoard,
 }) => {
   const scrollRef = useRef(null)
 
@@ -67,6 +68,7 @@ export const List = ({
                             provided={dragProvided}
                             style={style}
                             idBoard={idBoard}
+                            uuidBoard={uuidBoard}
                             editCardVisible={editCardVisible}
                             onEditCardToggle={onEditCardToggle}
                             onChangeCard={handleOnChangeCard}
@@ -89,6 +91,7 @@ export const List = ({
 }
 
 List.propTypes = {
+  uuidBoard: PropTypes.string,
   items: PropTypes.array,
   listId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

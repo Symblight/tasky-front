@@ -34,6 +34,7 @@ export const Tile = enhance(
       data,
       idBoard,
       provided,
+      uuidBoard,
       style,
       editCardVisible,
       onEditCardToggle,
@@ -99,7 +100,7 @@ export const Tile = enhance(
         onMouseLeave={handleHide}
         ref={ref}
         style={style}
-        to={`/b/${idBoard}/${data.uuid}`}
+        to={`/b/${uuidBoard}/${data.uuid}`}
       >
         <Container ref={refEdit}>
           <Row>
@@ -137,6 +138,7 @@ export const Tile = enhance(
 )
 
 Tile.propTypes = {
+  uuidBoard: PropTypes.string,
   data: PropTypes.object,
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   provided: PropTypes.object,

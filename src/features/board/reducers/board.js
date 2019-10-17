@@ -17,6 +17,14 @@ import {
   REMOVE_CARD_SUCCESS,
   CHANGE_POS_CARD_SUCCESS,
   CHANGE_POS_LIST_SUCCESS,
+  NEW_CARD_SOCKET,
+  REMOVE_CARD_SOCKET,
+  EDIT_CARD_SOCKET,
+  POS_CARD_SOCKET,
+  EDIT_LIST_SOCKET,
+  CREATE_LIST_SOCKET,
+  REMOVE_LIST_SOCKET,
+  POS_LIST_SOCKET,
 } from "../constants"
 
 const initialState = Immutable.fromJS({
@@ -43,60 +51,66 @@ export const reducer = (state = initialState, action) => {
         )
         .set("loading", false)
     }
-    case CREATE_LIST_SUCCESS: {
+    case CREATE_LIST_SOCKET: {
       const { data } = action.payload
       return state.update("lists", (lists) =>
         lists.push(Immutable.fromJS(data)),
       )
     }
-    case EDIT_LIST_SUCCESS: {
-      const { data, id } = action.payload
+    case EDIT_LIST_SOCKET: {
+      const { data } = action.payload
       const indexList = state
         .get("lists")
-        .findIndex((item) => item.get("uuid") === id)
-      return state.setIn(["lists", indexList, "title"], data.title)
+        .findIndex((item) => item.get("id") === data.id)
+      return state.setIn(["lists", indexList], data)
     }
-    case EDIT_CARD_SUCCESS: {
-      const { data, id } = action.payload
+    case EDIT_CARD_SOCKET: {
+      const { data } = action.payload
       const indexCard = state
         .get("cards")
-        .findIndex((item) => item.get("uuid") === id)
+        .findIndex((item) => item.get("id") === data.id)
       return state.setIn(["cards", indexCard, "data"], data.data)
     }
-    case REMOVE_CARD_SUCCESS: {
+    case REMOVE_CARD_SOCKET: {
       return state.update("cards", (items) =>
         items.filter((value) => value.get("uuid") !== action.payload.id),
       )
     }
-    case REMOVE_LIST_SUCCESS: {
+    case REMOVE_LIST_SOCKET: {
       return state.update("lists", (items) =>
         items.filter((value) => value.get("uuid") !== action.payload.id),
       )
     }
-    case CREATE_CARD_SUCCESS: {
-      const { data, idList } = action.payload
+    case NEW_CARD_SOCKET: {
+      const { data } = action.payload
 
       const newCard = Immutable.fromJS(data)
 
-      return state.update("cards", (items) => {
-        return items.push(newCard)
-      })
+      const exists = state
+        .get("cards")
+        .findIndex((card) => card.get("id") === data.id)
+      if (exists === -1) {
+        return state.update("cards", (items) => {
+          return items.push(newCard)
+        })
+      }
+      return state
     }
-    case CHANGE_POS_LIST_SUCCESS: {
-      const { data, id } = action.payload
+    case POS_LIST_SOCKET: {
+      const { data } = action.payload
 
       const indexList = state
         .get("lists")
-        .findIndex((item) => item.get("uuid") === id)
+        .findIndex((item) => item.get("uuid") === data.uuid)
 
       return state.setIn(["lists", indexList], Immutable.fromJS(data))
     }
-    case CHANGE_POS_CARD_SUCCESS: {
+    case POS_CARD_SOCKET: {
       const { data, id } = action.payload
 
       const indexCard = state
         .get("cards")
-        .findIndex((item) => item.get("uuid") === id)
+        .findIndex((item) => item.get("uuid") === data.uuid)
 
       return state.setIn(["cards", indexCard], Immutable.fromJS(data))
     }

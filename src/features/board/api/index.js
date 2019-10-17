@@ -45,19 +45,22 @@ export const boardById = (id) => ({
   },
 })
 
-export const addList = (data) => ({
+export const addList = (data, uuid) => ({
   meta: {
     types: [CREATE_LIST_SUCCESS, CREATE_LIST_FAIL],
     async: true,
     request: {
       method: "POST",
       url: `/lists`,
-      data,
+      data: {
+        ...data,
+        uuidBoard: uuid,
+      },
     },
   },
 })
 
-export const editList = (id, title) => ({
+export const editList = (id, title, idBoard) => ({
   id,
   meta: {
     types: [EDIT_LIST_SUCCESS, EDIT_LIST_FAIL],
@@ -67,12 +70,13 @@ export const editList = (id, title) => ({
       url: `/lists/${id}`,
       data: {
         title,
+        idBoard,
       },
     },
   },
 })
 
-export const removeList = (id) => ({
+export const removeList = (id, idBoard) => ({
   id,
   meta: {
     types: [REMOVE_LIST_SUCCESS, REMOVE_LIST_FAIL],
@@ -80,6 +84,9 @@ export const removeList = (id) => ({
     request: {
       method: "DELETE",
       url: `/lists/${id}`,
+      data: {
+        idBoard,
+      },
     },
   },
 })
@@ -97,7 +104,7 @@ export const addCard = (data) => ({
   },
 })
 
-export const editCard = (data) => ({
+export const editCard = (data, idBoard) => ({
   id: data.uuid,
   meta: {
     types: [EDIT_CARD_SUCCESS, EDIT_CARD_FAIL],
@@ -105,12 +112,15 @@ export const editCard = (data) => ({
     request: {
       method: "PUT",
       url: `/cards/${data.uuid}`,
-      data,
+      data: {
+        idBoard,
+        ...data,
+      },
     },
   },
 })
 
-export const removeCard = (id) => ({
+export const removeCard = (id, idBoard) => ({
   id,
   meta: {
     types: [REMOVE_CARD_SUCCESS, REMOVE_CARD_FAIL],
@@ -118,32 +128,41 @@ export const removeCard = (id) => ({
     request: {
       method: "DELETE",
       url: `/cards/${id}`,
+      data: {
+        idBoard,
+      },
     },
   },
 })
 
-export const changeList = (data) => ({
+export const changeList = (data, idBoard) => ({
   id: data.uuid,
   meta: {
     types: [CHANGE_POS_LIST_SUCCESS, CHANGE_POS_LIST_FAIL],
     async: true,
     request: {
       method: "PUT",
-      url: `/lists/${data.uuid}`,
-      data,
+      url: `/lists/p/${data.uuid}`,
+      data: {
+        ...data,
+        idBoard,
+      },
     },
   },
 })
 
-export const changeCard = (data) => ({
+export const changeCard = (data, idBoard) => ({
   id: data.uuid,
   meta: {
     types: [CHANGE_POS_CARD_SUCCESS, CHANGE_POS_CARD_FAIL],
     async: true,
     request: {
       method: "PUT",
-      url: `/cards/${data.uuid}`,
-      data,
+      url: `/cards/p/${data.uuid}`,
+      data: {
+        ...data,
+        idBoard,
+      },
     },
   },
 })

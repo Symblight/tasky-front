@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from "react"
+import React, { memo, useState, useCallback, useEffect } from "react"
 import PropTypes from "prop-types"
 
 import { Icon, Input, Popover } from "antd"
@@ -31,8 +31,13 @@ const View = ({
   onChangeCard,
   onDeleteColumn,
   onDeleteCard,
+  uuidBoard,
 }) => {
   const [valueHeader, setValueHeader] = useState({ title, id })
+
+  useEffect(() => {
+    setValueHeader({ title, id })
+  }, [title])
 
   const handleChange = useCallback(
     (event) =>
@@ -115,6 +120,7 @@ const View = ({
               internalScroll
               dropProvider={provided}
               idBoard={idBoard}
+              uuidBoard={uuidBoard}
               addable={newCardVisible === id}
               onAdd={handleOnAdd}
               onCancel={handleAddButtonToggleCancel}
@@ -139,6 +145,7 @@ const View = ({
 View.propTypes = {
   items: PropTypes.array,
   title: PropTypes.string,
+  uuidBoard: PropTypes.string,
   index: PropTypes.number,
   onAdd: PropTypes.func,
   onEditTitle: PropTypes.func,

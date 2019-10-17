@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react"
 
 import { useDispatch, useSelector } from "react-redux"
+import connection from "@lib/utils/socket"
 
 import {
   subscribeMessages,
@@ -16,6 +17,8 @@ import {
   changeCard,
 } from "../../api"
 
+let subscription
+
 export const useApiBoard = (id) => {
   const dispatch = useDispatch()
   const selector = useSelector((state) => {
@@ -24,8 +27,24 @@ export const useApiBoard = (id) => {
   })
 
   useEffect(() => {
-    handleLoadBoard()
+    connection.connect()
+    if (id) {
+      subscription = connection.subscribe(`board:${id}`, handleActions)
+      handleLoadBoard()
+    }
   }, [])
+
+  useEffect(() => {
+    return () => {
+      subscription.close()
+    }
+  }, [])
+
+  const handleActions = (socket) => {
+    const { type, data } = socket
+
+    dispatch({ type, payload: { data, id: data } })
+  }
 
   const handleConnect = async () => {
     try {
@@ -55,7 +74,7 @@ export const useApiBoard = (id) => {
 
   const handleAddList = async (data) => {
     try {
-      await dispatch(addList(data))
+      await dispatch(addList(data, id))
     } catch (error) {
       console.error(error)
     }
@@ -63,7 +82,7 @@ export const useApiBoard = (id) => {
 
   const handleEditList = async (idList, title) => {
     try {
-      await dispatch(editList(idList, title))
+      await dispatch(editList(idList, title, id))
     } catch (error) {
       console.error(error)
     }
@@ -71,7 +90,7 @@ export const useApiBoard = (id) => {
 
   const handleRemoveList = async (idList) => {
     try {
-      await dispatch(removeList(idList))
+      await dispatch(removeList(idList, id))
     } catch (error) {
       console.error(error)
     }
@@ -79,7 +98,7 @@ export const useApiBoard = (id) => {
 
   const handleChangeList = async (data) => {
     try {
-      await dispatch(changeList(data))
+      await dispatch(changeList(data, id))
     } catch (error) {
       console.error(error)
     }
@@ -95,7 +114,7 @@ export const useApiBoard = (id) => {
 
   const handleEditCard = async (data) => {
     try {
-      await dispatch(editCard(data))
+      await dispatch(editCard(data, id))
     } catch (error) {
       console.error(error)
     }
@@ -103,7 +122,7 @@ export const useApiBoard = (id) => {
 
   const handleRemoveCard = async (idCard) => {
     try {
-      await dispatch(removeCard(idCard))
+      await dispatch(removeCard(idCard, id))
     } catch (error) {
       console.error(error)
     }
@@ -111,7 +130,7 @@ export const useApiBoard = (id) => {
 
   const handleChangeCard = async (data) => {
     try {
-      await dispatch(changeCard(data))
+      await dispatch(changeCard(data, id))
     } catch (error) {
       console.error(error)
     }

@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
 `
 
 export const ContextItem = styled.div`
+  position: relative;
   background-color: #00000087;
 
   margin: 0 0 4px 8px;
