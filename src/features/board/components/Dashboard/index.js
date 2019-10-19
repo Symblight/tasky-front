@@ -5,7 +5,7 @@ import { Button } from "antd"
 
 import { Title, Item, Wrapper, MainItems } from "./styled"
 
-export const Dashboard = ({ title }) => {
+export const Dashboard = ({ title, onMenuToggle }) => {
   return (
     <Wrapper>
       <MainItems>
@@ -13,17 +13,18 @@ export const Dashboard = ({ title }) => {
           <Title>{title}</Title>
         </Item>
         <Item>
-          <Button>Команда</Button>
+          <span>Команда</span>
         </Item>
         <Item>
           <Button>Пригласить</Button>
         </Item>
       </MainItems>
-      <Button>Меню</Button>
+      <Button onClick={onMenuToggle}>Меню</Button>
     </Wrapper>
   )
 }
 
 Dashboard.propTypes = {
   title: PropTypes.string,
+  onMenuToggle: PropTypes.func,
 }

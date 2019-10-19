@@ -1,25 +1,46 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Button, Input } from "antd"
+import { Button } from "antd"
 
 import { CardMenu } from "../CardMenu"
 
-import { Wrapper, FooterEdit } from "./styled"
+import {
+  ColorsWrap,
+  StyledTextArea,
+  Content,
+  Wrapper,
+  FooterEdit,
+  Color,
+} from "./styled"
 
-const { TextArea } = Input
-
-export const CardEdit = ({ value, onCancel, onChange, editable, onDelete }) => {
+export const CardEdit = ({
+  labels,
+  value,
+  onCancel,
+  onChange,
+  editable,
+  onDelete,
+}) => {
   return (
     <Wrapper editable={editable} onClick={(e) => e.preventDefault()}>
-      <div>
-        <TextArea value={value} autosize={{ minRows: 4 }} onChange={onChange} />
-        <FooterEdit>
-          <Button type="primary" onClick={onCancel}>
-            Сохранить
-          </Button>
-        </FooterEdit>
-      </div>
+      <Content>
+        <ColorsWrap>
+          <Color />
+          <Color />
+          <Color />
+        </ColorsWrap>
+        <StyledTextArea
+          value={value}
+          autosize={{ minRows: 4 }}
+          onChange={onChange}
+        />
+      </Content>
+      <FooterEdit>
+        <Button type="primary" onClick={onCancel}>
+          Сохранить
+        </Button>
+      </FooterEdit>
       <CardMenu onDelete={onDelete} />
     </Wrapper>
   )
@@ -31,4 +52,5 @@ CardEdit.propTypes = {
   onDelete: PropTypes.func,
   value: PropTypes.string,
   editable: PropTypes.object,
+  labels: PropTypes.array,
 }

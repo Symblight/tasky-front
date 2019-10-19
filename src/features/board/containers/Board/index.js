@@ -2,9 +2,8 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 
 import { Layout } from "antd"
-import { GenericPage } from "@tasky/components"
 
-import { Dashboard, Board as BoardMain } from "../../components"
+import { Dashboard, DrawerMenu, Board as BoardMain } from "../../components"
 import { useApiBoard } from "../../hooks"
 
 import { Wrapper, StyledContent } from "./styled"
@@ -22,6 +21,7 @@ export const Board = ({ match }) => {
     board,
     loading,
   } = useApiBoard(match.params.idBoard)
+  const [visibleMenu, setVisibleMenu] = useState(false)
 
   const handleChangeColumn = (item) => {
     onChangeList(item)
@@ -55,12 +55,15 @@ export const Board = ({ match }) => {
     onEditCard(item)
   }
 
+  const onCloseMenu = () => setVisibleMenu(false)
+  const onMenu = () => setVisibleMenu(true)
+
   if (loading) return <div>Loading...</div>
 
   return (
     <Layout style={{ height: "100%" }}>
       <StyledContent style={{ display: "flex", flexDirection: "column" }}>
-        <Dashboard title={board.get("title")} />
+        <Dashboard title={board.get("title")} onMenuToggle={onMenu} />
         <div style={{ flex: "1 auto", width: "100vw", paddingTop: "12px" }}>
           <Wrapper>
             <BoardMain
@@ -81,6 +84,7 @@ export const Board = ({ match }) => {
             />
           </Wrapper>
         </div>
+        <DrawerMenu onClose={onCloseMenu} visible={visibleMenu} />
       </StyledContent>
     </Layout>
   )

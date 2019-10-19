@@ -1,36 +1,44 @@
-import React, { useState, useCallback } from "react"
+import React, { useRef } from "react"
 import PropTypes from "prop-types"
 
 import { Icon } from "antd"
 
 import { MenuLabels } from "../MenuLabels"
+import { MenuMembers } from "../MenuMembers"
 
 import { Wrapper, ContextItem } from "./styled"
+import { useAlign } from "@hooks"
 
 export const CardMenu = ({ onDelete }) => {
-  const [targetMenu, setTargetMenu] = useState(null)
+  const ref = useRef(null)
+  const { align } = useAlign({ ref, aligns: ["left", "right"] })
 
-  const handleToggleMenu = useCallback((value) => setTargetMenu(value), [])
+  const DropdownButtonMembers = ({ ...props }) => {
+    return (
+      <ContextItem {...props}>
+        <Icon type="team" />
+        <span>Участники</span>
+      </ContextItem>
+    )
+  }
 
-  const handleToggleLabels = () => {
-    handleToggleMenu("labels")
+  const DropdownButtonLabels = ({ ...props }) => {
+    return (
+      <ContextItem {...props}>
+        <Icon type="tag" />
+        <span>Метки</span>
+      </ContextItem>
+    )
   }
 
   return (
-    <Wrapper>
+    <Wrapper right={align.right} ref={ref}>
       <ContextItem onClick={onDelete}>
         <Icon type="delete" />
         <span>Удалить</span>
       </ContextItem>
-      <ContextItem onClick={handleToggleLabels}>
-        <Icon type="tag" />
-        <span>Метки</span>
-      </ContextItem>
-      <ContextItem>
-        <Icon type="team" />
-        <span>Участники</span>
-      </ContextItem>
-      {targetMenu === "labels" && <MenuLabels />}
+      <MenuLabels button={DropdownButtonLabels} />
+      <MenuMembers button={DropdownButtonMembers} />
     </Wrapper>
   )
 }
