@@ -8,7 +8,7 @@ import { Color } from "./Color"
 
 import { Colors } from "./styled"
 
-export const Form = () => {
+export function Form() {
   return (
     <>
       <Input label="Название" />

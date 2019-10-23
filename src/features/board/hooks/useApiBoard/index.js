@@ -15,11 +15,13 @@ import {
   editCard,
   removeCard,
   changeCard,
+  addLabelToCard,
+  setBackgroundColor,
 } from "../../api"
 
 let subscription
 
-export const useApiBoard = (id) => {
+export function useApiBoard(id) {
   const dispatch = useDispatch()
   const selector = useSelector((state) => {
     const { board } = state
@@ -136,6 +138,22 @@ export const useApiBoard = (id) => {
     }
   }
 
+  const handleSelectColor = async (color, idBoard, idCard) => {
+    try {
+      await dispatch(addLabelToCard(color, idBoard, idCard))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleBackgorundColor = async (color, idBoard) => {
+    try {
+      await dispatch(setBackgroundColor(color, idBoard))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     onAddList: handleAddList,
     onEditList: handleEditList,
@@ -145,6 +163,8 @@ export const useApiBoard = (id) => {
     onEditCard: handleEditCard,
     onRemoveCard: handleRemoveCard,
     onChangeCard: handleChangeCard,
+    onSelectColor: handleSelectColor,
+    onBackgroundColor: handleBackgorundColor,
     board: selector,
     loading: selector.loading,
   }

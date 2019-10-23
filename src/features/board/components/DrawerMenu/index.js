@@ -8,7 +8,7 @@ import { DrawerLabels } from "./DrawerLabels"
 import { DrawerAbout } from "./DrawerAbout"
 import { ItemMenu } from "./Item"
 
-export const DrawerMenu = ({ onClose, visible }) => {
+export function DrawerMenu({ onClose, background, onColor, visible }) {
   const [visibleBackground, setVisibleBackground] = useState(false)
   const [visibleLabels, setVisibleLabels] = useState(false)
   const [visibleAbout, setVisibleAbout] = useState(false)
@@ -50,6 +50,8 @@ export const DrawerMenu = ({ onClose, visible }) => {
       <DrawerBackground
         visible={visibleBackground}
         onClose={handleToggleBackground}
+        onColor={onColor}
+        background={background}
       />
       <DrawerLabels visible={visibleLabels} onClose={handleToggleLabels} />
       <DrawerAbout visible={visibleAbout} onClose={handleToggleAbout} />
@@ -60,4 +62,6 @@ export const DrawerMenu = ({ onClose, visible }) => {
 DrawerMenu.propTypes = {
   onClose: PropTypes.func,
   visible: PropTypes.bool,
+  onColor: PropTypes.func,
+  background: PropTypes.string,
 }

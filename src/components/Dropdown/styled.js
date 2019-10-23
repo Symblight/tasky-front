@@ -7,6 +7,9 @@ const isVisible = ({ visible }) => (visible ? "1" : "0")
 const isVisibleBlock = ({ visible }) => (visible ? "block" : "none")
 const isVisibleRight = ({ visible }) => (!visible ? "-9999px" : "0%")
 
+const TopPos = ({ top }) => (top ? `${top}px` : "0%")
+const LeftPos = ({ left }) => (left ? `${left}px` : "0%")
+
 export const Wrapper = styled.div`
   display: ${isVisibleBlock};
   background-color: #fff;
@@ -16,9 +19,8 @@ export const Wrapper = styled.div`
   z-index: 95;
   position: absolute;
   cursor: pointer;
-  top: ${isBottomPrecent};
-  right: ${isVisibleRight};
-  left: 0%;
+  top: ${TopPos};
+  left: ${LeftPos};
   margin: 0 0 4px 8px;
   box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
     0 0 0 1px rgba(9, 30, 66, 0.08);

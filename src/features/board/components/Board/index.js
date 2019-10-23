@@ -15,12 +15,13 @@ import {
 import { Column } from "../Column"
 import { AddNewList } from "../AddNewList"
 import { DragScroll } from "../DragScroll"
+import { ProviderCard } from "../ProviderCard"
 
 import { useBoard } from "../../hooks"
 
 import { QuickCardEditor, Wrapper } from "./styled"
 
-export const Board = ({
+export function Board({
   idBoard,
   uuidBoard,
   columns: data,
@@ -34,7 +35,9 @@ export const Board = ({
   onCreateCard,
   onDeleteColumn,
   onDeleteCard,
-}) => {
+  onSelectColor,
+  labels,
+}) {
   const stateToggleBoard = useBoard()
   const [columns, setColumns] = useState(Immutable.fromJS(getOrdered(data)))
   const [cards, setCards] = useState(cardsAll)
@@ -160,7 +163,7 @@ export const Board = ({
     }
   }
 
-  const handleEditCard = (idCard, idList, value) => {
+  const handleEditCard = (idCard, value) => {
     if (onEditCard) {
       onEditCard({ uuid: idCard, data: value.data, labels: [] })
     }
@@ -180,6 +183,12 @@ export const Board = ({
     }
   }
 
+  const handleSelectColor = (value, id) => {
+    if (onSelectColor) {
+      onSelectColor(value, uuidBoard, id)
+    }
+  }
+
   const getCardsByListId = (idList) => {
     const orderedCards = getOrdered(
       cards.filter((card) => card.get("id_list") === idList),
@@ -188,7 +197,12 @@ export const Board = ({
   }
 
   return (
-    <>
+    <ProviderCard
+      onAddLabel={handleSelectColor}
+      onChangeCard={handleEditCard}
+      onDelete={handleDeleteCard}
+      labels={labels}
+    >
       {stateToggleBoard.editCardVisible && (
         <QuickCardEditor onClick={handleHideCardEditor} />
       )}
@@ -207,9 +221,7 @@ export const Board = ({
                     onAdd={handleAddCard}
                     onEditTitle={handleEditTitle}
                     idBoard={idBoard}
-                    onChangeCard={handleEditCard}
                     onDeleteColumn={handleDeleteColumn}
-                    onDeleteCard={handleDeleteCard}
                     uuidBoard={uuidBoard}
                     {...stateToggleBoard}
                   />
@@ -221,7 +233,7 @@ export const Board = ({
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </ProviderCard>
   )
 }
 
@@ -229,6 +241,7 @@ Board.propTypes = {
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   author: PropTypes.string,
   columns: PropTypes.object,
+  labels: PropTypes.object,
   cards: PropTypes.object,
   onChangeCard: PropTypes.func,
   onChangeColumn: PropTypes.func,
@@ -238,5 +251,6 @@ Board.propTypes = {
   onCreateCard: PropTypes.func,
   onDeleteColumn: PropTypes.func,
   onDeleteCard: PropTypes.func,
+  onSelectColor: PropTypes.func,
   uuidBoard: PropTypes.string,
 }

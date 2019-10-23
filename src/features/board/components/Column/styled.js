@@ -10,7 +10,7 @@ export const Wrapper = styled(Block)`
   display: inline-block;
   vertical-align: top;
   white-space: nowrap;
-  background-color: #ebecf0;
+  background-color: #ebecf0a3;
 `
 
 export const Header = styled.div`

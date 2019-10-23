@@ -5,7 +5,7 @@ import { Icon } from "antd"
 
 import { Wrapper, Check } from "./styled"
 
-export const Color = ({ onClick, data, isActive }) => {
+export function Color({ onClick, data, isActive }) {
   const handleOnClick = () => {
     if (onClick) {
       onClick(data)

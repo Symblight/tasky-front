@@ -7,7 +7,7 @@ import { Form } from "../Form"
 
 import { WrapActions, Wrapper } from "./styled"
 
-export const Edit = () => {
+export function Edit() {
   return (
     <Wrapper>
       <Form />

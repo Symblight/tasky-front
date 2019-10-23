@@ -2,10 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { Button } from "antd"
+import { Dropdown } from "@tasky/components"
 
 import { Title, Item, Wrapper, MainItems } from "./styled"
 
-export const Dashboard = ({ title, onMenuToggle }) => {
+export function Dashboard({ title, onMenuToggle }) {
   return (
     <Wrapper>
       <MainItems>
@@ -16,7 +17,14 @@ export const Dashboard = ({ title, onMenuToggle }) => {
           <span>Команда</span>
         </Item>
         <Item>
-          <Button>Пригласить</Button>
+          <Dropdown
+            title="Добавить участника"
+            DropdownButton={({ ...props }) => (
+              <Button {...props}>Пригласить</Button>
+            )}
+          >
+            <div>Создать ссылку?</div>
+          </Dropdown>
         </Item>
       </MainItems>
       <Button onClick={onMenuToggle}>Меню</Button>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import { Drawer } from "antd"
 
-export const DrawerAbout = ({ onClose, visible }) => {
+export function DrawerAbout({ onClose, visible }) {
   return (
     <Drawer
       title="О доске"

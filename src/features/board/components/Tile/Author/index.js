@@ -5,7 +5,7 @@ import { Avatar } from "@tasky/components"
 
 import { Wrapper } from "./styled"
 
-export const Author = ({ data }) => {
+export function Author({ data }) {
   return (
     <Wrapper>
       <Avatar />

@@ -14,7 +14,7 @@ import { WrapHeader, Action, Header, Wrapper, HeaderTitle } from "./styled"
 
 const enhance = compose(memo)
 
-const View = ({
+function View({
   title,
   index,
   items,
@@ -28,11 +28,9 @@ const View = ({
   idBoard,
   editCardVisible,
   onEditCardToggle,
-  onChangeCard,
   onDeleteColumn,
-  onDeleteCard,
   uuidBoard,
-}) => {
+}) {
   const [valueHeader, setValueHeader] = useState({ title, id })
 
   useEffect(() => {
@@ -126,8 +124,6 @@ const View = ({
               onCancel={handleAddButtonToggleCancel}
               editCardVisible={editCardVisible}
               onEditCardToggle={onEditCardToggle}
-              onChangeCard={onChangeCard}
-              onDeleteCard={onDeleteCard}
             />
             {newCardVisible !== id && (
               <Action onClick={handleAddButtonToggle}>
@@ -156,9 +152,7 @@ View.propTypes = {
   idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   editCardVisible: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onEditCardToggle: PropTypes.func,
-  onChangeCard: PropTypes.func,
   onDeleteColumn: PropTypes.func,
-  onDeleteCard: PropTypes.func,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 

@@ -4,6 +4,8 @@ import { Input } from "antd"
 
 const { TextArea } = Input
 
+const backgroundColor = ({ color }) => color
+
 const isEditActive = ({ editable }) =>
   editable
     ? `
@@ -75,5 +77,5 @@ export const Color = styled.span`
   color: #fff;
   display: block;
 
-  background-color: #eb5a46;
+  background-color: ${backgroundColor};
 `

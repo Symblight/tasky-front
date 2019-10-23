@@ -3,11 +3,14 @@ import PropTypes from "prop-types"
 
 import { Icon, Input, Button } from "antd"
 
+import { compose } from "recompose"
+
 import { Action, Wrapper, ActionClose, WrapAction } from "./styled"
 
 const { TextArea } = Input
+const enhance = compose(memo)
 
-export const AddNewList = memo(({ onAdd }) => {
+function Index({ onAdd }) {
   const [value, setValue] = useState("")
   const [addable, setAddable] = useState(false)
 
@@ -54,8 +57,10 @@ export const AddNewList = memo(({ onAdd }) => {
       </Wrapper>
     </div>
   )
-})
+}
 
-AddNewList.propTypes = {
+Index.propTypes = {
   onAdd: PropTypes.func,
 }
+
+export const AddNewList = enhance(Index)

@@ -1,9 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Input, Divider, Drawer } from "antd"
+import { Drawer } from "antd"
 
-export const DrawerBackground = ({ onClose, visible }) => {
+import { BackgroundBoard } from "../../BackgroundBoard"
+
+export function DrawerBackground({ background, onClose, onColor, visible }) {
   return (
     <Drawer
       title="Фон"
@@ -12,12 +14,14 @@ export const DrawerBackground = ({ onClose, visible }) => {
       onClose={onClose}
       visible={visible}
     >
-      Фон
+      <BackgroundBoard background={background} onColor={onColor} />
     </Drawer>
   )
 }
 
 DrawerBackground.propTypes = {
   onClose: PropTypes.func,
+  onColor: PropTypes.func,
   visible: PropTypes.bool,
+  background: PropTypes.string,
 }

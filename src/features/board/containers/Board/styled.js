@@ -3,6 +3,8 @@ import { Layout } from "antd"
 
 const { Content } = Layout
 
+const backgroundColor = ({ background }) => background
+
 export const Wrapper = styled.div`
   height: 100%;
   margin-right: 8px;
@@ -10,5 +12,7 @@ export const Wrapper = styled.div`
 `
 
 export const StyledContent = styled(Content)`
-  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  background-color: ${backgroundColor};
 `

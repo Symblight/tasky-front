@@ -18,6 +18,8 @@ import {
   CHANGE_POS_CARD_FAIL,
   CHANGE_POS_LIST_SUCCESS,
   CHANGE_POS_LIST_FAIL,
+  ADD_LABEL_TO_CARD_SUCCESS,
+  ADD_LABEL_TO_CARD_FAIL,
 } from "../constants"
 
 export const subscribeMessages = () => {
@@ -161,6 +163,36 @@ export const changeCard = (data, idBoard) => ({
       url: `/cards/p/${data.uuid}`,
       data: {
         ...data,
+        idBoard,
+      },
+    },
+  },
+})
+
+export const addLabelToCard = (color, idBoard, idCard) => ({
+  meta: {
+    types: [ADD_LABEL_TO_CARD_SUCCESS, ADD_LABEL_TO_CARD_FAIL],
+    async: true,
+    request: {
+      method: "PUT",
+      url: `/cards/l/${idCard}`,
+      data: {
+        color,
+        idBoard,
+      },
+    },
+  },
+})
+
+export const setBackgroundColor = (color, idBoard) => ({
+  meta: {
+    types: [ADD_LABEL_TO_CARD_SUCCESS, ADD_LABEL_TO_CARD_FAIL],
+    async: true,
+    request: {
+      method: "PUT",
+      url: `/board/background/${idBoard}`,
+      data: {
+        background: color,
         idBoard,
       },
     },

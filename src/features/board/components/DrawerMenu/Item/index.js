@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import { IconWrap, Name, Wrapper } from "./styled"
 
-export const ItemMenu = ({ Icon, children, onClick }) => {
+export function ItemMenu({ Icon, children, onClick }) {
   return (
     <Wrapper onClick={onClick}>
       <IconWrap>{Icon}</IconWrap>

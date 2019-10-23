@@ -1,11 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Input, Divider, Drawer } from "antd"
+import { Drawer } from "antd"
 
 import { Labels } from "./Labels"
 
-export const DrawerLabels = ({ onClose, visible }) => {
+export function DrawerLabels({ onClose, visible }) {
   return (
     <Drawer
       title="Метки"

@@ -6,8 +6,7 @@ export const Wrapper = styled.div`
   width: 100%;
 
   padding: 6px 12px 6px 12px;
-  border-bottom: 1px solid #eaeaea;
-  background-color: #e6e6e6;
+  background-color: #ebecf0a3;
 `
 
 export const MainItems = styled.div`

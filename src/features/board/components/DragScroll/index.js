@@ -5,7 +5,7 @@ import _ from "lodash"
 
 import { Wrapper } from "./styled"
 
-export const DragScroll = ({ children, className, ...props }) => {
+export function DragScroll({ children, className, ...props }) {
   const [dragging, setDragging] = useState(false)
   const [lastClientX, setLastClientX] = useState(0)
   const scrollRef = useRef(null)

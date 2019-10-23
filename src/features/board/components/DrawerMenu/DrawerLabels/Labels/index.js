@@ -11,7 +11,7 @@ import { Color } from "./Color"
 
 import { WrapActions, Wrapper } from "./styled"
 
-export const Labels = ({ onClick, onEditToggle }) => {
+export function Labels({ onClick, onEditToggle }) {
   const [activeColor, setColor] = useState(null)
 
   const handleHover = useCallback((value) => {

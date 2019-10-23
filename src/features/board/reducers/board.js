@@ -1,22 +1,7 @@
 import Immutable from "immutable"
 
 import {
-  reorder,
-  getOrdered,
-  reorderCards,
-  INITIAL_POSITION,
-} from "@lib/utils/dnd-order"
-
-import {
   LOAD_BOARD_SUCCESS,
-  CREATE_LIST_SUCCESS,
-  EDIT_LIST_SUCCESS,
-  REMOVE_LIST_SUCCESS,
-  CREATE_CARD_SUCCESS,
-  EDIT_CARD_SUCCESS,
-  REMOVE_CARD_SUCCESS,
-  CHANGE_POS_CARD_SUCCESS,
-  CHANGE_POS_LIST_SUCCESS,
   NEW_CARD_SOCKET,
   REMOVE_CARD_SOCKET,
   EDIT_CARD_SOCKET,
@@ -25,6 +10,12 @@ import {
   CREATE_LIST_SOCKET,
   REMOVE_LIST_SOCKET,
   POS_LIST_SOCKET,
+  ADD_LABEL_TO_BOARD_SOCKET,
+  EDIT_LABEL_BOARD_SOCKET,
+  REMOVE_LABEL_BOARD_SOCKET,
+  ADD_LABEL_CARD_SOCKET,
+  REMOVE_LABEL_FROM_CARD_SOCKET,
+  SET_BACKGROUND_COLOR_SOCKET,
 } from "../constants"
 
 const initialState = Immutable.fromJS({
@@ -106,13 +97,24 @@ export const reducer = (state = initialState, action) => {
       return state.setIn(["lists", indexList], Immutable.fromJS(data))
     }
     case POS_CARD_SOCKET: {
-      const { data, id } = action.payload
+      const { data } = action.payload
 
       const indexCard = state
         .get("cards")
         .findIndex((item) => item.get("uuid") === data.uuid)
 
       return state.setIn(["cards", indexCard], Immutable.fromJS(data))
+    }
+    case ADD_LABEL_TO_BOARD_SOCKET:
+    case EDIT_LABEL_BOARD_SOCKET:
+    case REMOVE_LABEL_BOARD_SOCKET:
+    case ADD_LABEL_CARD_SOCKET:
+    case REMOVE_LABEL_FROM_CARD_SOCKET: {
+      return state
+    }
+    case SET_BACKGROUND_COLOR_SOCKET: {
+      const { data } = action.payload
+      return state.set("background", data)
     }
     default: {
       return state

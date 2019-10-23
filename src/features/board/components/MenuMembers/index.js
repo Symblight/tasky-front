@@ -6,7 +6,7 @@ import { useOnClickOutside } from "@features/common"
 
 import { Wrapper } from "./styled"
 
-export const MenuMembers = ({ button, visible, onClose }) => {
+export function MenuMembers({ button, visible, onClose }) {
   const ref = useRef()
 
   const handleVisible = (event) => {

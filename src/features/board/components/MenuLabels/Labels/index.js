@@ -2,41 +2,49 @@ import React, { useState, useCallback } from "react"
 import PropTypes from "prop-types"
 
 import { Button } from "antd"
-import { HEX_COLORS, LABELS_COLORS } from "@lib/mocks/colors"
+import { HEX_COLORS } from "@lib/mocks/colors"
 
 import { Color } from "./Color"
 
 import { WrapActions, Wrapper } from "./styled"
 
-export const Labels = ({ onClick, onEditToggle }) => {
+export function Labels({
+  labelsByCard,
+  labels,
+  onClick,
+  onCreate,
+  onEditToggle,
+}) {
   const [activeColor, setColor] = useState(null)
-
-  const handleHover = useCallback((value) => {
-    setColor(value)
-  }, [])
 
   return (
     <Wrapper>
       <ul>
-        {LABELS_COLORS.map((data) => (
+        {labels.toJS().map((data) => (
           <Color
-            active={activeColor === data.color}
-            onMouseEnter={() => handleHover(data.color)}
+            active={!!labelsByCard.find((c) => c.color === data.color)}
+            // onMouseEnter={() => handleHover(data.color)}
             key={HEX_COLORS[data.color].hex}
             color={HEX_COLORS[data.color].hex}
             shadow={HEX_COLORS[data.color].shadow}
             onEditToggle={onEditToggle}
+            onClick={onClick}
+            name={data.color}
+            id={data.id}
           />
         ))}
       </ul>
       <WrapActions>
-        <Button onClick={onClick}>Создать новую метку</Button>
+        <Button onClick={onCreate}>Создать новую метку</Button>
       </WrapActions>
     </Wrapper>
   )
 }
 
 Labels.propTypes = {
+  labels: PropTypes.object,
   onClick: PropTypes.func,
+  onCreate: PropTypes.func,
   onEditToggle: PropTypes.func,
+  labelsByCard: PropTypes.array,
 }

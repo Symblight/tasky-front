@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { Button } from "antd"
+import { HEX_COLORS } from "@lib/mocks/colors"
 
 import { CardMenu } from "../CardMenu"
 
@@ -14,21 +15,23 @@ import {
   Color,
 } from "./styled"
 
-export const CardEdit = ({
-  labels,
+export function CardEdit({
   value,
   onCancel,
   onChange,
   editable,
   onDelete,
-}) => {
+  onSelectColor,
+  labels,
+  labelsByCard,
+}) {
   return (
     <Wrapper editable={editable} onClick={(e) => e.preventDefault()}>
       <Content>
         <ColorsWrap>
-          <Color />
-          <Color />
-          <Color />
+          {labelsByCard.map((item) => (
+            <Color key={item.color} color={HEX_COLORS[item.color].hex} />
+          ))}
         </ColorsWrap>
         <StyledTextArea
           value={value}
@@ -41,7 +44,12 @@ export const CardEdit = ({
           Сохранить
         </Button>
       </FooterEdit>
-      <CardMenu onDelete={onDelete} />
+      <CardMenu
+        labels={labels}
+        labelsByCard={labelsByCard}
+        onDelete={onDelete}
+        onSelectColor={onSelectColor}
+      />
     </Wrapper>
   )
 }
@@ -50,7 +58,9 @@ CardEdit.propTypes = {
   onChange: PropTypes.func,
   onCancel: PropTypes.func,
   onDelete: PropTypes.func,
+  onSelectColor: PropTypes.func,
+  labelsByCard: PropTypes.array,
   value: PropTypes.string,
   editable: PropTypes.object,
-  labels: PropTypes.array,
+  labels: PropTypes.object,
 }

@@ -3,11 +3,13 @@ import PropTypes from "prop-types"
 
 import { Input, Button } from "antd"
 
+import { compose } from "recompose"
 import { Wrapper, ActionClose, WrapAction } from "./styled"
 
 const { TextArea } = Input
+const enhance = compose(memo)
 
-export const AddNewTile = memo(({ onCancel, onAdd }) => {
+export function Index({ onCancel, onAdd }) {
   const [value, setValue] = useState("")
 
   const handleChange = useCallback((event) => setValue(event.target.value), [])
@@ -38,9 +40,11 @@ export const AddNewTile = memo(({ onCancel, onAdd }) => {
       </WrapAction>
     </Wrapper>
   )
-})
+}
 
-AddNewTile.propTypes = {
+Index.propTypes = {
   onCancel: PropTypes.func,
   onAdd: PropTypes.func,
 }
+
+export const AddNewTile = enhance(Index)

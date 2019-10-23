@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import { Modal } from "antd"
 
-export const Card = ({ history, match }) => {
+export function Card({ history, match }) {
   const handleBack = () => {
     history.push(`/b/${match.params.idBoard}/`)
   }

@@ -9,7 +9,7 @@ import { AddNewTile } from "../AddNewTile"
 
 import { DropZone, Container } from "./styled"
 
-export const List = ({
+export function List({
   idBoard,
   items,
   listId,
@@ -18,10 +18,8 @@ export const List = ({
   onCancel,
   editCardVisible,
   onEditCardToggle,
-  onChangeCard,
-  onDeleteCard,
   uuidBoard,
-}) => {
+}) {
   const scrollRef = useRef(null)
 
   useEffect(() => {
@@ -29,18 +27,6 @@ export const List = ({
       scrollRef.current.scrollTo(0, document.body.scrollHeight)
     }
   }, [addable])
-
-  const handleOnChangeCard = (idCard, value) => {
-    if (onChangeCard) {
-      onChangeCard(idCard, listId, value)
-    }
-  }
-
-  const handleOnDeleteCard = (idCard) => {
-    if (onDeleteCard) {
-      onDeleteCard(idCard, listId)
-    }
-  }
 
   return (
     <Droppable droppableId={listId}>
@@ -71,8 +57,7 @@ export const List = ({
                             uuidBoard={uuidBoard}
                             editCardVisible={editCardVisible}
                             onEditCardToggle={onEditCardToggle}
-                            onChangeCard={handleOnChangeCard}
-                            onDelete={handleOnDeleteCard}
+                            listId={listId}
                           />
                         )}
                       </NaturalDragAnimation>
@@ -100,6 +85,4 @@ List.propTypes = {
   onCancel: PropTypes.func,
   editCardVisible: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onEditCardToggle: PropTypes.func,
-  onChangeCard: PropTypes.func,
-  onDeleteCard: PropTypes.func,
 }

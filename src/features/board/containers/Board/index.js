@@ -8,7 +8,7 @@ import { useApiBoard } from "../../hooks"
 
 import { Wrapper, StyledContent } from "./styled"
 
-export const Board = ({ match }) => {
+export function Board({ match }) {
   const {
     onAddList,
     onEditList,
@@ -18,8 +18,10 @@ export const Board = ({ match }) => {
     onEditCard,
     onChangeCard,
     onRemoveCard,
+    onSelectColor,
     board,
     loading,
+    onBackgroundColor,
   } = useApiBoard(match.params.idBoard)
   const [visibleMenu, setVisibleMenu] = useState(false)
 
@@ -55,6 +57,14 @@ export const Board = ({ match }) => {
     onEditCard(item)
   }
 
+  const handleSelectColor = (color, idBoard, idCard) => {
+    onSelectColor(color, idBoard, idCard)
+  }
+
+  const handleBackgroundColor = (color) => {
+    onBackgroundColor(color, match.params.idBoard)
+  }
+
   const onCloseMenu = () => setVisibleMenu(false)
   const onMenu = () => setVisibleMenu(true)
 
@@ -62,7 +72,7 @@ export const Board = ({ match }) => {
 
   return (
     <Layout style={{ height: "100%" }}>
-      <StyledContent style={{ display: "flex", flexDirection: "column" }}>
+      <StyledContent background={board.get("background")}>
         <Dashboard title={board.get("title")} onMenuToggle={onMenu} />
         <div style={{ flex: "1 auto", width: "100vw", paddingTop: "12px" }}>
           <Wrapper>
@@ -72,6 +82,7 @@ export const Board = ({ match }) => {
               onAddList={onAddList}
               author="Alexey"
               columns={board.get("lists")}
+              labels={board.get("labels")}
               cards={board.get("cards")}
               onChangeCard={handleChangeCard}
               onChangeColumn={handleChangeColumn}
@@ -81,10 +92,16 @@ export const Board = ({ match }) => {
               onCreateCard={handleCreateCard}
               onDeleteColumn={handleDeleteColumm}
               onDeleteCard={handleDeleteCard}
+              onSelectColor={handleSelectColor}
             />
           </Wrapper>
         </div>
-        <DrawerMenu onClose={onCloseMenu} visible={visibleMenu} />
+        <DrawerMenu
+          onClose={onCloseMenu}
+          onColor={handleBackgroundColor}
+          visible={visibleMenu}
+          background={board.get("background")}
+        />
       </StyledContent>
     </Layout>
   )

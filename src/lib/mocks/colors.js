@@ -8,6 +8,7 @@ export const COLORS = [
   "#cd5a91",
   "#ecf0f1",
   "#34495e",
+  "#ffa5d2",
 ]
 
 export const HEX_COLORS = {
@@ -15,7 +16,6 @@ export const HEX_COLORS = {
   blue: { hex: "#40a9ff", shadow: "#388ace" },
   green: { hex: "#73d13d", shadow: "#58a22d" },
   yellow: { hex: "#ffec3d", shadow: "#d2c234" },
-  white: { hex: "#ecf0f1", shadow: "#d8d8d8" },
   gray: { hex: "#34495e", shadow: "#2a3540" },
 }
 
@@ -24,6 +24,5 @@ export const LABELS_COLORS = [
   { color: "blue", name: "" },
   { color: "green", name: "" },
   { color: "yellow", name: "" },
-  { color: "white", name: "" },
   { color: "gray", name: "" },
 ]

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useEffect, useState, useRef } from "react"
+import { useLayoutEffect, useEffect, useState } from "react"
 
 import _ from "lodash"
 
@@ -76,7 +76,7 @@ export const useAlign = ({
         const result = isRight(width, right + xRef, clientWidth)
         setPosition((prevState) => ({
           ...prevState,
-          right: x > 0 ? result : false,
+          right: result,
           updated: true,
         }))
       }

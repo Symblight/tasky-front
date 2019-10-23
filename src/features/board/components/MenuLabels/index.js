@@ -10,7 +10,13 @@ import { Edit } from "./Edit"
 
 import { Wrapper } from "./styled"
 
-export const MenuLabels = ({ button, visible, onClose }) => {
+export function MenuLabels({
+  labelsByCard,
+  button,
+  onSelectColor,
+  labels,
+  onClose,
+}) {
   const [currentIndex, setIndex] = useState(0)
   const ref = useRef()
 
@@ -21,9 +27,15 @@ export const MenuLabels = ({ button, visible, onClose }) => {
     }
   }
 
+  const handleClick = (value) => {
+    if (onSelectColor) {
+      onSelectColor(value)
+    }
+  }
+
   useOnClickOutside(ref, (event) => handleVisible(event))
 
-  const handleClick = useCallback(() => setIndex(1), [])
+  const handleCreate = useCallback(() => setIndex(1), [])
   const handleEditToggle = useCallback(() => setIndex(2), [])
   const handleBack = useCallback(() => setIndex(0), [])
 
@@ -35,7 +47,13 @@ export const MenuLabels = ({ button, visible, onClose }) => {
         DropdownButton={button}
         onBack={handleBack}
       >
-        <Labels onClick={handleClick} onEditToggle={handleEditToggle} />
+        <Labels
+          onCreate={handleCreate}
+          onClick={handleClick}
+          onEditToggle={handleEditToggle}
+          labels={labels}
+          labelsByCard={labelsByCard}
+        />
         <Create />
         <Edit />
       </Dropdown>
@@ -44,7 +62,9 @@ export const MenuLabels = ({ button, visible, onClose }) => {
 }
 
 MenuLabels.propTypes = {
-  visible: PropTypes.bool,
+  labels: PropTypes.object,
   onClose: PropTypes.func,
+  onSelectColor: PropTypes.func,
   button: PropTypes.any,
+  labelsByCard: PropTypes.array,
 }
