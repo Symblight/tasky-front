@@ -1,26 +1,55 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Button, Input } from "antd"
+import { Button } from "antd"
+import { HEX_COLORS } from "@lib/mocks/colors"
 
 import { CardMenu } from "../CardMenu"
 
-import { Wrapper, FooterEdit } from "./styled"
+import {
+  ColorsWrap,
+  StyledTextArea,
+  Content,
+  Wrapper,
+  FooterEdit,
+  Color,
+} from "./styled"
 
-const { TextArea } = Input
-
-export const CardEdit = ({ value, onCancel, onChange, editable, onDelete }) => {
+export function CardEdit({
+  value,
+  onCancel,
+  onChange,
+  editable,
+  onDelete,
+  onSelectColor,
+  labels,
+  labelsByCard,
+}) {
   return (
     <Wrapper editable={editable} onClick={(e) => e.preventDefault()}>
-      <div>
-        <TextArea value={value} autosize={{ minRows: 4 }} onChange={onChange} />
-        <FooterEdit>
-          <Button type="primary" onClick={onCancel}>
-            Сохранить
-          </Button>
-        </FooterEdit>
-      </div>
-      <CardMenu onDelete={onDelete} />
+      <Content>
+        <ColorsWrap>
+          {labelsByCard.map((item) => (
+            <Color key={item.color} color={HEX_COLORS[item.color].hex} />
+          ))}
+        </ColorsWrap>
+        <StyledTextArea
+          value={value}
+          autosize={{ minRows: 4 }}
+          onChange={onChange}
+        />
+      </Content>
+      <FooterEdit>
+        <Button type="primary" onClick={onCancel}>
+          Сохранить
+        </Button>
+      </FooterEdit>
+      <CardMenu
+        labels={labels}
+        labelsByCard={labelsByCard}
+        onDelete={onDelete}
+        onSelectColor={onSelectColor}
+      />
     </Wrapper>
   )
 }
@@ -29,6 +58,9 @@ CardEdit.propTypes = {
   onChange: PropTypes.func,
   onCancel: PropTypes.func,
   onDelete: PropTypes.func,
+  onSelectColor: PropTypes.func,
+  labelsByCard: PropTypes.array,
   value: PropTypes.string,
   editable: PropTypes.object,
+  labels: PropTypes.object,
 }

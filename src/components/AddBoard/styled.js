@@ -17,6 +17,8 @@ export const Container = styled.div`
 
 export const StyledBlock = styled(Block)`
   background-color: #eaeaea;
+  height: 100%;
+  justify-content: center;
 
   &:hover {
     background-color: #cecece;

@@ -14,9 +14,15 @@ export const GlobalStyles = createGlobalStyle`
   #root {
     display: flex;
     height: 100%;
-    overflow: auto;
+
+    overflow: hidden;
     position: relative;
+    z-index: 1;
+  
     section {
+      height: 100%;
+      position: relative;
+      z-index: 0;
       background-color: #fff;
     }
   }

@@ -44,13 +44,13 @@ export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
       </Divider>
       <Wrapper>
         {rows.map((row, indexRow) => (
-          <Row key={uuid(1)}>
+          <Row key={_.uniqueId("row-")}>
             {row &&
               row.map((project, index) => {
                 if (!_.isEmpty(project) && !project.addable) {
                   return (
                     <StyledBoard
-                      id={project.id}
+                      id={project.uuid}
                       key={project.id}
                       data={project}
                       index={indexRow + index}
@@ -61,13 +61,13 @@ export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
                 if (project.addable) {
                   return (
                     <StyledAddBoard
-                      key={uuid(1)}
+                      key={_.uniqueId("id-")}
                       onClick={handleOnToggle}
                       addable={addable}
                     />
                   )
                 }
-                return <EmptyTile key={uuid(1)} />
+                return <EmptyTile key={_.uniqueId("id-")} />
               })}
           </Row>
         ))}

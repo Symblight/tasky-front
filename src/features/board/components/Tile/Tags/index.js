@@ -1,16 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Icon } from "antd"
+import { HEX_COLORS } from "@lib/mocks/colors"
 
 import { Wrapper, StyledTag } from "./styled"
 
-export const Tags = ({ data }) => {
+export function Tags({ data }) {
   return (
     <Wrapper>
-      <StyledTag color="blue">
-        <Icon type="tag" />
-      </StyledTag>
+      {data.map((value) => (
+        <StyledTag key={value.color} color={HEX_COLORS[value.color].hex} />
+      ))}
     </Wrapper>
   )
 }

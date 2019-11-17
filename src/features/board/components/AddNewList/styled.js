@@ -5,7 +5,7 @@ import { Icon } from "antd"
 export const Wrapper = styled.div`
   padding: 8px;
   border-radius: 6px;
-  background-color: #ebecf0;
+  background-color: #ebecf0a3;
   width: 230px;
   min-width: 230px;
 

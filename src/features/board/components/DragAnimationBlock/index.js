@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import { Wrapper } from "./styled"
 
-export const DragAnimationBlock = ({ children, isDragging, ...props }) => {
+export function DragAnimationBlock({ children, isDragging, ...props }) {
   return (
     <Wrapper isDragging={isDragging} {...props}>
       {children}

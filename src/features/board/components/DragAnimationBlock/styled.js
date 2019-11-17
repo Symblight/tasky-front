@@ -5,6 +5,5 @@ const isDraggingBlock = ({ isDragging }) =>
 
 export const Wrapper = styled.div`
   color: ${({ isDragging }) => (isDragging ? "green" : "none")};
-  ${({ isDragging }) =>
-  isDragging ? `transform: rotate(5deg);` : null}
+  ${({ isDragging }) => (isDragging ? `transform: rotate(5deg);` : null)}
 `

@@ -35,7 +35,7 @@ const config = {
   devtool: isProduction ? false : "source-map",
   mode: process.env.NODE_ENV,
 
-  entry: INDEX,
+  entry: ["@babel/polyfill", INDEX],
 
   output: {
     filename: "[name].[hash].js",
@@ -50,6 +50,7 @@ const config = {
     modules: ["node_modules"],
     alias: {
       "@tasky/components": resolve(__dirname, "..", "src/components"),
+      "@hooks": resolve(__dirname, "..", "src/hooks"),
       "@features": resolve(__dirname, "..", "src/features"),
       "@lib": resolve(__dirname, "..", "src/lib"),
       "@assets": resolve(__dirname, "..", "assets"),

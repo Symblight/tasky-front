@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react"
 
-export const useBoard = () => {
+export function useBoard() {
   const [newCard, setNewCard] = useState(null)
   const [editTitle, setEditTitle] = useState(null)
   const [editCard, setEditCard] = useState(null)

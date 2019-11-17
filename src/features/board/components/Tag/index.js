@@ -8,11 +8,13 @@ const COLOR = {
   green: "green",
 }
 
-export const Tag = ({ color, className, children }) => (
-  <Wrapper color={COLOR[color]} className={className}>
-    {children}
-  </Wrapper>
-)
+export function Tag({ color, className, children }) {
+  return (
+    <Wrapper color={COLOR[color]} className={className}>
+      {children}
+    </Wrapper>
+  )
+}
 
 Tag.propTypes = {
   color: PropTypes.string,

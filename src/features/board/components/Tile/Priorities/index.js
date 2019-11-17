@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import { Wrapper } from "./styled"
 
-export const Priorities = ({ data }) => {
+export function Priorities({ data }) {
   return (
     <Wrapper>
       <span>Priorities</span>

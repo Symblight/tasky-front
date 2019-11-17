@@ -7,7 +7,7 @@ import DefaultContext from "../Context"
 
 import { Wrapper } from "./styled"
 
-const Provider = ({ children, timeout, context: Context }) => {
+export function Provider({ children, timeout, context: Context }) {
   const [alerts, setAlerts] = useState([])
   const timersId = useRef([])
 
@@ -92,5 +92,3 @@ Provider.defaultProps = {
   context: DefaultContext,
   timeout: 2200,
 }
-
-export default Provider

@@ -7,7 +7,7 @@ import { Layout } from "antd"
 import { renderRoutes } from "react-router-config"
 
 export const Root = ({ route }) => {
-  return <StyledLayout>11{renderRoutes(route && route.routes)}</StyledLayout>
+  return <StyledLayout>{renderRoutes(route && route.routes)}</StyledLayout>
 }
 
 Root.propTypes = {

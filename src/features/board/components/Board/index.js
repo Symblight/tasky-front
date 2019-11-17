@@ -1,48 +1,56 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 import { Droppable, DragDropContext } from "react-beautiful-dnd"
-import uuid from "uuid"
+import Immutable from "immutable"
 import _ from "lodash"
 
-import { authorQuoteMap } from "@lib/mocks/board"
+import {
+  reorder,
+  getOrdered,
+  reorderCards,
+  INITIAL_POSITION,
+} from "@lib/utils/dnd-order"
 
 import { Column } from "../Column"
 import { AddNewList } from "../AddNewList"
 import { DragScroll } from "../DragScroll"
-
-import reorder, { reorderQuoteMap } from "../../reorder"
+import { ProviderCard } from "../ProviderCard"
 
 import { useBoard } from "../../hooks"
 
 import { QuickCardEditor, Wrapper } from "./styled"
 
-export const Board = ({ idBoard }) => {
-  const [columns, setColumns] = useState(authorQuoteMap)
-  const [ordered, setOrdered] = useState(Object.keys(authorQuoteMap))
-
+export function Board({
+  idBoard,
+  uuidBoard,
+  columns: data,
+  cards: cardsAll,
+  author,
+  onChangeCard,
+  onChangeColumn,
+  onEditColumn,
+  onEditCard,
+  onCreateColumn,
+  onCreateCard,
+  onDeleteColumn,
+  onDeleteCard,
+  onSelectColor,
+  labels,
+}) {
   const stateToggleBoard = useBoard()
+  const [columns, setColumns] = useState(Immutable.fromJS(getOrdered(data)))
+  const [cards, setCards] = useState(cardsAll)
+
+  useEffect(() => {
+    setColumns(Immutable.fromJS(getOrdered(data)))
+  }, [data])
+
+  useEffect(() => {
+    setCards(cardsAll)
+  }, [cardsAll])
 
   const onDragEnd = (result) => {
-    if (result.combine) {
-      if (result.type === "COLUMN") {
-        const shallow = [...ordered]
-        shallow.splice(result.source.index, 1)
-        setOrdered(shallow)
-        return
-      }
-
-      const column = columns[result.source.droppableId]
-      const withQuoteRemoved = [...column]
-      withQuoteRemoved.splice(result.source.index, 1)
-      const newColumns = {
-        ...columns,
-        [result.source.droppableId]: withQuoteRemoved,
-      }
-      setColumns(newColumns)
-      return
-    }
-
     if (!result.destination) {
       return
     }
@@ -58,60 +66,93 @@ export const Board = ({ idBoard }) => {
     }
 
     if (result.type === "COLUMN") {
-      const newOrdered = reorder(ordered, source.index, destination.index)
+      const { map, item, pos } = reorder(
+        columns,
+        source.index,
+        destination.index,
+      )
 
-      setOrdered(newOrdered)
+      setColumns(map)
+
+      setColumns(map)
+      if (onChangeColumn) {
+        onChangeColumn({
+          uuid: map.getIn([destination.index, "uuid"]),
+          pos: Number(pos),
+        })
+      }
 
       return
     }
 
-    const data = reorderQuoteMap({
-      quoteMap: columns,
+    const { map, pos, item, update } = reorderCards({
+      lists: columns,
+      cards,
       source,
       destination,
+      draggableId: result.draggableId,
     })
+    setCards(map)
 
-    setColumns(data.quoteMap)
+    if (onChangeCard) {
+      onChangeCard({
+        uuid: item.get("uuid"),
+        pos: Number(pos),
+        update,
+        id_list: item.get("id_list"),
+      })
+    }
   }
 
-  const handleAddTile = (title, value) => {
-    const editColumn = [
-      ...columns[title],
-      {
-        author: {
-          name: "Alexey",
-          id: 24,
-        },
-        content: value,
-        id: uuid(1), // TEST
-      },
-    ]
-    setColumns((prevState) => {
-      return {
-        ...prevState,
-        [title]: [...editColumn],
-      }
+  const handleAddCard = (idList, value) => {
+    const indexList = columns.findIndex((item) => item.get("uuid") === idList)
+    const cardsByList = getCardsByListId(columns.getIn([indexList, "id"]))
+    const newPosition = cardsByList.getIn([-1, "pos"])
+      ? cardsByList.getIn([-1, "pos"]) + INITIAL_POSITION
+      : INITIAL_POSITION
+
+    const newCard = Immutable.fromJS({
+      uuid: _.uniqueId("card-"),
+      title: author,
+      idBoard: uuidBoard,
+      id_list: columns.getIn([indexList, "id"]),
+      data: value,
+      labels: [],
+      pos: Number(newPosition),
     })
+    const updated = cards.update((items) => items.push(newCard))
+    setCards(updated)
+    if (onCreateCard) {
+      onCreateCard({
+        id_author: author,
+        data: value,
+        pos: Number(newPosition),
+        labels: [],
+        idList: columns.getIn([indexList, "id"]),
+        idBoard: uuidBoard,
+      })
+    }
   }
 
   const handleAddColumn = (value) => {
-    const editColumns = { ...columns, [value]: [] }
-    const newOrdered = [...ordered]
-    newOrdered.push(value)
-    setColumns(editColumns)
-    setOrdered(newOrdered)
+    const newPosition = columns.getIn([-1, "pos"])
+      ? Number(columns.getIn([-1, "pos"])) + INITIAL_POSITION
+      : INITIAL_POSITION
+
+    setColumns(
+      columns.update((lists) =>
+        lists.push({ uuid: _.uniqueId("new-list-"), title: value }),
+      ),
+    )
+    if (onCreateColumn) {
+      onCreateColumn({ title: value, pos: Number(newPosition), idBoard })
+    }
   }
 
-  const handleEditTitle = (title, value) => {
-    const editColumns = { ...columns, [value]: [...columns[title]] }
-    delete editColumns[title]
-
-    const index = ordered.findIndex((val) => val === title)
-    const newOrdered = [...ordered]
-    newOrdered[index] = value
-
-    setColumns(editColumns)
-    setOrdered(newOrdered)
+  const handleEditTitle = (id, value) => {
+    if (onEditColumn) {
+      onEditColumn(id, value)
+    }
   }
 
   const handleHideCardEditor = () => {
@@ -122,38 +163,46 @@ export const Board = ({ idBoard }) => {
     }
   }
 
-  const handleEditCard = (idCard, idList, value) => {
-    const items = [...columns[idList]]
-
-    const itemIndex = items.findIndex((item) => item.id === idCard)
-    items[itemIndex] = value
-
-    const editColumns = { ...columns, [idList]: items }
-    setColumns(editColumns)
+  const handleEditCard = (idCard, value) => {
+    if (onEditCard) {
+      onEditCard({ uuid: idCard, data: value.data, labels: [] })
+    }
   }
 
   const handleDeleteColumn = (id) => {
-    const editColumns = { ...columns }
-    delete editColumns[id]
-
-    const newOrdered = _.filter(ordered, (item) => item !== id)
-
-    setColumns(editColumns)
-    setOrdered(newOrdered)
+    if (onDeleteColumn) {
+      onDeleteColumn(id)
+    }
   }
 
-  const handleDeleteCard = (idCard, idColumn) => {
-    const items = [...columns[idColumn]]
-
-    const newItems = _.filter(items, (item) => item.id !== idCard)
-
-    const editColumns = { ...columns, [idColumn]: newItems }
-    setColumns(editColumns)
+  const handleDeleteCard = (idCard) => {
     handleHideCardEditor()
+
+    if (onDeleteCard) {
+      onDeleteCard(idCard)
+    }
+  }
+
+  const handleSelectColor = (value, id) => {
+    if (onSelectColor) {
+      onSelectColor(value, uuidBoard, id)
+    }
+  }
+
+  const getCardsByListId = (idList) => {
+    const orderedCards = getOrdered(
+      cards.filter((card) => card.get("id_list") === idList),
+    )
+    return Immutable.fromJS(orderedCards)
   }
 
   return (
-    <>
+    <ProviderCard
+      onAddLabel={handleSelectColor}
+      onChangeCard={handleEditCard}
+      onDelete={handleDeleteCard}
+      labels={labels}
+    >
       {stateToggleBoard.editCardVisible && (
         <QuickCardEditor onClick={handleHideCardEditor} />
       )}
@@ -162,18 +211,18 @@ export const Board = ({ idBoard }) => {
           {(provided) => (
             <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
               <DragScroll>
-                {ordered.map((key, index) => (
+                {columns.toJS().map((column, index) => (
                   <Column
-                    key={key}
+                    key={column.uuid}
+                    id={column.uuid}
                     index={index}
-                    title={key}
-                    items={columns[key]}
-                    onAdd={handleAddTile}
+                    title={column.title}
+                    items={getCardsByListId(column.id).toJS()}
+                    onAdd={handleAddCard}
                     onEditTitle={handleEditTitle}
                     idBoard={idBoard}
-                    onChangeCard={handleEditCard}
                     onDeleteColumn={handleDeleteColumn}
-                    onDeleteCard={handleDeleteCard}
+                    uuidBoard={uuidBoard}
                     {...stateToggleBoard}
                   />
                 ))}
@@ -184,10 +233,24 @@ export const Board = ({ idBoard }) => {
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </ProviderCard>
   )
 }
 
 Board.propTypes = {
-  idBoard: PropTypes.string,
+  idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  author: PropTypes.string,
+  columns: PropTypes.object,
+  labels: PropTypes.object,
+  cards: PropTypes.object,
+  onChangeCard: PropTypes.func,
+  onChangeColumn: PropTypes.func,
+  onEditColumn: PropTypes.func,
+  onEditCard: PropTypes.func,
+  onCreateColumn: PropTypes.func,
+  onCreateCard: PropTypes.func,
+  onDeleteColumn: PropTypes.func,
+  onDeleteCard: PropTypes.func,
+  onSelectColor: PropTypes.func,
+  uuidBoard: PropTypes.string,
 }

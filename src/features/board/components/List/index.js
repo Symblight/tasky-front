@@ -9,7 +9,7 @@ import { AddNewTile } from "../AddNewTile"
 
 import { DropZone, Container } from "./styled"
 
-export const List = ({
+export function List({
   idBoard,
   items,
   listId,
@@ -18,9 +18,8 @@ export const List = ({
   onCancel,
   editCardVisible,
   onEditCardToggle,
-  onChangeCard,
-  onDeleteCard,
-}) => {
+  uuidBoard,
+}) {
   const scrollRef = useRef(null)
 
   useEffect(() => {
@@ -28,18 +27,6 @@ export const List = ({
       scrollRef.current.scrollTo(0, document.body.scrollHeight)
     }
   }, [addable])
-
-  const handleOnChangeCard = (idCard, value) => {
-    if (onChangeCard) {
-      onChangeCard(idCard, listId, value)
-    }
-  }
-
-  const handleOnDeleteCard = (idCard) => {
-    if (onDeleteCard) {
-      onDeleteCard(idCard, listId)
-    }
-  }
 
   return (
     <Droppable droppableId={listId}>
@@ -49,7 +36,11 @@ export const List = ({
             <Container ref={scrollRef}>
               <DropZone ref={dropProvided.innerRef}>
                 {items.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                  <Draggable
+                    key={item.uuid}
+                    draggableId={item.uuid}
+                    index={index}
+                  >
                     {(dragProvided, dragSnapshot) => (
                       <NaturalDragAnimation
                         style={dragProvided.draggableProps.style}
@@ -57,16 +48,16 @@ export const List = ({
                       >
                         {(style) => (
                           <Tile
-                            key={item.id}
+                            key={item.uuid}
                             ref={dragProvided.innerRef}
                             data={item}
                             provided={dragProvided}
                             style={style}
                             idBoard={idBoard}
+                            uuidBoard={uuidBoard}
                             editCardVisible={editCardVisible}
                             onEditCardToggle={onEditCardToggle}
-                            onChangeCard={handleOnChangeCard}
-                            onDelete={handleOnDeleteCard}
+                            listId={listId}
                           />
                         )}
                       </NaturalDragAnimation>
@@ -85,14 +76,13 @@ export const List = ({
 }
 
 List.propTypes = {
+  uuidBoard: PropTypes.string,
   items: PropTypes.array,
-  listId: PropTypes.string,
-  idBoard: PropTypes.string,
+  listId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  idBoard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   addable: PropTypes.bool,
   onAdd: PropTypes.func,
   onCancel: PropTypes.func,
-  editCardVisible: PropTypes.string,
+  editCardVisible: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onEditCardToggle: PropTypes.func,
-  onChangeCard: PropTypes.func,
-  onDeleteCard: PropTypes.func,
 }

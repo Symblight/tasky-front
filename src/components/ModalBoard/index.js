@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 
 import _ from "lodash"
 
+import { COLORS } from "@lib/mocks/colors"
 import { Select, Icon, Input } from "antd"
 
 import { Colors } from "./Colors"
@@ -16,45 +17,11 @@ import {
   Container,
   Form,
 } from "./styled"
+import { useOnClickOutside } from "@hooks"
 
 const modalRoot = document.querySelector("#modal-root")
 
-const COLORS = [
-  "#ff4d4f",
-  "#40a9ff",
-  "#73d13d",
-  "#1abc9c",
-  "#ffec3d",
-  "#ff7a45",
-  "#cd5a91",
-  "#ecf0f1",
-  "#34495e",
-]
-
 const { Option } = Select
-
-function useOnClickOutside(ref, handler) {
-  useEffect(() => {
-    const listener = (event) => {
-      if (
-        !ref.current ||
-        ref.current.contains(event.target) ||
-        event.target.getAttribute("role") === "option"
-      ) {
-        return
-      }
-      handler(event)
-    }
-
-    document.addEventListener("mousedown", listener)
-    document.addEventListener("touchstart", listener)
-
-    return () => {
-      document.removeEventListener("mousedown", listener)
-      document.removeEventListener("touchstart", listener)
-    }
-  }, [ref, handler])
-}
 
 const PortalModal = ({ children }) => {
   return ReactDOM.createPortal(children, modalRoot)
