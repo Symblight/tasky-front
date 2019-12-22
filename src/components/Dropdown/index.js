@@ -44,10 +44,6 @@ const Index = memo(
       }
     }
 
-    console.log(
-      refButton.current && refButton.current.getBoundingClientRect().right,
-    )
-
     const popapRoot = document.querySelector("#root")
 
     return (

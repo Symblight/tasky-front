@@ -23,4 +23,6 @@ export const WrapInitials = styled.div`
   font-size: ${getSizeFont}px;
   font-weight: 700;
   height: 100%;
+
+  user-select: none;
 `

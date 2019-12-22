@@ -39,12 +39,6 @@ export const Boards = ({ match }) => {
           <MenuNavigation username={USER.username} currentKey="boards" />
         </StyledAside>
         <Content>
-          <BoardList
-            data={DATA_RECENTLY}
-            username={match.params.username}
-            label="Недавно просмотренное"
-            icon="⏱️"
-          />
           {!loading ? (
             <BoardList
               data={boards}
@@ -57,6 +51,13 @@ export const Boards = ({ match }) => {
           ) : (
             <span>Загрузка</span>
           )}
+          <BoardList
+            data={[]}
+            username={match.params.username}
+            label="Архив"
+            onToggle={handleToggle}
+            icon="📁"
+          />
         </Content>
         <CreateBoardModal
           visible={createModal}
