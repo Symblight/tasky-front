@@ -1,11 +1,9 @@
-import { useState, useCallback, useEffect } from "react"
+import { useEffect } from "react"
 
 import { useDispatch, useSelector } from "react-redux"
 import connection from "@lib/utils/socket"
 
 import {
-  subscribeMessages,
-  unsubscribeMessages,
   boardById,
   addList,
   editList,
@@ -46,22 +44,6 @@ export function useApiBoard(id) {
     const { type, data } = socket
 
     dispatch({ type, payload: { data, id: data } })
-  }
-
-  const handleConnect = async () => {
-    try {
-      await dispatch(subscribeMessages())
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleDisconnect = async () => {
-    try {
-      await dispatch(unsubscribeMessages())
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   const handleLoadBoard = async () => {

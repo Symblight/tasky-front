@@ -73,7 +73,11 @@ export function Board({ match }) {
   return (
     <Layout style={{ height: "100%" }}>
       <StyledContent background={board.get("background")}>
-        <Dashboard title={board.get("title")} onMenuToggle={onMenu} />
+        <Dashboard
+          title={board.get("title")}
+          onMenuToggle={onMenu}
+          users={board.get("users")}
+        />
         <div style={{ flex: "1 auto", width: "100vw", paddingTop: "12px" }}>
           <Wrapper>
             <BoardMain

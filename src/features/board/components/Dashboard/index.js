@@ -2,11 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { Button } from "antd"
-import { Dropdown } from "@tasky/components"
+import { Dropdown, Avatar } from "@tasky/components"
 
 import { Title, Item, Wrapper, MainItems } from "./styled"
 
-export function Dashboard({ title, onMenuToggle }) {
+export function Dashboard({ title, onMenuToggle, users = [] }) {
   return (
     <Wrapper>
       <MainItems>
@@ -14,7 +14,15 @@ export function Dashboard({ title, onMenuToggle }) {
           <Title>{title}</Title>
         </Item>
         <Item>
-          <span>Команда</span>
+          {users.map((user) => (
+            <Avatar
+              key={user.get("id")}
+              data={{
+                firstname: user.get("firstname"),
+                lastname: user.get("lastname"),
+              }}
+            />
+          ))}
         </Item>
         <Item>
           <Dropdown
@@ -35,4 +43,5 @@ export function Dashboard({ title, onMenuToggle }) {
 Dashboard.propTypes = {
   title: PropTypes.string,
   onMenuToggle: PropTypes.func,
+  users: PropTypes.object,
 }

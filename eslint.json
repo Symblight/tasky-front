@@ -1,0 +1,53 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": ["prettier", "@atomix/react", "prettier"],
+  "plugins": ["react-hooks", "prettier"],
+  "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/prefer-stateless-function": [
+      false,
+      { "ignorePureComponents": true }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-max-depth": "off",
+    "react/no-render-return-value": false,
+    "react/require-default-props": false,
+    "react-hooks/rules-of-hooks": "error",
+    "unicorn/filename-case": false,
+    "react/forbid-prop-types": false,
+    "import/no-default-export": false,
+    "import/prefer-default-export": "off",
+    "unicorn/prevent-abbreviations": false,
+    "react/destructuring-assignment": false,
+    "react/no-unused-state": false,
+    "class-methods-use-this": 0,
+    "no-unused-expressions": 0,
+    "radix": "off",
+    "id-match": 0,
+    "linebreak-style": 0,
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          ":": "before",
+          "?": "before"
+        }
+      }
+    ]
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true
+  },
+  "parser": "babel-eslint"
+}

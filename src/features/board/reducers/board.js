@@ -1,5 +1,4 @@
 import Immutable from "immutable"
-
 import {
   LOAD_BOARD_SUCCESS,
   NEW_CARD_SOCKET,
@@ -10,7 +9,6 @@ import {
   CREATE_LIST_SOCKET,
   REMOVE_LIST_SOCKET,
   POS_LIST_SOCKET,
-  ADD_LABEL_TO_BOARD_SOCKET,
   EDIT_LABEL_BOARD_SOCKET,
   REMOVE_LABEL_BOARD_SOCKET,
   ADD_LABEL_CARD_SOCKET,
@@ -18,11 +16,13 @@ import {
   SET_BACKGROUND_COLOR_SOCKET,
 } from "../constants"
 
+import { users } from "@mocks"
+
 const initialState = Immutable.fromJS({
   lists: [],
   labels: [],
   cards: [],
-  users: [],
+  users,
   root: false,
   title: "",
   loading: true,
@@ -103,12 +103,28 @@ export const reducer = (state = initialState, action) => {
         .get("cards")
         .findIndex((item) => item.get("uuid") === data.uuid)
 
-      return state.setIn(["cards", indexCard], Immutable.fromJS(data))
+      const currentCard = state.getIn(["cards", indexCard])
+
+      return state.setIn(
+        ["cards", indexCard],
+        Immutable.fromJS({ ...currentCard.toJS(), ...data }),
+      )
     }
-    case ADD_LABEL_TO_BOARD_SOCKET:
+    case ADD_LABEL_CARD_SOCKET: {
+      const { data } = action.payload
+
+      const indexCard = state
+        .get("cards")
+        .findIndex((item) => item.get("uuid") === data.id)
+
+      return state.updateIn(["cards", indexCard, "labels"], (value) => {
+        const updated = value.toJS()
+        updated.push(data.targetLabel)
+        return Immutable.fromJS(updated)
+      })
+    }
     case EDIT_LABEL_BOARD_SOCKET:
     case REMOVE_LABEL_BOARD_SOCKET:
-    case ADD_LABEL_CARD_SOCKET:
     case REMOVE_LABEL_FROM_CARD_SOCKET: {
       return state
     }

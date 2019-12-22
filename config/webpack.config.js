@@ -53,6 +53,7 @@ const config = {
       "@hooks": resolve(__dirname, "..", "src/hooks"),
       "@features": resolve(__dirname, "..", "src/features"),
       "@lib": resolve(__dirname, "..", "src/lib"),
+      "@mocks": resolve(__dirname, "..", "src/mocks"),
       "@assets": resolve(__dirname, "..", "assets"),
       ...(!isProduction ? { "react-dom": "@hot-loader/react-dom" } : undefined),
     },
