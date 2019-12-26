@@ -40,7 +40,7 @@ function Index(
   },
   ref,
 ) {
-  const { onDelete, onAddLabel, onChangeCard, labels } = useCard()
+  const { onDelete, onAddLabel, onChangeCard, labels, members } = useCard()
   const [visible, setVisible] = useState(false)
   const [editable, setEditable] = useState({})
   const [value, setValue] = useState(data.data)
@@ -96,6 +96,12 @@ function Index(
       : []
   }
 
+  const getUserByCard = (values, cardsUsers) => {
+    return cardsUsers
+      ? cardsUsers.map((item) => values.find((o) => o.id === item.id_user))
+      : []
+  }
+
   return (
     <Wrapper
       {...provided.draggableProps}
@@ -123,7 +129,7 @@ function Index(
         <Footer>
           <InfoWrap>
             <NameCard>{data.title}</NameCard>
-            <Author />
+            <Author data={getUserByCard(members.toJS(), data.members)} />
           </InfoWrap>
         </Footer>
       </Container>

@@ -22,7 +22,7 @@ const initialState = Immutable.fromJS({
   lists: [],
   labels: [],
   cards: [],
-  users,
+  members: [],
   root: false,
   title: "",
   loading: true,
@@ -33,11 +33,19 @@ export const reducer = (state = initialState, action) => {
     case LOAD_BOARD_SUCCESS: {
       const { data } = action.payload
 
+      const { cards, usersByCards } = data
+      const updatedCards = cards.map((card) => ({
+        ...card,
+        members: usersByCards.filter((id) => id.id_card === card.id),
+      }))
+
       return state
         .update((value) =>
           Immutable.fromJS({
             ...value.toJS(),
             ...data,
+            cards: updatedCards,
+            members: data.members,
           }),
         )
         .set("loading", false)

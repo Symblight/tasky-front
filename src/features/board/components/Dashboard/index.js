@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Button } from "antd"
+import { Button, Input } from "antd"
 import { Dropdown, Avatar } from "@tasky/components"
 
 import { Title, Item, Wrapper, MainItems } from "./styled"
@@ -31,7 +31,11 @@ export function Dashboard({ title, onMenuToggle, users = [] }) {
               <Button {...props}>Пригласить</Button>
             )}
           >
-            <div>Создать ссылку?</div>
+            <div>
+              <span>email пользователя</span>
+              <Input type="email" />
+              <Button>Отправить приглашение</Button>
+            </div>
           </Dropdown>
         </Item>
       </MainItems>

@@ -37,6 +37,7 @@ export function Board({
   onDeleteCard,
   onSelectColor,
   labels,
+  members,
 }) {
   const stateToggleBoard = useBoard()
   const [columns, setColumns] = useState(Immutable.fromJS(getOrdered(data)))
@@ -202,6 +203,7 @@ export function Board({
       onChangeCard={handleEditCard}
       onDelete={handleDeleteCard}
       labels={labels}
+      members={members}
     >
       {stateToggleBoard.editCardVisible && (
         <QuickCardEditor onClick={handleHideCardEditor} />
@@ -242,6 +244,7 @@ Board.propTypes = {
   author: PropTypes.string,
   columns: PropTypes.object,
   labels: PropTypes.object,
+  members: PropTypes.object,
   cards: PropTypes.object,
   onChangeCard: PropTypes.func,
   onChangeColumn: PropTypes.func,

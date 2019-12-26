@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 
 import { Layout } from "antd"
+import { useUser } from "@features/common"
 
 import { Dashboard, DrawerMenu, Board as BoardMain } from "../../components"
 import { useApiBoard } from "../../hooks"
@@ -23,6 +24,7 @@ export function Board({ match }) {
     loading,
     onBackgroundColor,
   } = useApiBoard(match.params.idBoard)
+  const { user } = useUser()
   const [visibleMenu, setVisibleMenu] = useState(false)
 
   const handleChangeColumn = (item) => {
@@ -76,7 +78,7 @@ export function Board({ match }) {
         <Dashboard
           title={board.get("title")}
           onMenuToggle={onMenu}
-          users={board.get("users")}
+          users={board.get("members")}
         />
         <div style={{ flex: "1 auto", width: "100vw", paddingTop: "12px" }}>
           <Wrapper>
@@ -84,9 +86,10 @@ export function Board({ match }) {
               idBoard={board.get("id")}
               uuidBoard={match.params.idBoard}
               onAddList={onAddList}
-              author="Alexey"
+              author={user.get("id")}
               columns={board.get("lists")}
               labels={board.get("labels")}
+              members={board.get("members")}
               cards={board.get("cards")}
               onChangeCard={handleChangeCard}
               onChangeColumn={handleChangeColumn}
