@@ -9,7 +9,13 @@ import { MenuMembers } from "../MenuMembers"
 import { Wrapper, ContextItem } from "./styled"
 import { useAlign } from "@hooks"
 
-export function CardMenu({ labelsByCard, labels, onSelectColor, onDelete }) {
+export function CardMenu({
+  labelsByCard,
+  labels,
+  members,
+  onSelectColor,
+  onDelete,
+}) {
   const ref = useRef(null)
   const { align } = useAlign({ ref, aligns: ["left", "right"] })
 
@@ -43,7 +49,7 @@ export function CardMenu({ labelsByCard, labels, onSelectColor, onDelete }) {
         onSelectColor={onSelectColor}
         labelsByCard={labelsByCard}
       />
-      <MenuMembers button={DropdownButtonMembers} />
+      <MenuMembers button={DropdownButtonMembers} members={members} />
     </Wrapper>
   )
 }
@@ -52,5 +58,6 @@ CardMenu.propTypes = {
   onDelete: PropTypes.func,
   onSelectColor: PropTypes.func,
   labels: PropTypes.object,
+  members: PropTypes.object,
   labelsByCard: PropTypes.array,
 }

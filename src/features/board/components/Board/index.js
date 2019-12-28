@@ -67,11 +67,7 @@ export function Board({
     }
 
     if (result.type === "COLUMN") {
-      const { map, item, pos } = reorder(
-        columns,
-        source.index,
-        destination.index,
-      )
+      const { map, pos } = reorder(columns, source.index, destination.index)
 
       setColumns(map)
 

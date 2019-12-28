@@ -75,3 +75,6 @@ export const SET_BACKGROUND_COLOR_SOCKET = "board:background"
 
 export const GET_CARD_SUCCESS = "GET_CARD_SUCCESS"
 export const GET_CARD_FAIL = "GET_CARD_FAIL"
+
+export const SEND_INVITE_SUCCESS = "SEND_INVITE_SUCCESS"
+export const SEND_INVITE_FAIL = "SEND_INVITE_FAIL"

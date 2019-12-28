@@ -7,6 +7,8 @@ import {
   SIGN_UP_FAIL,
   USER_FAIL,
   USER_SUCCESS,
+  SEND_TOKEN_BOARD_SUCCESS,
+  SEND_TOKEN_BOARD_FAIL,
 } from "../constants"
 
 export const signIn = (data) => ({
@@ -58,6 +60,17 @@ export const logout = () => ({
     request: {
       method: "DELETE",
       url: "/user/logout",
+    },
+  },
+})
+
+export const sendTokenUser = (token, idBoard) => ({
+  meta: {
+    types: [SEND_TOKEN_BOARD_SUCCESS, SEND_TOKEN_BOARD_FAIL],
+    async: true,
+    request: {
+      method: "GET",
+      url: `/user/token/${token}/b/${idBoard}`,
     },
   },
 })

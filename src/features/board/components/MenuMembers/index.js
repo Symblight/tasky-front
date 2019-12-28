@@ -1,12 +1,12 @@
 import React, { useRef } from "react"
 import PropTypes from "prop-types"
 
-import { Dropdown } from "@tasky/components"
+import { Dropdown, Avatar } from "@tasky/components"
 import { useOnClickOutside } from "@features/common"
 
 import { Wrapper } from "./styled"
 
-export function MenuMembers({ button, visible, onClose }) {
+export function MenuMembers({ button, members, visible, onClose }) {
   const ref = useRef()
 
   const handleVisible = (event) => {
@@ -21,7 +21,17 @@ export function MenuMembers({ button, visible, onClose }) {
   return (
     <Wrapper ref={ref}>
       <Dropdown title="Участники" index={0} DropdownButton={button}>
-        Members
+        <div>
+          {members.map((user) => (
+            <Avatar
+              key={user.get("id")}
+              data={{
+                firstname: user.get("firstname"),
+                lastname: user.get("lastname"),
+              }}
+            />
+          ))}
+        </div>
       </Dropdown>
     </Wrapper>
   )
@@ -31,4 +41,5 @@ MenuMembers.propTypes = {
   visible: PropTypes.bool,
   onClose: PropTypes.func,
   button: PropTypes.any,
+  members: PropTypes.object,
 }

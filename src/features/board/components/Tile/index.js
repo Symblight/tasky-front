@@ -142,6 +142,7 @@ function Index(
           onSelectColor={handleOnSelectColor}
           value={value}
           labels={labels}
+          members={members}
           labelsByCard={getLabelsByCard(labels.toJS(), data.labels)}
         />
       )}
