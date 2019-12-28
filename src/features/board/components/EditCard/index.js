@@ -24,6 +24,7 @@ export function CardEdit({
   onSelectColor,
   labels,
   labelsByCard,
+  members,
 }) {
   return (
     <Wrapper editable={editable} onClick={(e) => e.preventDefault()}>
@@ -49,6 +50,7 @@ export function CardEdit({
         labelsByCard={labelsByCard}
         onDelete={onDelete}
         onSelectColor={onSelectColor}
+        members={members}
       />
     </Wrapper>
   )
@@ -62,5 +64,6 @@ CardEdit.propTypes = {
   labelsByCard: PropTypes.array,
   value: PropTypes.string,
   editable: PropTypes.object,
+  members: PropTypes.object,
   labels: PropTypes.object,
 }

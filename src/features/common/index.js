@@ -7,6 +7,12 @@ export { withUser, withLogin, withLayout, withGuest } from "./proxy-props"
 
 export { userReducers } from "./reducers"
 
-export { useSignIn, useSignUp, useOnClickOutside } from "./hooks"
+export {
+  useUser,
+  useSignIn,
+  useSignUp,
+  useOnClickOutside,
+  useToken,
+} from "./hooks"
 
 export { rootRoutes } from "./routes"

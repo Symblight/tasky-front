@@ -22,6 +22,8 @@ import {
   ADD_LABEL_TO_CARD_FAIL,
   GET_CARD_FAIL,
   GET_CARD_SUCCESS,
+  SEND_INVITE_SUCCESS,
+  SEND_INVITE_FAIL,
 } from "../constants"
 
 export const subscribeMessages = () => {
@@ -209,6 +211,21 @@ export const getCard = (id) => ({
     request: {
       method: "GET",
       url: `/cards/${id}`,
+    },
+  },
+})
+
+export const sendInvite = (data) => ({
+  meta: {
+    types: [SEND_INVITE_SUCCESS, SEND_INVITE_FAIL],
+    async: true,
+    request: {
+      method: "POST",
+      url: "/user/token",
+      data: {
+        idBoard: data.idBoard,
+        email: data.email,
+      },
     },
   },
 })

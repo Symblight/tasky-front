@@ -2,13 +2,15 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 
 import { Layout } from "antd"
+import { useUser } from "@features/common"
 
+import { Redirect } from "react-router-dom"
 import { Dashboard, DrawerMenu, Board as BoardMain } from "../../components"
 import { useApiBoard } from "../../hooks"
 
 import { Wrapper, StyledContent } from "./styled"
 
-export function Board({ match }) {
+export function Board({ match, history }) {
   const {
     onAddList,
     onEditList,
@@ -22,7 +24,9 @@ export function Board({ match }) {
     board,
     loading,
     onBackgroundColor,
+    onInvite,
   } = useApiBoard(match.params.idBoard)
+  const { user } = useUser()
   const [visibleMenu, setVisibleMenu] = useState(false)
 
   const handleChangeColumn = (item) => {
@@ -65,10 +69,16 @@ export function Board({ match }) {
     onBackgroundColor(color, match.params.idBoard)
   }
 
+  const handleOnInvite = (email) => {
+    onInvite({ email, idBoard: match.params.idBoard })
+  }
+
   const onCloseMenu = () => setVisibleMenu(false)
   const onMenu = () => setVisibleMenu(true)
 
-  if (loading) return <div>Loading...</div>
+  if (board.get("loading")) return <div>Loading...</div>
+
+  if (!board.get("loading") && !board.get("id")) return <Redirect to="/" />
 
   return (
     <Layout style={{ height: "100%" }}>
@@ -76,7 +86,8 @@ export function Board({ match }) {
         <Dashboard
           title={board.get("title")}
           onMenuToggle={onMenu}
-          users={board.get("users")}
+          users={board.get("members")}
+          onInvite={handleOnInvite}
         />
         <div style={{ flex: "1 auto", width: "100vw", paddingTop: "12px" }}>
           <Wrapper>
@@ -84,9 +95,10 @@ export function Board({ match }) {
               idBoard={board.get("id")}
               uuidBoard={match.params.idBoard}
               onAddList={onAddList}
-              author="Alexey"
+              author={user.get("id")}
               columns={board.get("lists")}
               labels={board.get("labels")}
+              members={board.get("members")}
               cards={board.get("cards")}
               onChangeCard={handleChangeCard}
               onChangeColumn={handleChangeColumn}
@@ -113,4 +125,5 @@ export function Board({ match }) {
 
 Board.propTypes = {
   match: PropTypes.object,
+  history: PropTypes.object,
 }

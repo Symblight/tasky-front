@@ -15,6 +15,7 @@ import {
   changeCard,
   addLabelToCard,
   setBackgroundColor,
+  sendInvite,
 } from "../../api"
 
 let subscription
@@ -52,7 +53,8 @@ export function useApiBoard(id) {
         await dispatch(boardById(id))
       }
     } catch (error) {
-      console.error(error)
+      throw error
+      // history.push("/")
     }
   }
 
@@ -136,6 +138,14 @@ export function useApiBoard(id) {
     }
   }
 
+  const handleSendToken = async (data) => {
+    try {
+      await dispatch(sendInvite(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     onAddList: handleAddList,
     onEditList: handleEditList,
@@ -147,6 +157,7 @@ export function useApiBoard(id) {
     onChangeCard: handleChangeCard,
     onSelectColor: handleSelectColor,
     onBackgroundColor: handleBackgorundColor,
+    onInvite: handleSendToken,
     board: selector,
     loading: selector.loading,
   }

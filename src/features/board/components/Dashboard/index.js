@@ -1,12 +1,21 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 
-import { Button } from "antd"
+import { Button, Input } from "antd"
 import { Dropdown, Avatar } from "@tasky/components"
 
 import { Title, Item, Wrapper, MainItems } from "./styled"
 
-export function Dashboard({ title, onMenuToggle, users = [] }) {
+export function Dashboard({ title, onInvite, onMenuToggle, users = [] }) {
+  const [email, setEmail] = useState("")
+  const handleOnInvite = () => {
+    if (onInvite) {
+      onInvite(email)
+    }
+  }
+  const handleChange = (e) => {
+    setEmail(e.target.value)
+  }
   return (
     <Wrapper>
       <MainItems>
@@ -31,7 +40,11 @@ export function Dashboard({ title, onMenuToggle, users = [] }) {
               <Button {...props}>Пригласить</Button>
             )}
           >
-            <div>Создать ссылку?</div>
+            <div>
+              <span>email пользователя</span>
+              <Input onChange={handleChange} value={email} type="email" />
+              <Button onClick={handleOnInvite}>Отправить приглашение</Button>
+            </div>
           </Dropdown>
         </Item>
       </MainItems>
@@ -43,5 +56,6 @@ export function Dashboard({ title, onMenuToggle, users = [] }) {
 Dashboard.propTypes = {
   title: PropTypes.string,
   onMenuToggle: PropTypes.func,
+  onInvite: PropTypes.func,
   users: PropTypes.object,
 }

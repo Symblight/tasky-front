@@ -18,6 +18,7 @@ export function Provider({
   onDelete,
   onChangeCard,
   labels,
+  members,
 }) {
   const values = {
     onAddLabel,
@@ -27,6 +28,7 @@ export function Provider({
     onDelete,
     onChangeCard,
     labels,
+    members,
   }
   return <Context.Provider value={values}>{children}</Context.Provider>
 }
@@ -44,6 +46,7 @@ Provider.propTypes = {
   onDelete: PropTypes.func,
   onChangeCard: PropTypes.func,
   labels: PropTypes.object,
+  members: PropTypes.object,
 }
 
 Provider.defaultProps = {

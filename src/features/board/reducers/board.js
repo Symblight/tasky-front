@@ -14,6 +14,7 @@ import {
   ADD_LABEL_CARD_SOCKET,
   REMOVE_LABEL_FROM_CARD_SOCKET,
   SET_BACKGROUND_COLOR_SOCKET,
+  LOAD_BOARD_FAIL,
 } from "../constants"
 
 import { users } from "@mocks"
@@ -22,10 +23,11 @@ const initialState = Immutable.fromJS({
   lists: [],
   labels: [],
   cards: [],
-  users,
+  members: [],
   root: false,
   title: "",
   loading: true,
+  attempted: false,
 })
 
 export const reducer = (state = initialState, action) => {
@@ -33,14 +35,25 @@ export const reducer = (state = initialState, action) => {
     case LOAD_BOARD_SUCCESS: {
       const { data } = action.payload
 
+      const { cards, usersByCards } = data
+      const updatedCards = cards.map((card) => ({
+        ...card,
+        members: usersByCards.filter((id) => id.id_card === card.id),
+      }))
+
       return state
         .update((value) =>
           Immutable.fromJS({
             ...value.toJS(),
             ...data,
+            cards: updatedCards,
+            members: data.members,
           }),
         )
         .set("loading", false)
+    }
+    case LOAD_BOARD_FAIL: {
+      return state.set("loading", false)
     }
     case CREATE_LIST_SOCKET: {
       const { data } = action.payload

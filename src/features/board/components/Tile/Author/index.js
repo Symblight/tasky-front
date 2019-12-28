@@ -8,7 +8,15 @@ import { Wrapper } from "./styled"
 export function Author({ data }) {
   return (
     <Wrapper>
-      <Avatar />
+      {data.map((user) => (
+        <Avatar
+          key={user.id}
+          data={{
+            firstname: user.firstname,
+            lastname: user.lastname,
+          }}
+        />
+      ))}
     </Wrapper>
   )
 }
