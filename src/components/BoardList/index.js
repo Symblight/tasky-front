@@ -34,6 +34,8 @@ export const BoardList = memo(({ icon, data, label, addable, onToggle }) => {
     }
   }
 
+  if (data.length === 0 && !addable) return null
+
   return (
     <>
       <Divider orientation="left">

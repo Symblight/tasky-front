@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 import { Layout } from "antd"
 import { useUser } from "@features/common"
+import { useBoards } from "@features/boards"
 
 import { Redirect } from "react-router-dom"
 import { Dashboard, DrawerMenu, Board as BoardMain } from "../../components"
@@ -27,6 +28,7 @@ export function Board({ match, history }) {
     onInvite,
   } = useApiBoard(match.params.idBoard)
   const { user } = useUser()
+  const { onClose } = useBoards()
   const [visibleMenu, setVisibleMenu] = useState(false)
 
   const handleChangeColumn = (item) => {
@@ -73,6 +75,11 @@ export function Board({ match, history }) {
     onInvite({ email, idBoard: match.params.idBoard })
   }
 
+  const handleCloseBoard = () => {
+    onClose(match.params.idBoard)
+    history.push("/")
+  }
+
   const onCloseMenu = () => setVisibleMenu(false)
   const onMenu = () => setVisibleMenu(true)
 
@@ -114,6 +121,7 @@ export function Board({ match, history }) {
         </div>
         <DrawerMenu
           onClose={onCloseMenu}
+          onCloseBoard={handleCloseBoard}
           onColor={handleBackgroundColor}
           visible={visibleMenu}
           background={board.get("background")}

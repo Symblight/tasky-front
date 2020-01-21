@@ -41,7 +41,7 @@ export const Boards = ({ match }) => {
         <Content>
           {!loading ? (
             <BoardList
-              data={boards}
+              data={boards.filter((board) => !board.removed)}
               username={match.params.username}
               label="Персональные доски"
               addable
@@ -52,7 +52,7 @@ export const Boards = ({ match }) => {
             <span>Загрузка</span>
           )}
           <BoardList
-            data={[]}
+            data={boards.filter((board) => board.removed)}
             username={match.params.username}
             label="Архив"
             onToggle={handleToggle}

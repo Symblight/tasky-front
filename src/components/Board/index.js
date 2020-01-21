@@ -7,6 +7,19 @@ import { Animate } from "../Animate"
 import { Wrapper, StyledBlock } from "./styled"
 
 export const Board = ({ data, className, background, index, ...props }) => {
+  if (data.removed) {
+    return (
+      <StyledBlock
+        animate={Animate}
+        color={background}
+        index={index}
+        className={className}
+        {...props}
+      >
+        <Wrapper>{data.title}</Wrapper>
+      </StyledBlock>
+    )
+  }
   return (
     <Link to={`/b/${data.uuid}`} className={className}>
       <StyledBlock

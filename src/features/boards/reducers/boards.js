@@ -30,6 +30,13 @@ export const reducer = (state = initialState, action) => {
 
       return state.update("boards", (items) => items.push(board))
     }
+    case DELETE_BOARD_SUCCESS: {
+      const { data } = action.payload
+      const indexCard = state
+        .get("boards")
+        .findIndex((item) => item.get("id") === data.id)
+      return state.setIn(["boards", indexCard], data)
+    }
     default:
       return state
   }

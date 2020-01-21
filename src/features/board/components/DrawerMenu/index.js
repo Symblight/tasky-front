@@ -8,7 +8,13 @@ import { DrawerLabels } from "./DrawerLabels"
 import { DrawerAbout } from "./DrawerAbout"
 import { ItemMenu } from "./Item"
 
-export function DrawerMenu({ onClose, background, onColor, visible }) {
+export function DrawerMenu({
+  onClose,
+  background,
+  onColor,
+  visible,
+  onCloseBoard,
+}) {
   const [visibleBackground, setVisibleBackground] = useState(false)
   const [visibleLabels, setVisibleLabels] = useState(false)
   const [visibleAbout, setVisibleAbout] = useState(false)
@@ -40,7 +46,7 @@ export function DrawerMenu({ onClose, background, onColor, visible }) {
           Метки
         </ItemMenu>
         <Divider />
-        <ItemMenu>Закрыть доску</ItemMenu>
+        <ItemMenu onClick={onCloseBoard}>Закрыть доску</ItemMenu>
         <Divider />
         <ItemMenu>
           <span>Ссылка на доску</span>
@@ -64,4 +70,5 @@ DrawerMenu.propTypes = {
   visible: PropTypes.bool,
   onColor: PropTypes.func,
   background: PropTypes.string,
+  onCloseBoard: PropTypes.func,
 }

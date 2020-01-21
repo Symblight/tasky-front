@@ -58,7 +58,7 @@ export const deleteBoard = (id) => ({
     async: true,
     request: {
       method: "DELETE",
-      url: `/board/?id=${id}`,
+      url: `/board/${id}`,
     },
   },
 })

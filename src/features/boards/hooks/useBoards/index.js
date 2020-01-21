@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import _ from "lodash"
 
-import { allBoardsByUser, createBoard } from "../../api"
+import { allBoardsByUser, createBoard, deleteBoard } from "../../api"
 
 export const useBoards = () => {
   const [boards, setBoards] = useState([])
@@ -41,9 +41,18 @@ export const useBoards = () => {
     }
   }
 
+  const handleCloseBoard = async (id) => {
+    try {
+      await dispatch(deleteBoard(id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     boards,
     loading: selector.get("loading"),
     onCreate: handleCreate,
+    onClose: handleCloseBoard,
   }
 }
