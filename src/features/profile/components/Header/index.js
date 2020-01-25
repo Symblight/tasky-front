@@ -9,9 +9,14 @@ export const Header = ({ data }) => {
   return (
     <Wrapper>
       <Content>
-        <Avatar data={{ firstname: data.firstname, lastname: data.lastname }} />
-        <Title>{`${data.firstname} ${data.lastname}`}</Title>
-        <span>{`@${data.username}`}</span>
+        <Avatar
+          data={{
+            firstname: data.get("firstname"),
+            lastname: data.get("lastname"),
+          }}
+        />
+        <Title>{`${data.get("firstname")} ${data.get("lastname")}`}</Title>
+        <span>{`@${data.get("username")}`}</span>
       </Content>
     </Wrapper>
   )

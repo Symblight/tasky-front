@@ -10,12 +10,12 @@ import { Header } from "../../components"
 
 const { Header: HeaderLayout, Content } = Layout
 
-export const withLayout = (type) => (Component) => ({ ...props }) => {
+export const withLayout = (type) => (Component) => ({ user, ...props }) => {
   if (type === "default") {
     return (
       <Layout>
         <HeaderLayout style={{ height: "44px" }}>
-          <Header />
+          <Header user={user} />
         </HeaderLayout>
         <Content>
           <Component {...props} />

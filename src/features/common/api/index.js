@@ -9,6 +9,8 @@ import {
   USER_SUCCESS,
   SEND_TOKEN_BOARD_SUCCESS,
   SEND_TOKEN_BOARD_FAIL,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAIL,
 } from "../constants"
 
 export const signIn = (data) => ({
@@ -71,6 +73,18 @@ export const sendTokenUser = (token, idBoard) => ({
     request: {
       method: "GET",
       url: `/user/token/${token}/b/${idBoard}`,
+    },
+  },
+})
+
+export const editUser = (data) => ({
+  meta: {
+    types: [EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAIL],
+    async: true,
+    request: {
+      method: "PUT",
+      url: `/user/${data.id}`,
+      data,
     },
   },
 })

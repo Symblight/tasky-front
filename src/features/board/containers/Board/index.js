@@ -125,6 +125,7 @@ export function Board({ match, history }) {
           onColor={handleBackgroundColor}
           visible={visibleMenu}
           background={board.get("background")}
+          user={user}
         />
       </StyledContent>
     </Layout>

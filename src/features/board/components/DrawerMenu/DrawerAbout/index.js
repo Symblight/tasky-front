@@ -2,8 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { Drawer } from "antd"
+import { Avatar } from "@tasky/components"
 
-export function DrawerAbout({ onClose, visible }) {
+export function DrawerAbout({ onClose, visible, user }) {
   return (
     <Drawer
       title="О доске"
@@ -14,8 +15,16 @@ export function DrawerAbout({ onClose, visible }) {
     >
       <div>
         <h4>Автор</h4>
-        <div>Avatar</div>
-        <div>name</div>
+        <div>
+          <Avatar
+            key={user.get("id")}
+            data={{
+              firstname: user.get("firstname"),
+              lastname: user.get("lastname"),
+            }}
+          />
+        </div>
+        <div>{user.get("firstname")}</div>
       </div>
     </Drawer>
   )
@@ -24,4 +33,5 @@ export function DrawerAbout({ onClose, visible }) {
 DrawerAbout.propTypes = {
   onClose: PropTypes.func,
   visible: PropTypes.bool,
+  user: PropTypes.object,
 }

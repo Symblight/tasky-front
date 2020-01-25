@@ -1,6 +1,6 @@
 import React from "react"
 
-import { USER } from "@lib/mocks/user"
+import { useUser } from "@features/common"
 import { Divider } from "antd"
 
 import { Form, Header, AvatarLoader } from "../../components"
@@ -8,17 +8,18 @@ import { Form, Header, AvatarLoader } from "../../components"
 import { Container, Wrapper, Content } from "./styled"
 
 export const Profile = () => {
+  const { user, onEdit } = useUser()
   const handleSave = (values) => {
-    console.log(values)
+    onEdit({ ...values, id: user.get("id") })
   }
   return (
     <Wrapper>
-      <Header data={USER} />
+      <Header data={user} />
       <Content>
         <Divider>Личные данные</Divider>
         <Container>
           <Form onSave={handleSave} />
-          <AvatarLoader data={USER} />
+          <AvatarLoader data={user} />
         </Container>
       </Content>
     </Wrapper>

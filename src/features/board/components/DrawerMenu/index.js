@@ -14,6 +14,7 @@ export function DrawerMenu({
   onColor,
   visible,
   onCloseBoard,
+  user,
 }) {
   const [visibleBackground, setVisibleBackground] = useState(false)
   const [visibleLabels, setVisibleLabels] = useState(false)
@@ -60,7 +61,11 @@ export function DrawerMenu({
         background={background}
       />
       <DrawerLabels visible={visibleLabels} onClose={handleToggleLabels} />
-      <DrawerAbout visible={visibleAbout} onClose={handleToggleAbout} />
+      <DrawerAbout
+        visible={visibleAbout}
+        onClose={handleToggleAbout}
+        user={user}
+      />
     </Drawer>
   )
 }
@@ -71,4 +76,5 @@ DrawerMenu.propTypes = {
   onColor: PropTypes.func,
   background: PropTypes.string,
   onCloseBoard: PropTypes.func,
+  user: PropTypes.object,
 }

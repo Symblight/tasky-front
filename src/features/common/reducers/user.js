@@ -8,6 +8,7 @@ import {
   USER_SUCCESS,
   USER_FAIL,
   LOGOUT_SUCCESS,
+  EDIT_PROFILE_SUCCESS,
 } from "../constants"
 
 const initialState = Immutable.fromJS({
@@ -36,6 +37,10 @@ export const reducer = (state = initialState, action) => {
         .set("authenticated", false)
         .set("loading", false)
         .set("authAttempt", true)
+    }
+    case EDIT_PROFILE_SUCCESS: {
+      const { data } = action.payload
+      return state.set("user", Immutable.fromJS(data))
     }
     case LOGOUT_SUCCESS: {
       return state.set("user", Immutable.fromJS({})).set("authenticated", false)

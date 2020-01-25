@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 import { useDispatch, useSelector } from "react-redux"
 
-import { auth } from "../../api"
+import { auth, editUser } from "../../api"
 
 export const useUser = () => {
   const dispatch = useDispatch()
@@ -21,11 +21,23 @@ export const useUser = () => {
     await dispatch(auth())
   }
 
+  const hanbleChangeUser = async (data) => {
+    try {
+      await dispatch(editUser(data))
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
   useEffect(() => {
     if (!selectors.attempt) {
       handleAuth()
     }
   }, [])
 
-  return selectors
+  return {
+    ...selectors,
+    user: selectors.user,
+    onEdit: hanbleChangeUser,
+  }
 }

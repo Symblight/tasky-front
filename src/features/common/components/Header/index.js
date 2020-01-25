@@ -4,17 +4,19 @@ import PropTypes from "prop-types"
 import { Icon, Menu } from "antd"
 import { Link } from "react-router-dom"
 
-import { USER } from "@lib/mocks/user"
 import { Avatar } from "@tasky/components"
 
 import { StyledItem, StyledMenu } from "./styled"
 
-const { SubMenu } = Menu
-
-export const Header = () => {
+export const Header = ({ user }) => {
   const renderSubmenu = () => {
     return (
-      <Avatar data={{ firstname: USER.firstname, lastname: USER.lastname }} />
+      <Avatar
+        data={{
+          firstname: user.get("firstname"),
+          lastname: user.get("lastname"),
+        }}
+      />
     )
   }
   return (
@@ -33,7 +35,7 @@ export const Header = () => {
         </Menu.Item>
         <StyledItem key="user" title={renderSubmenu()}>
           <Menu.Item key="profile">
-            <Link to={`/p/${USER.username}`}>Профиль</Link>
+            <Link to={`/p/${user.get("username")}`}>Профиль</Link>
           </Menu.Item>
           <Menu.Item key="login">
             <Link to="/logout">Выйти</Link>
@@ -42,4 +44,8 @@ export const Header = () => {
       </StyledMenu>
     </>
   )
+}
+
+Header.propTypes = {
+  user: PropTypes.object,
 }

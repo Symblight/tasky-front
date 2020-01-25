@@ -15,10 +15,6 @@ import {
 } from "./styled"
 import { useAlign, useOnClickOutside } from "@hooks"
 
-// const root = document.querySelector("#root")
-// const popapRoot = document.createElement("div")
-// root.append(popapRoot)
-
 const PortalPopap = ({ popap, children }) => {
   return ReactDOM.createPortal(children, popap)
 }

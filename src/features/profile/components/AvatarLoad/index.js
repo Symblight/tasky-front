@@ -10,7 +10,10 @@ export const AvatarLoader = ({ data }) => {
     <Wrapper>
       <Avatar
         size={4}
-        data={{ firstname: data.firstname, lastname: data.lastname }}
+        data={{
+          firstname: data.get("firstname"),
+          lastname: data.get("lastname"),
+        }}
       />
       <span>Загрузить</span>
     </Wrapper>
