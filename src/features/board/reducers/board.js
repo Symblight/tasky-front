@@ -89,8 +89,6 @@ export const reducer = (state = initialState, action) => {
     case NEW_CARD_SOCKET: {
       const { data } = action.payload
 
-      console.log(data)
-
       const newCard = Immutable.fromJS(data)
 
       const exists = state

@@ -3,7 +3,7 @@ import { GET_CARD_SUCCESS } from "../constants"
 
 const initialState = Immutable.fromJS({
   loading: true,
-  users: [],
+  members: [],
   labels: [],
   item: {},
 })
@@ -17,7 +17,7 @@ export const reducer = (state = initialState, action) => {
           Immutable.fromJS({
             ...value.toJS(),
             item: data,
-            users: data.users,
+            members: data.members,
             labels: data.labels,
           }),
         )

@@ -22,15 +22,14 @@ export function Labels({
       <ul>
         {labels.toJS().map((data) => (
           <Color
-            active={!!labelsByCard.find((c) => c.color === data.color)}
-            // onMouseEnter={() => handleHover(data.color)}
+            active={!!labelsByCard.find((c) => c && c.color === data.color)}
             key={HEX_COLORS[data.color].hex}
             color={HEX_COLORS[data.color].hex}
             shadow={HEX_COLORS[data.color].shadow}
             onEditToggle={onEditToggle}
             onClick={onClick}
             name={data.color}
-            id={data.id}
+            id={data.id_label}
           />
         ))}
       </ul>

@@ -28,7 +28,6 @@ export function InfoPanelCard({ users = [], labels = [] }) {
         <Col span={12}>
           <Label>Участники:</Label>
           <Section>
-            <Avatar />
             {users &&
               users.map((user) => (
                 <Avatar

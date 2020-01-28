@@ -26,7 +26,7 @@ export function Card({ history, match }) {
         <Content>
           <InfoWrap>
             <InfoPanelCard
-              users={card.getIn(["users"])}
+              users={card.getIn(["members"])}
               labels={card.getIn(["labels"])}
             />
           </InfoWrap>

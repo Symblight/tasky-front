@@ -92,7 +92,9 @@ function Index(
 
   const getLabelsByCard = (values, cardsLabels) => {
     return cardsLabels
-      ? cardsLabels.map((item) => values.find((o) => o.id === item.id_label))
+      ? cardsLabels.map((item) =>
+          values.find((o) => o.id_label === item.id_label),
+        )
       : []
   }
 

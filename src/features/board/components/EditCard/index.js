@@ -30,9 +30,12 @@ export function CardEdit({
     <Wrapper editable={editable} onClick={(e) => e.preventDefault()}>
       <Content>
         <ColorsWrap>
-          {labelsByCard.map((item) => (
-            <Color key={item.color} color={HEX_COLORS[item.color].hex} />
-          ))}
+          {labelsByCard.map(
+            (item) =>
+              item && (
+                <Color key={item.color} color={HEX_COLORS[item.color].hex} />
+              ),
+          )}
         </ColorsWrap>
         <StyledTextArea
           value={value}

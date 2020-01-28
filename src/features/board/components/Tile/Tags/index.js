@@ -8,9 +8,12 @@ import { Wrapper, StyledTag } from "./styled"
 export function Tags({ data }) {
   return (
     <Wrapper>
-      {data.map((value) => (
-        <StyledTag key={value.color} color={HEX_COLORS[value.color].hex} />
-      ))}
+      {data.map(
+        (value) =>
+          value && (
+            <StyledTag key={value.color} color={HEX_COLORS[value.color].hex} />
+          ),
+      )}
     </Wrapper>
   )
 }
