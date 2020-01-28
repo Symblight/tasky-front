@@ -11,7 +11,6 @@ export function ColumnContent(onDelete) {
         <Icon type="delete" />
         Удалить
       </Item>
-      <Item key="colors">Цвет</Item>
     </Wrapper>
   )
 }

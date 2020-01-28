@@ -38,7 +38,7 @@ export const reducer = (state = initialState, action) => {
       const { cards, usersByCards } = data
       const updatedCards = cards.map((card) => ({
         ...card,
-        members: usersByCards.filter((id) => id.id_card === card.id),
+        members: usersByCards.filter((item) => item.id_card === card.id),
       }))
 
       return state
@@ -85,8 +85,11 @@ export const reducer = (state = initialState, action) => {
         items.filter((value) => value.get("uuid") !== action.payload.id),
       )
     }
+
     case NEW_CARD_SOCKET: {
       const { data } = action.payload
+
+      console.log(data)
 
       const newCard = Immutable.fromJS(data)
 
@@ -100,6 +103,7 @@ export const reducer = (state = initialState, action) => {
       }
       return state
     }
+
     case POS_LIST_SOCKET: {
       const { data } = action.payload
 
@@ -109,6 +113,7 @@ export const reducer = (state = initialState, action) => {
 
       return state.setIn(["lists", indexList], Immutable.fromJS(data))
     }
+
     case POS_CARD_SOCKET: {
       const { data } = action.payload
 
@@ -123,6 +128,7 @@ export const reducer = (state = initialState, action) => {
         Immutable.fromJS({ ...currentCard.toJS(), ...data }),
       )
     }
+
     case ADD_LABEL_CARD_SOCKET: {
       const { data } = action.payload
 
@@ -136,15 +142,18 @@ export const reducer = (state = initialState, action) => {
         return Immutable.fromJS(updated)
       })
     }
+
     case EDIT_LABEL_BOARD_SOCKET:
     case REMOVE_LABEL_BOARD_SOCKET:
     case REMOVE_LABEL_FROM_CARD_SOCKET: {
       return state
     }
+
     case SET_BACKGROUND_COLOR_SOCKET: {
       const { data } = action.payload
       return state.set("background", data)
     }
+
     default: {
       return state
     }

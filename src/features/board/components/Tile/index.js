@@ -97,9 +97,10 @@ function Index(
   }
 
   const getUserByCard = (values, cardsUsers) => {
-    return cardsUsers
-      ? cardsUsers.map((item) => values.find((o) => o.id === item.id_user))
+    const res = cardsUsers
+      ? cardsUsers.map((item) => values.find((o) => o.id_user === item.id_user))
       : []
+    return res
   }
 
   return (
