@@ -25,7 +25,7 @@ const Index = memo(
 
     const ref = useRef(null)
     const refButton = useRef(null)
-    const { align, width } = useAlign({
+    const { align } = useAlign({
       ref,
       aligns: ["top", "bottom", "left", "right"],
     })
@@ -43,46 +43,44 @@ const Index = memo(
     const popapRoot = document.querySelector("#root")
 
     return (
-      <>
-        <WrapButton ref={refButton}>
-          {DropdownButton && <DropdownButton onClick={handleToggle} />}
-          <PortalPopap popap={popapRoot}>
-            {toggle && (
-              <Wrapper
-                ref={ref}
-                bottom={align.bottom}
-                left={
-                  refButton.current &&
-                  refButton.current.getBoundingClientRect().left
-                }
-                top={
-                  refButton.current &&
-                  refButton.current.getBoundingClientRect().top
-                }
-                visible={toggle}
-                className={className}
-              >
-                <Header>
-                  {index !== 0 && (
-                    <WrapBack onClick={handleOnBack}>
-                      <Icon type="left" />
-                    </WrapBack>
-                  )}
-                  <Title>{title}</Title>
-                  <WrapClose onClick={handleToggle}>
-                    <Icon type="close" />
-                  </WrapClose>
-                </Header>
-                <Content>
-                  {React.Children.toArray(children).length === 1
-                    ? children
-                    : children[index]}
-                </Content>
-              </Wrapper>
-            )}
-          </PortalPopap>
-        </WrapButton>
-      </>
+      <WrapButton ref={refButton}>
+        {DropdownButton && <DropdownButton onClick={handleToggle} />}
+        <PortalPopap popap={popapRoot}>
+          {toggle && (
+            <Wrapper
+              ref={ref}
+              bottom={align.bottom}
+              left={
+                refButton.current &&
+                refButton.current.getBoundingClientRect().left
+              }
+              top={
+                refButton.current &&
+                refButton.current.getBoundingClientRect().top
+              }
+              visible={toggle}
+              className={className}
+            >
+              <Header>
+                {index !== 0 && (
+                  <WrapBack onClick={handleOnBack}>
+                    <Icon type="left" />
+                  </WrapBack>
+                )}
+                <Title>{title}</Title>
+                <WrapClose onClick={handleToggle}>
+                  <Icon type="close" />
+                </WrapClose>
+              </Header>
+              <Content>
+                {React.Children.toArray(children).length === 1
+                  ? children
+                  : children[index]}
+              </Content>
+            </Wrapper>
+          )}
+        </PortalPopap>
+      </WrapButton>
     )
   },
 )

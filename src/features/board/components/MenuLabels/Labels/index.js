@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 
 import { Button } from "antd"
@@ -15,8 +15,6 @@ export function Labels({
   onCreate,
   onEditToggle,
 }) {
-  const [activeColor, setColor] = useState(null)
-
   return (
     <Wrapper>
       <ul>

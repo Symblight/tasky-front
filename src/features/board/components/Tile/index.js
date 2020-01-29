@@ -109,6 +109,7 @@ function Index(
     <Wrapper
       {...provided.draggableProps}
       {...provided.dragHandleProps}
+      onDragStart={(e) => e.preventDefault()}
       onMouseEnter={handleVisible}
       onMouseLeave={handleHide}
       ref={ref}

@@ -27,7 +27,11 @@ export function CardEdit({
   members,
 }) {
   return (
-    <Wrapper editable={editable} onClick={(e) => e.preventDefault()}>
+    <Wrapper
+      editable={editable}
+      onClick={(e) => e.preventDefault()}
+      onDragStartCapture={(e) => e.preventDefault()}
+    >
       <Content>
         <ColorsWrap>
           {labelsByCard.map(

@@ -40,6 +40,7 @@ export function List({
                     key={item.uuid}
                     draggableId={item.uuid}
                     index={index}
+                    isDragDisabled={Boolean(editCardVisible)}
                   >
                     {(dragProvided, dragSnapshot) => (
                       <NaturalDragAnimation

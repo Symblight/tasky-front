@@ -38,7 +38,11 @@ export function CardMenu({
   }
 
   return (
-    <Wrapper right={align.right} ref={ref}>
+    <Wrapper
+      right={align.right}
+      ref={ref}
+      onDragEnter={(e) => console.log(111)}
+    >
       <ContextItem onClick={onDelete}>
         <Icon type="delete" />
         <span>Удалить</span>
