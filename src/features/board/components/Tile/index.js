@@ -114,7 +114,6 @@ function Index(
       onMouseLeave={handleHide}
       ref={ref}
       style={style}
-      to={`/b/${uuidBoard}/${data.uuid}`}
     >
       <Container ref={refEdit}>
         <Row>
