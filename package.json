@@ -96,7 +96,7 @@
     "connected-react-router": "^6.5.2",
     "history": "^4.9.0",
     "immutable": "^4.0.0-rc.12",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "natural-drag-animation-rbdnd": "^2.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
